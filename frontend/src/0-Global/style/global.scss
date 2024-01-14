@@ -54,7 +54,7 @@
   }
   section {
     display: flex;
-    min-height: 80svh;
+    min-height: 82svh;
     justify-content: center;
     align-items: center;
   }
@@ -78,6 +78,15 @@
       outline: none;
       opacity: 0.7;
       box-shadow: none;
+    }
+  }
+
+  @media only screen and (max-width: 1168px) {
+    * {
+      font-size: 1.5rem !important;
+    }
+    section {
+      min-height: 86svh;
     }
   }
 }
