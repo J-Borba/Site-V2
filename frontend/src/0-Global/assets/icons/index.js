@@ -9,7 +9,7 @@ import
 } from '@fortawesome/free-regular-svg-icons'
 import
 {
-  faToggleOn, faToggleOff, faCircleChevronDown, faHome, faCircleInfo, faTurnUp, faBookBookmark 
+  faToggleOn, faToggleOff, faCircleChevronDown, faHome, faCircleInfo, faTurnUp, faBookBookmark, faXmark, faBars, faJetFighterUp
 } from '@fortawesome/free-solid-svg-icons'
 
 
@@ -35,5 +35,8 @@ library.add(
   faGitAlt,
   faWhatsapp,
   faBookBookmark,
-  faHandPointRight
+  faHandPointRight,
+  faXmark,
+  faBars,
+  faJetFighterUp
 )

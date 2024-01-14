@@ -17,7 +17,7 @@
             (UERJ)</strong>
           </p>
           <p>
-            Desenvolvedor na <a href="https://www.tiplan.com.br/" target="_blank">TIPLAN</a>
+            Desenvolvedor .NET na <a href="https://www.tiplan.com.br/" target="_blank">TIPLAN</a>
           </p>
           <p>
             Amo desenvolver e busco mais conhecimento a cada dia

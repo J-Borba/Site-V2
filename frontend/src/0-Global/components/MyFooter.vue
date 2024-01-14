@@ -1,20 +1,44 @@
 <template>
-  <div class="d-flex justify-content-center w-100">
-    <footer class="footer-color border-top-radius-16 d-flex justify-content-center gap-3 p-3 w-50">
-      <a @click="handleClickFooter">
-        <font-awesome-icon class="footer-icon" :icon="['fas', 'turn-up']" size="lg" style="color: var(--secondary)"/>
-      </a>
-      <a href="https://github.com/J-Borba" target="_blank">
-        <font-awesome-icon class="footer-icon" :icon="['fab', 'github']" size="xl"/>
-      </a>
-      <a href="mailto:joao3borba3@gmail.com" target="_blank">
-        <font-awesome-icon class="footer-icon" :icon="['far', 'envelope']" size="xl"/>
-      </a>
-      <a href="https://www.linkedin.com/in/joao-borba27/" target="_blank">
-        <font-awesome-icon class="footer-icon" :icon="['fab', 'linkedin']" size="xl"/>
-      </a>
-    </footer>
-  </div>
+  <footer class="w-100 border-top-radius-16 footer-color">
+    <div class="py-4">
+      <div class="row justify-content-center gap-5">
+        <div class="col-lg-4 col-md-12 text-lg-start text-center d-flex flex-column justify-content-around">
+          <h1 class="">João Borba</h1>
+          <p class="small text-muted">
+            Desenvolvedor Web | .NET
+          </p>
+          <p class="small text-muted mb-0">
+            &copy; Copyrights. All rights reserved. <a href="https://joaoborba.com" target="_blank">joaoborba.com</a>
+          </p>
+        </div>
+        <div class="col-lg-2 col-md-12 text-lg-start text-center">
+          <h5 class="mb-3">Quick links</h5>
+          <ul class="list-unstyled">
+            <li>
+              <a href="#" @click="handleClickFooter">
+                <font-awesome-icon :icon="['fas', 'jet-fighter-up']" size="xl"/> Voltar ao início
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/J-Borba" target="_blank">
+                <font-awesome-icon class="footer-icon" :icon="['fab', 'github']" size="xl" /> Github
+              </a>
+            </li>
+            <li>
+              <a href="mailto:joao3borba3@gmail.com" target="_blank">
+                <font-awesome-icon class="footer-icon" :icon="['far', 'envelope']" size="xl"/> Mail
+              </a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com/in/joao-borba27/" target="_blank">
+                <font-awesome-icon class="footer-icon" :icon="['fab', 'linkedin']" size="xl"/> LinkedIn
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
 </template>
 
 <script setup>
@@ -24,30 +48,31 @@
 </script>
 
 <style lang="scss" scoped>
-  p {
-    line-height: 1.6;
-    font-weight: bold;
-  }
   .border-top-radius-16 {    
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
   }
   .footer-color {
-    background-color: var(--primary);
-    color: var(--footer-text) !important;
+    background-color: var(--secondary);
+
+    * {
+      color: var(--footer-text) !important;
+    }
   }
   .footer-icon {
     font-size: 1.5rem !important;
   }
-  a {
-    color: var(--footer-text);
-    cursor: pointer;
-    border: 0;
-
-    transition: transform 1.5s;
-  }
-  a:hover {
-    transform: translateY(-15%);
-    transition: transform 150ms;
+  ul {
+    display: flex;
+    flex-direction: column;
+    
+    gap: 0.5rem;
+    
+    li{
+      a{
+        font-weight: 500;
+        font-size: small;
+      }
+    }
   }
 </style>

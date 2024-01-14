@@ -1,35 +1,36 @@
 :root {
   // Theme Colors
   color-scheme: dark light;
-  --footer-text: #d7d7d7;
   @media (prefers-color-scheme: light) {
     --bg: #e3e1e1;
+    --bg-emphasis: #d6d6d6;
     --primary: #29A19C;
     --primary-low-opacity: #29a19d80;
     --primary-no-opacity: #29a19d00;
     --secondary: #1c6d6b;
     --text: #36524b;
+    --footer-text: #d7d7d7;
   }
   @media (prefers-color-scheme: dark) {
     --bg: #1f2327;
+    --bg-emphasis: #2e3135;
     --primary: #29A19C;
     --primary-low-opacity: #29a19d80;
     --primary-no-opacity: #29a19d00;
-    --secondary: #56f4d2;
+    --secondary: #37d3ce;
     --text: #d7d7d7;
+    --footer-text: #36524b;
   }
 
   // Personalized ScrollBar
   ::-webkit-scrollbar {
     width: 5px;
   }
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
   ::-webkit-scrollbar-thumb {
-    background: var(--secondary);
+    background: var(--primary);
     border-radius: 30px;
   }
+  
   * {
     transition: background-color 0.2s ease, transform 0.2s ease;
   }
@@ -45,7 +46,7 @@
 
     overflow-x: hidden !important;
 
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: Poppins, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     
