@@ -26,7 +26,7 @@
         <font-awesome-icon :icon="['fab', 'git-alt']" size="2xl" class="icon"/>
       </div>
       <div>
-        <font-awesome-icon :icon="['fab', 'square-github']" size="2xl" />
+        <font-awesome-icon :icon="['fab', 'square-github']" size="2xl" class="icon"/>
       </div>
     </div>
 
@@ -68,9 +68,6 @@
   }
 
   @media only screen and (max-width: 1168px) {
-    * {
-      font-size: 1.5rem;
-    }
     .icon-skills-container {
       gap: 1.2rem;
       padding: 2rem 0;
@@ -79,7 +76,7 @@
       }
     }
     .icon {
-      font-size: 2rem;
+      font-size: 2rem !important;
       color: var(--secondary);
     }
   }

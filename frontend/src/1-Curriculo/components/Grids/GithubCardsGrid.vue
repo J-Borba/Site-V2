@@ -153,9 +153,6 @@
     opacity: 1 !important;
   }
   @media only screen and (max-width: 1168px) {
-    * {
-      font-size: 0.875rem !important;
-    }
     .github-card-grid {
       grid-template-columns: repeat(1, 1fr);
       margin-bottom: 2rem;
