@@ -1,7 +1,7 @@
 <template>
   <section class="text-center flex-column justify-content-around">  
     <div class="jumbotron rounded-4 p-5">
-      <h1 class="display-4">Seja bem vindo!</h1>
+      <h1 class="display-4 primary">Seja bem vindo!</h1>
       <p class="lead">
         Este é meu portfólio repaginado! 
       </p>

@@ -6,16 +6,16 @@
           <div class="d-flex flex-column justify-content-around w-auto">
             <div>
               <p class="h1">João Borba</p>
-              <p class="small text-muted">
+              <p>
                 Desenvolvedor Web | .NET
               </p>
             </div>
-            <p class="small text-muted mb-0">
+            <p>
               &copy; Copyright. All rights reserved. <a class="fw-bold" href="https://joaoborba.com" target="_blank">joaoborba.com</a>
             </p>
           </div>
         </div>
-        <div class="col-lg-2 col-md-12 text-lg-start text-center small d-flex justify-content-center">
+        <div class="col-lg-2 col-md-12 text-lg-start text-center d-flex justify-content-center">
           <div class="w-auto">
             <p class="h4 mb-3">Quick links</p>
             <div class="d-flex flex-column gap-2">
