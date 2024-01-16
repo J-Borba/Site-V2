@@ -1,46 +1,47 @@
 <template>
-  <footer class="w-100 border-top-radius-16 footer-color">
+  <footer class="border-top-radius-16 footer-color">
     <div class="py-4">
       <div class="row justify-content-center gap-5">
-        <div class="col-lg-4 col-md-12 text-lg-start text-center d-flex flex-column justify-content-around">
-          <h1 class="">João Borba</h1>
-          <p class="small text-muted">
-            Desenvolvedor Web | .NET
-          </p>
-          <p class="small text-muted mb-0">
-            &copy; Copyrights. All rights reserved. <a href="https://joaoborba.com" target="_blank">joaoborba.com</a>
-          </p>
+        <div class="col-lg-4 col-md-12 text-lg-start text-center d-flex justify-content-center">
+          <div class="d-flex flex-column justify-content-around w-auto">
+            <div>
+              <p class="h1">João Borba</p>
+              <p class="small text-muted">
+                Desenvolvedor Web | .NET
+              </p>
+            </div>
+            <p class="small text-muted mb-0">
+              &copy; Copyright. All rights reserved. <a class="fw-bold" href="https://joaoborba.com" target="_blank">joaoborba.com</a>
+            </p>
+          </div>
         </div>
-        <div class="col-lg-2 col-md-12 text-lg-start text-center">
-          <h5 class="mb-3">Quick links</h5>
-          <ul class="list-unstyled">
-            <li>
+        <div class="col-lg-2 col-md-12 text-lg-start text-center small d-flex justify-content-center">
+          <div class="w-auto">
+            <p class="h4 mb-3">Quick links</p>
+            <div class="d-flex flex-column gap-2">
               <a href="#" @click="handleClickFooter">
-                <font-awesome-icon :icon="['fas', 'jet-fighter-up']" size="xl"/> Voltar ao início
+                <font-awesome-icon :icon="['fas', 'jet-fighter-up']" size="xl" />
+                <span>Voltar ao início</span>
               </a>
-            </li>
-            <li>
-              <a href="https://github.com/J-Borba" target="_blank">
-                <font-awesome-icon class="footer-icon" :icon="['fab', 'github']" size="xl" /> Github
-              </a>
-            </li>
-            <li>
-              <a href="mailto:joao3borba3@gmail.com" target="_blank">
-                <font-awesome-icon class="footer-icon" :icon="['far', 'envelope']" size="xl"/> Mail
-              </a>
-            </li>
-            <li>
               <a href="https://www.linkedin.com/in/joao-borba27/" target="_blank">
-                <font-awesome-icon class="footer-icon" :icon="['fab', 'linkedin']" size="xl"/> LinkedIn
+                <font-awesome-icon class="footer-icon" :icon="['fab', 'linkedin']" size="xl" /> 
+                <span>LinkedIn</span>
               </a>
-            </li>
-          </ul>
+              <a href="https://github.com/J-Borba" target="_blank">
+                <font-awesome-icon class="footer-icon" :icon="['fab', 'github']" size="xl" /> 
+                <span>Github</span>
+              </a>
+              <a href="mailto:joao3borba3@gmail.com" target="_blank">
+                <font-awesome-icon class="footer-icon" :icon="['far', 'envelope']" size="xl" /> 
+                <span>Mail</span>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </footer>
 </template>
-
 <script setup>
   function handleClickFooter() {
     document.documentElement.scrollTop = 0;
@@ -62,17 +63,10 @@
   .footer-icon {
     font-size: 1.5rem !important;
   }
-  ul {
-    display: flex;
-    flex-direction: column;
-    
-    gap: 0.5rem;
-    
-    li{
-      a{
-        font-weight: 500;
-        font-size: small;
-      }
+  a {
+    width: fit-content;
+    span {
+      margin-left: 0.25rem;
     }
   }
 </style>

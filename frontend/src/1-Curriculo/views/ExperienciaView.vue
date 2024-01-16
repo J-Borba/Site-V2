@@ -1,29 +1,44 @@
 <template>
-  <ViewsContainer>
-    <div class="title">
-      <h4>Experiências Profissionais</h4>
-    </div>
-    <div class="jobDescContainer" :id="job.sigla" v-for="job in jobs" :key="job.id">
-      <h5 class="nomeEmpresa">{{ job.empresa }}</h5>
-      <div class="experiencias" v-for="experiencia in job.experiencias" :key="experiencia.cargo">
-        <div class="cargo-periodo">
-          <p>{{ experiencia.cargo }}</p>
-          <p>{{ experiencia.periodo }}</p>
-        </div>
-        <div class="desc">
-          <p v-for="line in experiencia.descricao" :key="line">{{ line }}</p>
+  <section>
+    <div class="d-flex flex-column gap-4 my-5">
+      <h1 class="h3 primary text-center">Experiências Profissionais</h1>
+      <div class="bg-emphasis border border-secondary rounded-2 p-4">
+        <div :id="job.sigla" v-for="job in jobs" :key="job.id">
+          <p class="secondary fw-bold mb-2">{{ job.empresa }}</p>
+          <div class="" v-for="experiencia in job.experiencias" :key="experiencia.cargo">
+            <div class="d-flex justify-content-between primary small">
+              <p>{{ experiencia.cargo }}</p>
+              <p>{{ experiencia.periodo }}</p>
+            </div>
+            <div class="d-flex flex-column gap-2 mb-3 ms-3 small">
+              <p v-for="line in experiencia.descricao" :key="line">{{ line }}</p>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="line" v-if="jobs.length > 1"></div>
     </div>
-  </ViewsContainer>
+  </section>
 </template>
 
 <script setup>
-  import ViewsContainer from '../components/ViewsContainer.vue';
   import '../style/global.scss'
 
   const jobs = [
+  {
+      id: 2,
+      empresa: "TIPLAN",
+      sigla: 'TIPLAN',
+      experiencias: [
+        {
+          cargo: "Estagiário - Desenvolvimento",
+          periodo: "Out/2023 - Atualmente",
+          descricao: [
+            'Backend C# .NET',
+            'Frontend Vue.js 2',
+          ]
+        },
+      ]
+    },
     {
       id: 1,
       empresa: "Associação Brasileira Beneficente de Reabilitação (ABBR)",
@@ -56,77 +71,10 @@
           ]
         },
       ]
-    },
-    {
-      id: 2,
-      empresa: "TIPLAN",
-      sigla: 'TIPLAN',
-      experiencias: [
-        {
-          cargo: "Estagiário - Desenvolvimento",
-          periodo: "Out/2023 - Atualmente",
-          descricao: [
-            '.NET C#',
-            'Vue.js 2',
-          ]
-        },
-      ]
-    },
+    }
   ]
 
 </script>
 
 <style lang="scss" scoped>
-  p {
-    margin-block-end: 0;
-  }
-  .cargo-periodo {
-    color: var(--primary);
-  }
-  .title {
-    margin: 2rem auto 0 auto;
-  }
-  .jobDescContainer {
-    display: flex;
-    flex-direction: column;
-    min-width: 40rem;
-    color: var(--text);
-    padding: 1rem;
-    margin-bottom: 5%;
-
-  }
-  .nomeEmpresa {
-    border-bottom: 1px solid var(--primary);
-    display: flex;
-    width: fit-content;
-  }
-  .cargo-periodo {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    margin: 0.5rem 1rem;
-  }
-  .desc {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-left: 1rem;
-    margin-top: 1rem;
-
-    opacity: 0.8;
-    p::before {
-      content: "• ";
-    }
-  }
-  .experiencias {
-    margin-top: 1rem;
-  }
-  .line {
-    display: flex;
-    width: 100%;
-    height: 1px;
-    background-color: var(--secondary);
-    margin-top: 2rem;
-  }
 </style>

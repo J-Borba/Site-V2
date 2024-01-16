@@ -1,20 +1,20 @@
 <template>
   <header id="MyHeader">
-    <nav class="navbar sticky-top">
+    <nav class="navbar sticky-top mx-3">
       <div class="container-fluid">
         <!-- Icone para centralizar logo com spacebetween -->
-        <button class="navbar-toggler opacity-0" type="button" disabled>
+        <button class="navbar-toggler opacity-0" type="button" aria-label="disabled button" disabled>
           <span class="baseThemeBtn">
-            <font-awesome-icon :icon="['fas', 'circle-chevron-down']" />
+            <font-awesome-icon :icon="['fas', 'circle-chevron-down']" class="offcanvas-btn"/>
           </span>
         </button>
         <!-- End - Icone para centralizar logo com spacebetween -->
-        <router-link class="logoRouter" to="/">
-          <img src="../assets/myLogoNoBg.png" class="logo" alt="">
+        <router-link id="logoHeader" to="/">
+          <img src="../assets/myLogoNoBg.png" class="logoRouter" alt="Logo Joao Borba">
         </router-link>
-        <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
+        <button aria-label="Offcanvas button" class="navbar-toggler shadow-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
           <span class="baseThemeBtn">
-            <font-awesome-icon :icon="['fas', 'circle-chevron-down']" />
+            <font-awesome-icon :icon="['fas', 'circle-chevron-down']" size="xl" class="offcanvas-btn"/>
           </span>
         </button>
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasDarkNavbar"
@@ -23,14 +23,14 @@
             <router-link to="/">
               <font-awesome-icon :icon="['fas', 'house']" data-bs-dismiss="offcanvas"/>
             </router-link>
-            <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Navegação</h5>
+            <p class="h5 offcanvas-title" id="offcanvasDarkNavbarLabel">Navegação</p>
             <a href="#" class="pe-auto" data-bs-dismiss="offcanvas" aria-label="Close">
               <font-awesome-icon :icon="['fas', 'xmark']" size="xl"/>
             </a>
           </div>
           <div class="offcanvas-body">
-            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-              <li class="nav-item">
+            <nav class="navbar-nav justify-content-end flex-grow-1 pe-3">
+              <div class="nav-item">
                 <div class="d-flex gap-2">
                   <router-link class="nav-link" to="/curriculo/home">
                     <p data-bs-dismiss="offcanvas">
@@ -41,24 +41,24 @@
                     data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="visually-hidden">Toggle Dropdown</span>
                   </a>
-                  <ul class="dropdown-menu" data-bs-dismiss="offcanvas">
-                    <li>
+                  <div class="dropdown-menu p-3" data-bs-dismiss="offcanvas">
+                    <div>
                       <router-link to="/curriculo/experiencia">
                         Experiência
                       </router-link>
-                    </li>
-                    <li>
+                    </div>
+                    <div>
                       <hr class="dropdown-divider">
-                    </li>
-                    <li>
+                    </div>
+                    <div>
                       <router-link to="/curriculo/conhecimentos">
                         Conhecimentos
                       </router-link>
-                    </li>
-                  </ul>
+                    </div>
+                  </div>
                 </div>
-              </li>
-              <li class="nav-item">
+              </div>
+              <!-- <div class="nav-item">
                 <div class="d-flex gap-2">
                   <router-link class="nav-link" to="/financeiro/home">
                     <p data-bs-dismiss="offcanvas">
@@ -69,16 +69,16 @@
                     data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="visually-hidden">Toggle Dropdown</span>
                   </a>
-                  <ul class="dropdown-menu dropdown-menu-dark" data-bs-dismiss="offcanvas">
-                    <li>
+                  <div class="dropdown-menu dropdown-menu-dark" data-bs-dismiss="offcanvas">
+                    <div>
                       <router-link to="/financeiro/home">
                         Home
                       </router-link>
-                    </li>
-                  </ul>
+                    </div>
+                  </div>
                 </div>
-              </li>
-            </ul>
+              </div> -->
+            </nav>
           </div>
         </div>
       </div>
@@ -87,22 +87,33 @@
 </template>
 
 <style lang="scss" scoped>
+  #logoHeader {
+    &:hover {
+      opacity: 1 !important;
+    }
+    &:focus {
+      opacity: 1 !important;
+    }
+  }
   nav {
     a {
+      color: var(--text);
+      &:hover {
+        color: var(--text);
+      }
       &:not(.router-link-exact-active) {
-        &:hover {
-          color: var(--primary);
+        &:hover, &:focus {
+          color: var(--secondary);
           opacity: 1;
         }
       }
-      &.router-link-exact-active {
+      &.router-link-exact-active:not(#logoHeader) {
+        opacity: 0.7;
         p {
           border-bottom: 1px solid var(--secondary);
         }
-        
         &:hover {
           cursor: not-allowed;
-          color: var(--text);
         }
       }
     }
@@ -119,35 +130,19 @@
       color: var(--secondary);
     }
   }
-  .logo {
-    width: 6rem;
-  }
   .logoRouter {
-    border: none;
-    &.router-link-exact-active:hover {
-      cursor: pointer;
-    }
+    min-width: 6rem;
+    width: 7dvw;
+    aspect-ratio: 1.7;
   }
   .offcanvas {
+    font-size: 1.4rem !important;
     background-color: var(--bg);
     color: var(--text);
-
-    a {
-      &.router-link-exact-active {
-        opacity: 0.7;
-      }
-    }
   }
   .dropdown-menu {
+    font-size: 1.2rem !important;
     background-color: var(--bg-emphasis);
-    li {
-      margin-left: 1rem;
-    }
-  }
-
-  @media (max-width: 1168px) {
-    .logo {
-      width: 4rem;
-    }
+    text-align: center;
   }
 </style>

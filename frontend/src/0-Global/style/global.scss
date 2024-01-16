@@ -21,20 +21,13 @@
     --text: #d7d7d7;
     --footer-text: #36524b;
   }
-  * {
-    transition: background-color 0.2s ease, transform 0.2s ease;
-  }
-  html {
-    height: 100%;
-  }
   body {
+    overflow-x: hidden;
+    
     margin: 0;
     padding: 0;
     
-    width: 100svw;
-    height: 100svh;
-
-    overflow-x: hidden !important;
+    height: 100%;
 
     font-family: Poppins, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -45,20 +38,18 @@
   }
   section {
     display: flex;
-    min-height: 82svh;
+    min-height: 90dvh;
     justify-content: center;
     align-items: center;
   }
-  h2{
+  h1, h2, h3, h4, h5, h6 {
     color: var(--primary);
-    margin: 0;
+  }
+  p {
     margin-block-end: 0;
-    font-weight: bold;
   }
   a {
-    font-weight: bold;
-    color: var(--text);
-    border-bottom: 2px solid transparent;
+    color: var(--primary);
     transition: 200ms ease;
     text-decoration: none;
     &:hover {
@@ -71,16 +62,28 @@
       box-shadow: none;
     }
   }
+  .primary {
+    color: var(--primary);
+  }
+  .secondary {
+    color: var(--secondary);
+  }
+  .border-primary {
+    border-color: var(--primary) !important;
+  }
+  .border-secondary {
+    border-color: var(--secondary) !important;
+  }
+  .bg-emphasis {
+    background-color: var(--bg-emphasis) !important;
+  }
 
-  @media only screen and (max-width: 1168px) {
-    * {
-      font-size: 0.75rem !important;
-    }
-    h1, h2, h3, h4, h5, h6 {
+  @media only screen and (max-width: 768px) {
+    *:not(.h1, .h2, .offcanvas-btn) {
       font-size: 1rem !important;
     }
     section {
-      min-height: 86svh;
+      min-height: 95dvh;
     }
   }
 }

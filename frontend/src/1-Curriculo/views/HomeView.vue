@@ -1,19 +1,18 @@
 <template>
-  <HomeSections>
-    <ViewsContainer>
-      <div class="about-container">
-        <div class="profile-container">
-          <div class="img-container">
-            <a href="https://www.linkedin.com/in/joao-borba27/" target="_blank">
-              <img src="@/0-Global/assets/MyFotoCircle.png" alt="">
-            </a>
-          </div>
-          <h1>João Victor Borba</h1>
+  <section>
+    <div class="d-flex flex-column justify-content-center align-items-center gap-5 text-center">
+      <div class="d-flex align-items-center gap-2">
+        <div class="d-flex flex-column justify-content-center background-circle-spin">
+          <a class="opacity-100" href="https://www.linkedin.com/in/joao-borba27/" target="_blank">
+            <img id="MyFoto" src="@/0-Global/assets/MyFotoCircle.png" alt="Foto Joao Borba">
+          </a>
         </div>
-        
-        <div class="about-text-grid-container">
-          <p>
-            Estudante de Ciências da Computação na <strong>Universidade do Estado do Rio de Janeiro
+        <h1 class="secondary">João Victor Borba</h1>
+      </div>
+      
+      <div class="d-flex flex-column gap-3 text-start w-75">
+        <p>
+          Estudante de Ciências da Computação na <strong>Universidade do Estado do Rio de Janeiro
             (UERJ)</strong>
           </p>
           <p>
@@ -23,31 +22,30 @@
             Amo desenvolver e busco mais conhecimento a cada dia
           </p>
         </div>
-
+        
         <div class="more-icon-grid-container">
-          <h4>Mais sobre mim</h4>
-          <font-awesome-icon :icon="['far', 'hand-point-down']" bounce size="2xl" style="color: var(--primary)"/>
+          <p class="h4 mb-3">Mais sobre mim</p>
+          <font-awesome-icon class="primary" :icon="['far', 'hand-point-down']" bounce size="2xl" />
         </div>
       </div>
-    </ViewsContainer>
-  </HomeSections>
+  </section>
+
+  <ExperienciaGrid />
+  <FormacaoGrid />
+  <SkillsGrid />
+  <GithubCardsGrid />
 </template>
 
 <script setup>
-  import ViewsContainer from '../components/ViewsContainer.vue';
-  import HomeSections from '../components/HomeSections.vue';
+  import GithubCardsGrid from '../components/Grids/GithubCardsGrid.vue';
+  import ExperienciaGrid from '../components/Grids/ExperienciaGrid.vue'
+  import FormacaoGrid from '../components/Grids/FormacaoGrid.vue'
+  import SkillsGrid from '../components/Grids/SkillsGrid.vue'
   import '../style/global.scss'
 </script>
 
 <style lang="scss" scoped>
-  a{
-    opacity: 1 !important;
-  }
-  .img-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
+  .background-circle-spin {
     position: relative;
     
     width: 10.5rem;
@@ -70,42 +68,11 @@
       transition: 300ms;
       inset: -10px 0;
     }
-    img {
-      width: 10.5rem;
-    }
   }
-  .about-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-
-    gap: 2rem;
-    .about-text-grid-container {
-      display: flex;
-      flex-direction: column;
-      width: 80%;
-      text-align: start;
-      
-      a {
-        color: var(--primary);
-        &:hover {
-          opacity: 0.5;
-          color: var(--secondary);
-        }
-      }
-    }
-  }
-  .profile-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-
-    img {
-      width: 10rem;
-      border-radius: 50%;
-    }
+  #MyFoto {
+    width: 10rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
   }
   @keyframes spin {
     from {
@@ -115,15 +82,15 @@
       transform: rotate(360deg);
     }
   }
-  @media only screen and (max-width: 800px) {
-    .img-container {
+  @media only screen and (max-width: 1168px) {
+    .background-circle-spin {
       width: 7rem;
-      img {
-        width: 6.5rem;
-      }
       &::before {
         inset: -10px 20px;
       }
+    }
+    #MyFoto {
+      width: 6.5rem;
     }
   }
 </style>
