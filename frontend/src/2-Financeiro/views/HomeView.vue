@@ -8,9 +8,7 @@
 </template>
 
 <script setup>
-import '../style/global.scss'
+import '../style/global.scss';
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

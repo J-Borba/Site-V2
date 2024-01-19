@@ -3,7 +3,7 @@
     <div>
       <p class="h2 text-center mb-5">Projetos</p>
       <div class="row w-75 m-auto justify-content-center gap-4">
-        <div class="col-2 github-card" v-for="repo in repos" :key="repo.id">
+        <div v-for="repo in repos" :key="repo.id" class="col-2 github-card">
           <div class="github-card-content">
             <p class="repo-title">
               <a :href="repo.html_url" target="_blank">
@@ -16,9 +16,9 @@
               </a>
             </p>
             <p class="repo-desc">
-              {{ repo.description ?? "Descrição vazia" }}
+              {{ repo.description ?? 'Descrição vazia' }}
             </p>
-            <p class="repo-lang" :id="repo.language">
+            <p :id="repo.language" class="repo-lang">
               {{ repo.language }}
             </p>
           </div>
@@ -29,107 +29,106 @@
 </template>
 
 <script setup>
-  import '../../style/global.scss'
-  import { onMounted, ref } from 'vue';
-  import api from '@/0-Global/services/api.js'
+import '../../style/global.scss';
+import { onMounted, ref } from 'vue';
+import api from '@/0-Global/services/api.js';
 
-  const repos = ref([])
+const repos = ref([]);
 
-  async function getRepos() {
-    const response = await api.get('/repos?sort=updated')
+async function getRepos() {
+  const response = await api.get('/repos?sort=updated');
 
-    if (response) {
-      repos.value = JSON.parse(response.request.response)
-    }
+  if (response) {
+    repos.value = JSON.parse(response.request.response);
   }
-  onMounted(() => {
-    getRepos();
-  })
+}
+onMounted(() => {
+  getRepos();
+});
 </script>
 
 <style lang="scss" scoped>
+$title-clr: #0969da;
+$vue-clr: #41b883;
+$ts-clr: #3178c6;
+$js-clr: #f1e05a;
+$java-clr: #b07219;
+$csharp-clr: #178600;
+$border-clr: #b4bac0;
+$book-icon-clr: #768390;
 
-  $title-clr: #0969da;
-  $vue-clr: #41b883;
-  $ts-clr: #3178c6;
-  $js-clr: #f1e05a;
-  $java-clr: #b07219;
-  $csharp-clr: #178600;
-  $border-clr: #b4bac0;
-  $book-icon-clr: #768390;
+.github-card {
+  padding: 0.5rem;
+  width: 17rem;
+  height: 8rem;
 
-  .github-card {
-    padding: 0.5rem;
-    width: 17rem;
-    height: 8rem;
+  border-radius: 8px;
+  border: 1px solid $border-clr;
 
-    border-radius: 8px;
-    border: 1px solid $border-clr;
+  box-shadow: 1px 1px 8px 1px var(--primary);
+}
+.github-card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 
-    box-shadow: 1px 1px 8px 1px var(--primary);
-  }
-  .github-card-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-
-    height: 100%;
-    line-height: 1;
-    p{
-      font-size: 0.9rem;
-    }
-  }
-  .repo-title {
-    span {
-      font-size: 1.1rem;
-      color: $title-clr;
-      font-weight: 400;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-  .book-icon {
+  height: 100%;
+  line-height: 1;
+  p {
     font-size: 0.9rem;
-    color: $book-icon-clr;
   }
-  .repo-lang {
-    &::before {
-      content: '● ';
-      font-size: 1.1rem;
+}
+.repo-title {
+  span {
+    font-size: 1.1rem;
+    color: $title-clr;
+    font-weight: 400;
+    &:hover {
+      text-decoration: underline;
     }
   }
-  .title-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+}
+.book-icon {
+  font-size: 0.9rem;
+  color: $book-icon-clr;
+}
+.repo-lang {
+  &::before {
+    content: '● ';
+    font-size: 1.1rem;
   }
-  a:hover {
-    opacity: 1 !important;
+}
+.title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+a:hover {
+  opacity: 1 !important;
+}
+#Vue {
+  &::before {
+    color: $vue-clr;
   }
-  #Vue {
-    &::before {
-      color: $vue-clr;
-    }
+}
+#TypeScript {
+  &::before {
+    color: $ts-clr;
   }
-  #TypeScript {
-    &::before {
-      color: $ts-clr;
-    }
+}
+#JavaScript {
+  &::before {
+    color: $js-clr;
   }
-  #JavaScript {
-    &::before {
-      color: $js-clr;
-    }
+}
+#Java {
+  &::before {
+    color: $java-clr;
   }
-  #Java {
-    &::before {
-      color: $java-clr;
-    }
+}
+#C\# {
+  &::before {
+    color: $csharp-clr;
   }
-  #C\# {
-    &::before {
-      color: $csharp-clr;
-    }
-  }
+}
 </style>

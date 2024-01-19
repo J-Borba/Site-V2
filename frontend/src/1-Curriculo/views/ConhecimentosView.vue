@@ -15,32 +15,22 @@
 </template>
 
 <script setup>
-  import '../style/global.scss'
+import '../style/global.scss';
 
-  const skills = [
-      {
-        id: 2,
-        tipo: "Desenvolvimento",
-        sigla: "dev",
-        descricao: [
-          "Javascript | Typescript",
-          "Vue.js | React",
-          "C# .NET",
-          "Python",
-          "Java",
-        ]
-      },
-      {
-        id: 1,
-        tipo: "Ferramentas",
-        sigla: 'ferramentas',
-        descricao: [
-        "Banco de Dados SQL Server",
-        "Microsoft Power BI, Excel, Power Automate e Sharepoint",
-        ]
-      },
-    ]
+const skills = [
+  {
+    id: 2,
+    tipo: 'Desenvolvimento',
+    sigla: 'dev',
+    descricao: ['Javascript | Typescript', 'Vue.js | React', 'C# .NET', 'Python', 'Java'],
+  },
+  {
+    id: 1,
+    tipo: 'Ferramentas',
+    sigla: 'ferramentas',
+    descricao: ['Banco de Dados SQL Server', 'Microsoft Power BI, Excel, Power Automate e Sharepoint'],
+  },
+];
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

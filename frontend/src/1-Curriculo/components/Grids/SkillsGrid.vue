@@ -40,20 +40,20 @@
 </template>
 
 <script setup>
-  import '../../style/global.scss'
+import '../../style/global.scss';
 </script>
 
 <style lang="scss" scoped>
-  @media only screen and (max-width: 1168px) {
-    .skills-wrapper {
-      gap: 1.2rem;
-      padding: 2rem 0;
-      div {
-        width: 20%;
-      }
-    }
-    .icon {
-      font-size: 2rem !important;
+@media only screen and (max-width: 1168px) {
+  .skills-wrapper {
+    gap: 1.2rem;
+    padding: 2rem 0;
+    div {
+      width: 20%;
     }
   }
+  .icon {
+    font-size: 2rem !important;
+  }
+}
 </style>

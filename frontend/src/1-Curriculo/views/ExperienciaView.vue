@@ -21,60 +21,55 @@
 </template>
 
 <script setup>
-  import '../style/global.scss'
+import '../style/global.scss';
 
-  const jobs = [
+const jobs = [
   {
-      id: 2,
-      empresa: "TIPLAN",
-      sigla: 'TIPLAN',
-      experiencias: [
-        {
-          cargo: "Estagiário - Desenvolvimento",
-          periodo: "Out/2023 - Atualmente",
-          descricao: [
-            'Backend C# .NET',
-            'Frontend Vue.js 2',
-          ]
-        },
-      ]
-    },
-    {
-      id: 1,
-      empresa: "Associação Brasileira Beneficente de Reabilitação (ABBR)",
-      sigla: 'ABBR',
-      experiencias: [
-        {
-          cargo: "Estagiário - Analista",
-          periodo: "Mar/2022 - Fev/2023",
-          descricao: [
-            'Suporte ao cliente',
-            'Infraestrutura de TI',
-            'Desenvolvimento e manutenção de dashboards/indicadores - Power BI',
-            'Configurações Report Server do Power BI',
-            'Querys em SQL',
-            'Manutenção de planilhas em Excel',
-            'Automatização de processos e serviços - Power Automate',
-            'Uso do pacote Microsoft 365 (Antigo Office 365)',
-            'Criação de metadados para sistema TOTVS Linha RM',
-            'Gerenciar configurações dos sistemas TOTVS - Linha RM e Linha Protheus'
-          ]
-        },
-        {
-          cargo: "Analista de Sistemas",
-          periodo: "Fev/2023 - Jun/2023",
-          descricao: [
-            'Todas as funções citadas acima como estagiário',
-            'Desenvolvimento de ChatBot com TakeBlip',
-            'Desenvolvimento de Scripts em JS para ChatBot',
-            'Desenvolvimento de Sites com Vue.js 3',
-          ]
-        },
-      ]
-    }
-  ]
-
+    id: 2,
+    empresa: 'TIPLAN',
+    sigla: 'TIPLAN',
+    experiencias: [
+      {
+        cargo: 'Estagiário - Desenvolvimento',
+        periodo: 'Out/2023 - Atualmente',
+        descricao: ['Backend C# .NET', 'Frontend Vue.js 2'],
+      },
+    ],
+  },
+  {
+    id: 1,
+    empresa: 'Associação Brasileira Beneficente de Reabilitação (ABBR)',
+    sigla: 'ABBR',
+    experiencias: [
+      {
+        cargo: 'Estagiário - Analista',
+        periodo: 'Mar/2022 - Fev/2023',
+        descricao: [
+          'Suporte ao cliente',
+          'Infraestrutura de TI',
+          'Desenvolvimento e manutenção de dashboards/indicadores - Power BI',
+          'Configurações Report Server do Power BI',
+          'Querys em SQL',
+          'Manutenção de planilhas em Excel',
+          'Automatização de processos e serviços - Power Automate',
+          'Uso do pacote Microsoft 365 (Antigo Office 365)',
+          'Criação de metadados para sistema TOTVS Linha RM',
+          'Gerenciar configurações dos sistemas TOTVS - Linha RM e Linha Protheus',
+        ],
+      },
+      {
+        cargo: 'Analista de Sistemas',
+        periodo: 'Fev/2023 - Jun/2023',
+        descricao: [
+          'Todas as funções citadas acima como estagiário',
+          'Desenvolvimento de ChatBot com TakeBlip',
+          'Desenvolvimento de Scripts em JS para ChatBot',
+          'Desenvolvimento de Sites com Vue.js 3',
+        ],
+      },
+    ],
+  },
+];
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
