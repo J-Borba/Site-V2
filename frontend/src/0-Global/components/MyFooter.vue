@@ -1,9 +1,9 @@
 <template>
 	<footer class="border-top-radius-16 footer-color">
-		<div class="py-4">
-			<div class="row justify-content-center gap-5">
-				<div class="col-lg-4 col-md-12 text-lg-start text-center d-flex justify-content-center">
-					<div class="d-flex flex-column justify-content-around w-auto">
+		<div class="py-4 px-4">
+			<div class="d-flex flex-wrap justify-content-around gap-4">
+				<div class="text-lg-start text-center d-flex">
+					<div class="d-flex flex-column justify-content-between w-auto gap-lg-0 gap-4">
 						<div>
 							<p class="h1">João Borba</p>
 							<p>Desenvolvedor Web | .NET</p>
@@ -14,8 +14,8 @@
 						</p>
 					</div>
 				</div>
-				<div class="col-lg-2 col-md-12 text-lg-start text-center d-flex justify-content-center">
-					<div class="w-auto">
+				<div class="text-lg-start text-center d-flex justify-content-center">
+					<div>
 						<p class="h4 mb-3">Quick links</p>
 						<div class="d-flex flex-column gap-2">
 							<a href="#" @click="handleClickFooter">

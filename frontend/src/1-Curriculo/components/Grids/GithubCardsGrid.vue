@@ -1,9 +1,9 @@
 <template>
 	<section class="mb-lg-0 mb-5">
-		<div>
-			<p class="h2 text-center mb-5">Projetos</p>
-			<div class="row w-75 m-auto justify-content-center gap-4">
-				<div v-for="repo in repos" :key="repo.id" class="col-2 github-card">
+		<div class="d-flex flex-column align-items-center">
+			<p class="h2 primary text-center mb-5">Projetos</p>
+			<div class="d-flex flex-wrap justify-content-center w-75 gap-4">
+				<div v-for="repo in repos" :key="repo.id" class="github-card">
 					<div class="github-card-content">
 						<p class="repo-title">
 							<a :href="repo.html_url" target="_blank">

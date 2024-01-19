@@ -27,8 +27,6 @@
 		margin: 0;
 		padding: 0;
 
-		height: 100%;
-
 		font-family: Poppins, Helvetica, Arial, sans-serif;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
@@ -38,7 +36,7 @@
 	}
 	section {
 		display: flex;
-		min-height: 90dvh;
+		min-height: 90svh;
 		justify-content: center;
 		align-items: center;
 	}
@@ -90,7 +88,7 @@
 			font-size: 1rem !important;
 		}
 		section {
-			min-height: 95dvh;
+			min-height: 95svh;
 		}
 	}
 }

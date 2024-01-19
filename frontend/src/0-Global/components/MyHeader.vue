@@ -125,6 +125,9 @@
 				}
 			}
 		}
+		button {
+			border: none;
+		}
 	}
 	.baseThemeBtn {
 		background-color: transparent;
