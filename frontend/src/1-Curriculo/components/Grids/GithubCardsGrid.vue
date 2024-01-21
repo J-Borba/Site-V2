@@ -3,7 +3,7 @@
 		<div class="d-flex flex-column align-items-center">
 			<p class="h2 primary text-center mb-5">Projetos</p>
 			<div class="d-flex flex-wrap justify-content-center w-75 gap-4">
-				<div v-for="repo in repos" :key="repo.id" class="github-card">
+				<div v-for="repo in filteredRepos" :key="repo.id" class="github-card">
 					<div class="github-card-content">
 						<p class="repo-title">
 							<a :href="repo.html_url" target="_blank">
@@ -30,7 +30,7 @@
 
 <script setup>
 	import '../../style/global.scss';
-	import { onMounted, ref } from 'vue';
+	import { computed, onMounted, ref } from 'vue';
 	import api from '@/0-Global/services/api.js';
 
 	const repos = ref([]);
@@ -44,6 +44,10 @@
 	}
 	onMounted(() => {
 		getRepos();
+	});
+
+	const filteredRepos = computed(() => {
+		return repos.value.filter((repo) => repo.name != 'J-Borba');
 	});
 </script>
 
