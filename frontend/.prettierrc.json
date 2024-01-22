@@ -9,6 +9,5 @@
   "endOfLine": "lf",
   "trailingComma": "all",
   "embeddedLanguageFormatting": "auto",
-  "useTabs": true,
   "vueIndentScriptAndStyle": true
 }
