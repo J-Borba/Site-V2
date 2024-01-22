@@ -10,11 +10,12 @@
           </div>
           <div class="d-flex flex-column gap-1 ms-2">
             <div v-for="certificate in company.certificates" :key="certificate.id">
-              <a class="secondary" :href="certificate.url">
+              <a class="secondary" :href="certificate.url" target="_blank">
                 <font-awesome-icon :icon="['fas', 'medal']" /> {{ certificate.title }}
               </a>
             </div>
           </div>
+          ]
         </div>
       </div>
     </div>
