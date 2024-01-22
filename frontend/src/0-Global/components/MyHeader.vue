@@ -39,10 +39,10 @@
 					</div>
 					<div class="offcanvas-body">
 						<nav class="navbar-nav justify-content-end flex-grow-1 pe-3">
-							<div class="nav-item">
+							<div class="nav-item" v-for="item in offcanvasItems" :key="item.id">
 								<div class="d-flex gap-2">
-									<router-link class="nav-link" to="/curriculo/home">
-										<p data-bs-dismiss="offcanvas">Currículo</p>
+									<router-link class="nav-link" :to="{ path: item.route }">
+										<p data-bs-dismiss="offcanvas">{{ item.title }}</p>
 									</router-link>
 									<a
 										class="nav-link dropdown-toggle dropdown-toggle-split"
@@ -53,38 +53,13 @@
 										<span class="visually-hidden">Toggle Dropdown</span>
 									</a>
 									<div class="dropdown-menu p-3" data-bs-dismiss="offcanvas">
-										<div>
-											<router-link to="/curriculo/experiencia"> Experiência </router-link>
-										</div>
-										<div>
-											<hr class="dropdown-divider" />
-										</div>
-										<div>
-											<router-link to="/curriculo/conhecimentos"> Conhecimentos </router-link>
+										<div v-for="child in item.children" :key="child.id">
+											<router-link :to="{ path: child.route }"> {{ child.title }} </router-link>
+											<hr v-if="child.id < item.children.length" class="dropdown-divider mt-2" />
 										</div>
 									</div>
 								</div>
 							</div>
-							<!-- <div class="nav-item">
-                <div class="d-flex gap-2">
-                  <router-link class="nav-link" to="/financeiro/home">
-                    <p data-bs-dismiss="offcanvas">
-                      Financeiro
-                    </p>
-                  </router-link>
-                  <a class="nav-link dropdown-toggle dropdown-toggle-split" href="#" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    <span class="visually-hidden">Toggle Dropdown</span>
-                  </a>
-                  <div class="dropdown-menu dropdown-menu-dark" data-bs-dismiss="offcanvas">
-                    <div>
-                      <router-link to="/financeiro/home">
-                        Home
-                      </router-link>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
 						</nav>
 					</div>
 				</div>
@@ -92,6 +67,33 @@
 		</nav>
 	</header>
 </template>
+
+<script setup>
+	const offcanvasItems = [
+		{
+			id: 1,
+			title: 'Currículo',
+			route: '/curriculo/home',
+			children: [
+				{
+					id: 1,
+					title: 'Experiência',
+					route: '/curriculo/experiencia',
+				},
+				{
+					id: 2,
+					title: 'Conhecimentos',
+					route: '/curriculo/conhecimentos',
+				},
+				{
+					id: 3,
+					title: 'Certificados',
+					route: '/curriculo/certificados',
+				},
+			],
+		},
+	];
+</script>
 
 <style lang="scss" scoped>
 	#logoHeader {

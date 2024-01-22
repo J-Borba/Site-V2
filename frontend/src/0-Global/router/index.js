@@ -40,6 +40,14 @@ const routes = [
 		},
 		component: () => import('../../1-Curriculo/views/ConhecimentosView.vue'),
 	},
+	{
+		path: '/curriculo/certificados',
+		name: 'certificados',
+		meta: {
+			title: `Currículo : Certificados`,
+		},
+		component: () => import('../../1-Curriculo/views/CertificadosView.vue'),
+	},
 	// Financeiro
 	{
 		path: '/financeiro/',

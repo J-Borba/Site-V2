@@ -24,6 +24,7 @@ import {
 	faXmark,
 	faBars,
 	faJetFighterUp,
+	faMedal,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -52,4 +53,5 @@ library.add(
 	faXmark,
 	faBars,
 	faJetFighterUp,
+	faMedal,
 );
