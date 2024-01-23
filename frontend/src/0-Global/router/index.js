@@ -64,10 +64,6 @@ const routes = [
   // Not Found
   {
     path: '/:catchAll(.*)',
-    redirect: '/404',
-  },
-  {
-    path: '/404',
     name: 'notfound',
     meta: {
       title: `${title} : Not Found`,
