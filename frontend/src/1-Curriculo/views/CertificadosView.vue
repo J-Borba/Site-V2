@@ -8,9 +8,9 @@
             <img :src="company.icon" alt="company icon" />
             <p class="h5">{{ company.name }}</p>
           </div>
-          <div class="d-flex flex-column gap-1 ms-2">
+          <div class="d-flex flex-column gap-2 ms-2">
             <div v-for="certificate in company.certificates" :key="certificate.id">
-              <a class="secondary" :href="certificate.url" target="_blank">
+              <a v-if="certificate.title && certificate.url" class="secondary" :href="certificate.url" target="_blank">
                 <font-awesome-icon :icon="['fas', 'medal']" /> {{ certificate.title }}
               </a>
             </div>
@@ -32,6 +32,11 @@
       name: 'Alura',
       icon: aluraIcon,
       certificates: [
+        {
+          id: 2,
+          title: '.NET 6: criando uma web API',
+          url: 'https://cursos.alura.com.br/certificate/0a73ce25-571d-4d5d-8d42-b84a57123a78?lang=pt_BR',
+        },
         {
           id: 1,
           title: 'HTTP: entendendo a web por baixo dos panos',
