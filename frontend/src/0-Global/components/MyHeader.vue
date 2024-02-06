@@ -38,13 +38,17 @@
             </a>
           </div>
           <div class="offcanvas-body">
-            <nav class="navbar-nav justify-content-end flex-grow-1 pe-3">
-              <div class="nav-item" v-for="item in offcanvasItems" :key="item.id">
+            <nav
+              class="navbar-nav justify-content-end flex-grow-1 pe-3"
+              v-for="(item, index) in offcanvasItems"
+              :key="index">
+              <div class="nav-item">
                 <div class="d-flex gap-2">
                   <router-link class="nav-link" :to="{ path: item.route }">
                     <p data-bs-dismiss="offcanvas">{{ item.title }}</p>
                   </router-link>
                   <a
+                    v-if="item.children.length"
                     class="nav-link dropdown-toggle dropdown-toggle-split"
                     href="#"
                     role="button"
@@ -53,9 +57,9 @@
                     <span class="visually-hidden">Toggle Dropdown</span>
                   </a>
                   <div class="dropdown-menu p-3" data-bs-dismiss="offcanvas">
-                    <div v-for="child in item.children" :key="child.id">
+                    <div v-for="(child, childIndex) in item.children" :key="childIndex">
                       <router-link :to="{ path: child.route }"> {{ child.title }} </router-link>
-                      <hr v-if="child.id < item.children.length" class="dropdown-divider mt-2" />
+                      <hr v-if="childIndex < item.children.length" class="dropdown-divider mt-2" />
                     </div>
                   </div>
                 </div>
@@ -71,26 +75,27 @@
 <script setup>
   const offcanvasItems = [
     {
-      id: 1,
       title: 'Currículo',
       route: '/curriculo/home',
       children: [
         {
-          id: 1,
           title: 'Experiência',
           route: '/curriculo/experiencia',
         },
         {
-          id: 2,
           title: 'Conhecimentos',
           route: '/curriculo/conhecimentos',
         },
         {
-          id: 3,
           title: 'Certificados',
           route: '/curriculo/certificados',
         },
       ],
+    },
+    {
+      title: 'Financeiro',
+      route: '/financeiro/home',
+      children: [],
     },
   ];
 </script>
