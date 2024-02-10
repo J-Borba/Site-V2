@@ -38,7 +38,20 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddCors();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy",
+    policy =>
+    {
+        _ = policy.WithOrigins
+        (
+            "http://192.168.0.7:5173/",
+            "http://localhost:5173"
+        )
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
@@ -59,5 +72,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors("CorsPolicy");
 
 app.Run();

@@ -31,16 +31,19 @@
 <script setup>
   import '../../style/global.scss';
   import { computed, onMounted, ref } from 'vue';
-  import api from '@/0-Global/services/api.js';
+  import { githubApi } from '@/0-Global/services/api.js';
 
   const repos = ref([]);
 
   async function getRepos() {
-    const response = await api.get('/repos?sort=updated');
-
-    if (response) {
-      repos.value = JSON.parse(response.request.response);
-    }
+    await githubApi
+      .get('repos?sort=updated')
+      .then((response) => {
+        repos.value = JSON.parse(response.request.response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
   onMounted(() => {
     getRepos();

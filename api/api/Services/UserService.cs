@@ -4,6 +4,7 @@ using api.Services.Interfaces;
 using api.Validation;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.Services;
 
@@ -40,17 +41,27 @@ public class UserService : IUserService
     public async Task<(ValidationResult, string)> LoginUserAsync(LoginUserDto dto)
     {
         var validation = new ValidationResult();
+        var token = string.Empty;
 
-        var result = await _signInManager.PasswordSignInAsync(dto.UserName, dto.Password, isPersistent: false, lockoutOnFailure: false);
+        var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == dto.Email);
 
-        if (!result.Succeeded)
+        if (user == null)
         {
-            validation.AddError("An error ocurred on login.");
-            return (validation, string.Empty);
+            validation.AddError("There's no account using these credentials.");
         }
+        else
+        {
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, dto.Password, isPersistent: false, lockoutOnFailure: false);
 
-        var user = _signInManager.UserManager.Users.FirstOrDefault(x => x.NormalizedUserName == dto.UserName.ToUpper());
-        var token = _tokenService.GetToken(user);
+            if (result.Succeeded)
+            {
+                token = _tokenService.GetToken(user);
+            }
+            else
+            {
+                validation.AddError("An error ocurred on login.");
+            }
+        }
 
         return (validation, token);
     }
