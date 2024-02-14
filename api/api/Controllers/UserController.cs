@@ -1,5 +1,6 @@
 ﻿using api.Data.Dtos.User;
 using api.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers;
@@ -31,4 +32,10 @@ public class UserController : ControllerBase
 
         return validation.IsValid ? Ok($"User authenticated.\nToken: {token}") : BadRequest(validation.ErrorMessages);
     }
+
+    [Authorize("Bearer")]
+    [HttpGet()]
+    public async Task<IActionResult> GetAll()
+        => Ok(await _userService.GetUserAsync());
+
 }

@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="d-flex flex-column align-items-center w-75 gap-3">
-      <form class="d-flex flex-column gap-3 w-75 text-md-start text-center" :action="handleSubmit">
+      <form class="d-flex flex-column gap-3 w-75 text-md-start text-center"  @submit.prevent="handleSubmit">
         <div class="d-flex flex-column gap-3" v-if="hasCadastro">
           <div class="d-flex flex-column gap-1 text-center">
             <h1 class="h3 mb-3 fw-normal">Seja Bem-vindo!</h1>

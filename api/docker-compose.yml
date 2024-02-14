@@ -1,0 +1,32 @@
+version: "3.9"
+name: borba
+services:
+  borba-mysql:
+    container_name: borba-mysql
+    image: mysql:latest
+    ports:
+      - 3306:3306
+    volumes:
+      - mysqldata:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=borba@123
+    labels:
+      type: "borba"
+  borba-api:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: borba-api
+    ports:
+      - "8080:80"
+      - "8082:443"
+    depends_on:
+      - borba-mysql
+    environment:
+      APP_USE_ENVIRONMENT: true
+      APP_DEBUG: true
+      APP_SYMMETRICSECURITYKEY: "234567uydfghmkjhgfd2wszhkjhgfdegfd"
+      APP_CONNECTIONSTRING: "Server=borba-mysql;Database=borba;User Id=root;Password=borba@123;Application Name=borbaAPI;Convert Zero Datetime=true;"
+
+volumes:
+  mysqldata:

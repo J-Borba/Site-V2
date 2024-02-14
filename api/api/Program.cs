@@ -1,21 +1,16 @@
+using api.Configurations;
 using api.Data;
+using api.Data.Dtos.Common;
 using api.Models;
-using api.Services;
-using api.Services.Interfaces;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var appSettings = new AppSettingsDto();
 // Add services to the container.
-builder.Services.AddDbContext<SiteDbContext>(config =>
-{
-    var connectionString = builder.Configuration["ConnectionStrings:DefaultConnection"];
-    _ = config.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-});
+builder.Services.AddContextDependecies(builder.Configuration, out appSettings)
+                .RegisterDI()
+                .RegisterApiConfig(appSettings)
+                .RegisterSwagger();
 
 builder.Services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<SiteDbContext>()
@@ -23,37 +18,21 @@ builder.Services.AddIdentity<User, IdentityRole>()
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-builder.Services.AddAuthentication(opts => opts.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(opts => opts.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["SymmetricSecurityKey"])),
-                    ValidateAudience = false,
-                    ValidateIssuer = false,
-                    ClockSkew = TimeSpan.Zero
-                });
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("CorsPolicy",
-    policy =>
-    {
-        _ = policy.WithOrigins
-        (
-            "http://localhost:5173"
-        )
-        .AllowAnyHeader()
-        .AllowAnyMethod();
-    });
+    options.AddDefaultPolicy(
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .SetIsOriginAllowed(x => true)
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
 });
-
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<ITokenService, TokenService>();
 
 var app = builder.Build();
 
@@ -72,6 +51,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseCors("CorsPolicy");
+app.UseCors();
 
 app.Run();
