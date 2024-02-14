@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="d-flex flex-column align-items-center w-75 gap-3">
-      <form class="d-flex flex-column gap-3 w-75 text-md-start text-center"  @submit.prevent="handleSubmit" novalidate>
+      <form class="d-flex flex-column gap-3 w-75 text-md-start text-center"  @submit.prevent="handleSubmit">
         <div class="d-flex flex-column gap-3" v-if="hasCadastro">
           <div class="d-flex flex-column gap-1 text-center">
             <h1 class="h3 mb-3 fw-normal">Seja Bem-vindo!</h1>
@@ -17,7 +17,7 @@
             </div>
           </div>
           <div class="d-flex flex-column gap-2 w-100">
-            <button class="btn btn-primary border-0 bg-primary py-2"  type="submit" >Entrar</button>
+            <button class="btn btn-primary border-0 bg-primary py-2" type="submit">Entrar</button>
             <p class="d-flex w-100 justify-content-between">
               <a href="#" @click="handleCadastroClick">Criar conta</a>
               <a href="#" @click="handleEsqueciSenha">Esqueci minha senha</a>
@@ -79,15 +79,14 @@
   const hasCadastro = ref(true);
 
   const handleSubmit = async () => {
-
     if (hasCadastro.value) {
       await myApi
         .post('User/Login', {
-          userName: 'rafael',
-          password: 'q1w2e3@Rafael',
+          email: 'joao@gmail.com',
+          password: 'Teste@123!',
         })
         .then((response) => {
-          console.log("TESTE==>",response);
+          console.log(response);
         })
         .catch((error) => {
           console.log(error);
@@ -107,7 +106,6 @@
           console.log(error);
         });
     }
-
   };
 </script>
 

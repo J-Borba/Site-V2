@@ -22,7 +22,6 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(
@@ -53,4 +52,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.UseCors();
+
 app.Run();

@@ -5,5 +5,5 @@ export const githubApi = axios.create({
 });
 
 export const myApi = axios.create({
-  baseURL: 'https://localhost:7044',
+  baseURL: 'https://localhost:7044/',
 });
