@@ -48,7 +48,7 @@ public class UserController : ControllerBase
     [Authorize("Bearer")]
     public async Task<IActionResult> UpdateCurrentUser([FromBody] UpdateUserDto dto)
     {
-        var currentUserEmail = HttpContext.User.Claims.First(x => x.Type == "Email").Value;
+        var currentUserEmail = HttpContext.User.Claims.First(c => c.Type == nameof(UserPropsEnum.Email)).Value;
         var result = await _userService.UpdateCurrentUserAsync(dto, currentUserEmail);
 
         return result.IsValid ? Ok("User updated successfully.") : BadRequest(result.ErrorMessages);
