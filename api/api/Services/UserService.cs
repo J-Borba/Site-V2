@@ -99,10 +99,17 @@ public class UserService : IUserService
         {
             validation.AddError("User Not Found");
         }
-        else
-        {
-
-        }
+        //else
+        //{
+        //    if (!string.Equals(dto.NewUserName, user.UserName))
+        //    {
+        //        _ = _mapper.Map(dto.NewUserName, user.UserName);
+        //    }
+        //    if (!string.Equals(dto.NewEmail, user.Email))
+        //    {
+        //        _ = _mapper.Map(dto.NewEmail, user.Email);
+        //    }
+        //}
 
         return validation;
     }
