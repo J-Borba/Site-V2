@@ -33,7 +33,8 @@ public static class AuthConfig
         {
             auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
                 .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
-                .RequireAuthenticatedUser().Build());
+                .RequireAuthenticatedUser()
+                .Build());
         });
 
         return services;

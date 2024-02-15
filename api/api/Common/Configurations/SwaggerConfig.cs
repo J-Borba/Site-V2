@@ -1,4 +1,5 @@
 ﻿using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 namespace api.Common.Configurations;
 
@@ -9,7 +10,11 @@ public static class SwaggerConfig
         _ = services.AddSwaggerGen(c =>
         {
             var version = "v1";
-            c.SwaggerDoc(version, new OpenApiInfo { Title = "Site-V2 API", Version = version });
+            c.SwaggerDoc(version, new OpenApiInfo { Title = "Site-V2 API", Version = version, Description = "API for my personal web site" });
+
+            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            c.IncludeXmlComments(xmlPath);
 
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
             {
