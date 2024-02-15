@@ -40,7 +40,7 @@ public class UserController : ControllerBase
     /// <summary>
     /// Create user in database
     /// </summary>
-    /// <param name="dto">User Dto to create</param>
+    /// <param name="dto">User Dto to create (if username not informed, it becomes the same as email)</param>
     /// <returns>IActionResult</returns>
     /// <response code="200">If created successfully</response>
     /// <response code="400">If returned errors</response>
@@ -72,7 +72,7 @@ public class UserController : ControllerBase
     /// <summary>
     /// Update current logged user
     /// </summary>
-    /// <param name="dto">User Dto to update</param>
+    /// <param name="dto">User Dto to update (if field is blank, it does not change)</param>
     /// <returns>
     /// IActionResult
     /// </returns>
