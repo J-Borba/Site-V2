@@ -17,7 +17,8 @@ public class UserController : ControllerBase
     }
     #endregion
 
-    [HttpGet, Authorize("Bearer")]
+    [HttpGet]
+    [Authorize("Bearer")]
     public IActionResult GetUsers()
     {
         var currentUserClaims = HttpContext.User.Claims;
@@ -42,7 +43,8 @@ public class UserController : ControllerBase
         return validation.IsValid ? Ok(token) : BadRequest(validation.ErrorMessages);
     }
 
-    [HttpPut, Authorize("Bearer")]
+    [HttpPut]
+    [Authorize("Bearer")]
     public async Task<IActionResult> UpdateUser([FromBody] UpdateUserDto dto)
     {
         var result = await _userService.UpdateUserAsync(dto);
