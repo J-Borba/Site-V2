@@ -9,10 +9,10 @@ namespace api.Configurations;
 
 public static class DIApiConfig
 {
-    public static IServiceCollection RegisterApiConfig(this IServiceCollection services, AppSettingsDto appSettings)
+    public static IServiceCollection AddJWT(this IServiceCollection services, AppSettingsDto appSettings)
     {
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSettings.Secrets.SymmetricSecurityKey));
-        services.AddAuthentication(x =>
+        _ = services.AddAuthentication(x =>
         {
             x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -30,7 +30,7 @@ public static class DIApiConfig
             };
         });
 
-        services.AddAuthorization(auth =>
+        _ = services.AddAuthorization(auth =>
         {
             auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
                 .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
@@ -40,10 +40,9 @@ public static class DIApiConfig
         return services;
     }
 
-
-    public static IServiceCollection RegisterSwagger(this IServiceCollection services)
+    public static IServiceCollection AddSwaggerConfigs(this IServiceCollection services)
     {
-        services.AddSwaggerGen(c =>
+        _ = services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "Borba", Version = "v1" });
 
@@ -70,7 +69,7 @@ public static class DIApiConfig
                     new string[] {}
                 }
             });
-         });
+        });
 
         return services;
     }

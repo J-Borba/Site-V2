@@ -8,7 +8,6 @@ public class SiteDbContext : IdentityDbContext<User>
 {
     public SiteDbContext(DbContextOptions options) : base(options)
     {
-
         Database.Migrate();
     }
 }

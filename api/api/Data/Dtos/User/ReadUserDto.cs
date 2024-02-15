@@ -1,7 +1,7 @@
 ﻿namespace api.Data.Dtos.User;
 
-public class UserDto
+public class ReadUserDto
 {
     public string UserName { get; set; }
-    public string NormalizedUserName { get; set; }
+    public string Email { get; set; }
 }

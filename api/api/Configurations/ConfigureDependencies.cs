@@ -10,7 +10,7 @@ public static class ConfigureDependencies
         var cnf = new AppSettingsDto();
         services.EnvironmentValues(configuration, out cnf);
 
-        services.AddDbContext<SiteDbContext>(config =>
+        _ = services.AddDbContext<SiteDbContext>(config =>
         {
             _ = config.UseMySql(cnf.ConnectionStrings.DefaultConnection, ServerVersion.AutoDetect(cnf.ConnectionStrings.DefaultConnection));
         });
@@ -30,13 +30,12 @@ public static class ConfigureDependencies
 
         appSettings = cnf;
 
-        services.AddSingleton(cnf);
+        _ = services.AddSingleton(cnf);
     }
     private static string EValues(string envName, string appName, IConfiguration configuration, bool isCnStr = false)
     {
-        if (isCnStr)
-            return (Environment.GetEnvironmentVariable(envName) ?? configuration.GetConnectionString(appName)) ?? string.Empty;
-
-        return (Environment.GetEnvironmentVariable(envName) ?? configuration.GetSection(appName)?.Value) ?? string.Empty;
+        return isCnStr
+            ? (Environment.GetEnvironmentVariable(envName) ?? configuration.GetConnectionString(appName)) ?? string.Empty
+            : (Environment.GetEnvironmentVariable(envName) ?? configuration.GetSection(appName)?.Value) ?? string.Empty;
     }
 }

@@ -4,15 +4,23 @@ using api.Data.Dtos.Common;
 using api.Models;
 using Microsoft.AspNetCore.Identity;
 
-var builder = WebApplication.CreateBuilder(args);
 var appSettings = new AppSettingsDto();
+var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddContextDependecies(builder.Configuration, out appSettings)
-                .RegisterDI()
-                .RegisterApiConfig(appSettings)
-                .RegisterSwagger();
+                .AddDependencies()
+                .AddJWT(appSettings)
+                .AddSwaggerConfigs();
 
-builder.Services.AddIdentity<User, IdentityRole>()
+builder.Services.AddIdentity<User, IdentityRole>(config =>
+                    {
+                        config.User.RequireUniqueEmail = true;
+                        config.Password.RequireDigit = false;
+                        config.Password.RequireLowercase = false;
+                        config.Password.RequireUppercase = false;
+                        config.Password.RequireNonAlphanumeric = false;
+                        config.Password.RequiredLength = 4;
+                    })
                 .AddEntityFrameworkStores<SiteDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -24,14 +32,10 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(
-        builder =>
-        {
-            builder.AllowAnyOrigin()
-                   .SetIsOriginAllowed(x => true)
-                   .AllowAnyHeader()
-                   .AllowAnyMethod();
-        });
+    options.AddDefaultPolicy(builder => builder.WithOrigins("https://localhost")
+                                               .SetIsOriginAllowed(x => true)
+                                               .AllowAnyHeader()
+                                               .AllowAnyMethod());
 });
 
 var app = builder.Build();
@@ -44,13 +48,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.UseCors();
-
 app.Run();

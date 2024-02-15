@@ -4,10 +4,11 @@ namespace api.Data.Dtos.User;
 
 public class CreateUserDto
 {
+    public string UserName { get; set; }
     [Required]
-    public string UserName { get; set; } = string.Empty;
+    public string Email { get; set; }
     [Required, DataType(DataType.Password)]
-    public string Password { get; set; } = string.Empty;
+    public string Password { get; set; }
     [Required, Compare(nameof(Password))]
-    public string PasswordConfirmation { get; set; } = string.Empty;
+    public string PasswordConfirmation { get; set; }
 }

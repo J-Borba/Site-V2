@@ -5,11 +5,10 @@ namespace api.Configurations;
 
 public static class DIConfigs
 {
-    public static IServiceCollection RegisterDI(this IServiceCollection services)
+    public static IServiceCollection AddDependencies(this IServiceCollection services)
     {
-
-        services.AddScoped<IUserService, UserService>();
-        services.AddScoped<ITokenService, TokenService>();
+        _ = services.AddScoped<IUserService, UserService>();
+        _ = services.AddScoped<ITokenService, TokenService>();
 
         return services;
     }
