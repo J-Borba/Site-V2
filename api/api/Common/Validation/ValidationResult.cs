@@ -1,4 +1,4 @@
-﻿namespace api.Validation;
+﻿namespace api.Common.Validation;
 
 public class ValidationResult
 {

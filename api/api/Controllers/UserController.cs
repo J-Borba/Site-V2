@@ -1,4 +1,5 @@
 ﻿using api.Data.Dtos.User;
+using api.Services.Enumerators;
 using api.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,10 +20,10 @@ public class UserController : ControllerBase
 
     [HttpGet]
     [Authorize("Bearer")]
-    public IActionResult GetUsers()
+    public async Task<IActionResult> GetUsers()
     {
-        var currentUserClaims = HttpContext.User.Claims;
-        (var validation, var users) = _userService.GetUsersAsync(currentUserClaims);
+        var currentUserName = HttpContext.User.Claims.First(c => c.Type == nameof(UserPropsEnum.UserName)).Value;
+        (var validation, var users) = await _userService.GetUsersAsync(currentUserName);
 
         return validation.IsValid ? Ok(users) : BadRequest(validation.ErrorMessages);
     }
@@ -43,11 +44,12 @@ public class UserController : ControllerBase
         return validation.IsValid ? Ok(token) : BadRequest(validation.ErrorMessages);
     }
 
-    [HttpPut]
+    [HttpPost("Update/Current")]
     [Authorize("Bearer")]
-    public async Task<IActionResult> UpdateUser([FromBody] UpdateUserDto dto)
+    public async Task<IActionResult> UpdateCurrentUser([FromBody] UpdateUserDto dto)
     {
-        var result = await _userService.UpdateUserAsync(dto);
+        var currentUserEmail = HttpContext.User.Claims.First(x => x.Type == "Email").Value;
+        var result = await _userService.UpdateCurrentUserAsync(dto, currentUserEmail);
 
         return result.IsValid ? Ok("User updated successfully.") : BadRequest(result.ErrorMessages);
     }

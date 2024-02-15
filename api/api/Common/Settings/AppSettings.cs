@@ -1,18 +1,17 @@
-﻿namespace api.Data.Dtos.Common;
+﻿namespace api.Common.Settings;
 
-public class AppSettingsDto
+public class AppSettings
 {
     public ConnectionStrings ConnectionStrings { get; set; }
-    public SecretsDto Secrets { get; set; }
+    public Secrets Secrets { get; set; }
 
-    public AppSettingsDto()
+    public AppSettings()
     {
         ConnectionStrings = new ConnectionStrings();
-        Secrets = new SecretsDto();
+        Secrets = new Secrets();
     }
-
 }
-public class SecretsDto
+public class Secrets
 {
     public string SymmetricSecurityKey { get; set; }
 }

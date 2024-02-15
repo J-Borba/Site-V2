@@ -1,8 +1,8 @@
 ﻿using api.Data.Dtos.User;
-using api.Models;
+using api.Data.Models;
 using AutoMapper;
 
-namespace api.Profiles;
+namespace api.Data.Mapping;
 
 public class UserProfile : Profile
 {

@@ -1,13 +1,12 @@
-﻿using api.Data.Dtos.User;
-using api.Validation;
-using System.Security.Claims;
+﻿using api.Common.Validation;
+using api.Data.Dtos.User;
 
 namespace api.Services.Interfaces;
 
 public interface IUserService
 {
-    (ValidationResult, IEnumerable<ReadUserDto>) GetUsersAsync(IEnumerable<Claim> currentUserClaims);
+    Task<(ValidationResult, IEnumerable<ReadUserDto>)> GetUsersAsync(string currentUserName);
     Task<ValidationResult> CreateUserAsync(CreateUserDto dto);
     Task<(ValidationResult, string)> LoginUserAsync(LoginUserDto dto);
-    Task<ValidationResult> UpdateUserAsync(UpdateUserDto dto);
+    Task<ValidationResult> UpdateCurrentUserAsync(UpdateUserDto dto, string currentUserEmail);
 }

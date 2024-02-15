@@ -1,5 +1,6 @@
-﻿using api.Data.Dtos.Common;
-using api.Models;
+﻿using api.Common.Settings;
+using api.Data.Models;
+using api.Services.Enumerators;
 using api.Services.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -11,9 +12,9 @@ namespace api.Services;
 public class TokenService : ITokenService
 {
     private readonly IConfiguration _configuration;
-    private readonly AppSettingsDto _appSettings;
+    private readonly AppSettings _appSettings;
 
-    public TokenService(IConfiguration configuration, AppSettingsDto appSettings)
+    public TokenService(IConfiguration configuration, AppSettings appSettings)
     {
         _configuration = configuration;
         _appSettings = appSettings;
@@ -23,8 +24,9 @@ public class TokenService : ITokenService
     {
         var claims = new Claim[]
         {
-            new("id", user.Id),
-            new("username", user.UserName)
+            new(nameof(UserPropsEnum.Id), user.Id),
+            new(nameof(UserPropsEnum.UserName), user.UserName),
+            new(nameof(UserPropsEnum.Email), user.Email)
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.Secrets.SymmetricSecurityKey));

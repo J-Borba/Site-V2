@@ -1,13 +1,13 @@
-﻿using api.Data;
-using api.Data.Dtos.Common;
+﻿using api.Common.Settings;
+using api.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace api.Configurations;
-public static class ConfigureDependencies
+namespace api.Common.Configurations;
+public static class ContextConfig
 {
-    public static IServiceCollection AddContextDependecies(this IServiceCollection services, IConfiguration configuration, out AppSettingsDto appSettings)
+    public static IServiceCollection AddContextDependecies(this IServiceCollection services, IConfiguration configuration, out AppSettings appSettings)
     {
-        var cnf = new AppSettingsDto();
+        var cnf = new AppSettings();
         services.EnvironmentValues(configuration, out cnf);
 
         _ = services.AddDbContext<SiteDbContext>(config =>
@@ -20,9 +20,9 @@ public static class ConfigureDependencies
         return services;
     }
 
-    private static void EnvironmentValues(this IServiceCollection services, IConfiguration configuration, out AppSettingsDto appSettings)
+    private static void EnvironmentValues(this IServiceCollection services, IConfiguration configuration, out AppSettings appSettings)
     {
-        var cnf = new AppSettingsDto();
+        var cnf = new AppSettings();
 
         cnf.ConnectionStrings.DefaultConnection = EValues("APP_CONNECTIONSTRING", "DefaultConnection", configuration, true);
 

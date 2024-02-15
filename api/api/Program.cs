@@ -1,10 +1,10 @@
-using api.Configurations;
-using api.Data;
-using api.Data.Dtos.Common;
-using api.Models;
+using api.Common.Configurations;
+using api.Common.Settings;
+using api.Data.Contexts;
+using api.Data.Models;
 using Microsoft.AspNetCore.Identity;
 
-var appSettings = new AppSettingsDto();
+var appSettings = new AppSettings();
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddContextDependecies(builder.Configuration, out appSettings)
