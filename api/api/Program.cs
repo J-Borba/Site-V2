@@ -32,7 +32,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(builder => builder.WithOrigins("https://localhost")
+    options.AddDefaultPolicy(builder => builder.AllowAnyOrigin()
                                                .SetIsOriginAllowed(x => true)
                                                .AllowAnyHeader()
                                                .AllowAnyMethod());
