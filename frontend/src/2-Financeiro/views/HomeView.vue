@@ -1,17 +1,33 @@
 <template>
   <section>
     <div class="d-flex flex-column align-items-center w-75 gap-3">
-      <form class="d-flex flex-column gap-3 w-75 text-md-start text-center"  @submit.prevent="handleSubmit">
+      <form
+        class="d-flex flex-column gap-3 w-75 text-md-start text-center"
+        @submit.prevent="handleSubmit"
+        v-if="!isLogged">
+        <!-- LOGIN -->
         <div class="d-flex flex-column gap-3" v-if="hasCadastro">
           <div class="d-flex flex-column gap-1 text-center">
             <h1 class="h3 mb-3 fw-normal">Seja Bem-vindo!</h1>
             <div class="d-flex flex-column gap-2">
               <div class="form-floating">
-                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" required />
+                <input
+                  v-model="email"
+                  type="email"
+                  class="form-control"
+                  id="floatingInput"
+                  placeholder="name@example.com"
+                  required />
                 <label for="floatingInput">Email</label>
               </div>
               <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" required />
+                <input
+                  v-model="password"
+                  type="password"
+                  class="form-control"
+                  id="floatingPassword"
+                  placeholder="Password"
+                  required />
                 <label for="floatingPassword">Senha</label>
               </div>
             </div>
@@ -24,6 +40,7 @@
             </p>
           </div>
         </div>
+        <!-- CADASTRO -->
         <div class="d-flex flex-column gap-3" v-else>
           <div class="d-flex flex-column gap-1 text-center">
             <h1 class="h3 mb-3 fw-normal">Cadastre-se</h1>
@@ -59,6 +76,9 @@
           </div>
         </div>
       </form>
+      <main v-else>
+        <p>Logged</p>
+      </main>
     </div>
   </section>
 </template>
@@ -68,6 +88,13 @@
   import { ref } from 'vue';
   import { myApi } from '@/0-Global/services/api';
 
+  const hasCadastro = ref(true);
+  const isLogged = ref(false);
+  const email = ref('');
+  const password = ref('');
+
+  let token;
+
   const handleCadastroClick = () => {
     hasCadastro.value = !hasCadastro.value;
   };
@@ -76,24 +103,24 @@
     console.log('Esqueci minha senha');
   };
 
-  const hasCadastro = ref(true);
-
   const handleSubmit = async () => {
     if (hasCadastro.value) {
       await myApi
         .post('User/Login', {
-          email: 'joao@gmail.com',
-          password: 'Teste@123!',
+          email: email.value,
+          password: password.value,
         })
         .then((response) => {
-          console.log(response);
+          isLogged.value = true;
+          token = response.data;
+          console.log(token);
         })
         .catch((error) => {
           console.log(error);
         });
     } else {
       await myApi
-        .post('User/Signin', {
+        .post('User/Create', {
           email: 'teste@gmail.com',
           userName: 'testeVue',
           password: 'Teste@123!',
