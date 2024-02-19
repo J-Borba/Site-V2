@@ -1,22 +1,17 @@
 {
   "env": {
-    "browser": true,
-    "es6": true
+    "node": true
   },
   "extends": [
-    "plugin:vue/vue3-essential",
-    "eslint:recommended"
+    "eslint:recommended",
+    "plugin:vue/vue3-recommended",
+    "prettier"
   ],
-  "parserOptions": {
-    "parser": "@babel/eslint-parser",
-    "ecmaVersion": "latest",
-    "sourceType": "module",
-    "requireConfigFile": false
-  },
-  "root": true,
+  "parser": "@babel/eslint-parser",
   "rules": {
     "semi-spacing": "warn",
     "arrow-parens": "warn",
-    "comma-dangle": "off"
+    "comma-dangle": "warn",
+    "requireConfigFile": false
   }
 }

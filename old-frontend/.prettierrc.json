@@ -5,8 +5,9 @@
   "bracketSameLine": true,
   "bracketSpacing": true,
   "printWidth": 120,
+  "arrowParens": "always",
   "endOfLine": "lf",
+  "trailingComma": "all",
   "embeddedLanguageFormatting": "auto",
-  "vueIndentScriptAndStyle": true,
-  "singleAttributePerLine": false
+  "vueIndentScriptAndStyle": true
 }

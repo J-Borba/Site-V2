@@ -1,0 +1,17 @@
+.dropdown-menu {
+  --bs-dropdown-bg: var(--primary);
+  --bs-dropdown-color: var(--text);
+  --bs-dropdown-link-color: var(--bg-emphasis);
+  --bs-dropdown-link-hover-bg: var(--secondary);
+  --bs-dropdown-link-active-color: var(--bg-emphasis);
+  --bs-dropdown-link-active-bg: var(--secondary);
+
+  color: var(--bs-dropdown-color);
+  background-color: var(--bs-dropdown-bg);
+}
+.navbar-toggler {
+  border: 0;
+}
+a:hover {
+  --bs-link-color-rgb: var(--secondary);
+}
