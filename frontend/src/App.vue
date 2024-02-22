@@ -13,13 +13,3 @@
   <WhatsappButton />
   <MyFooter />
 </template>
-
-<style scoped lang="scss">
-  main {
-    display: flex;
-    flex-direction: column;
-
-    justify-content: center;
-    align-items: center;
-  }
-</style>
