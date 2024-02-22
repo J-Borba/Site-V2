@@ -42,7 +42,7 @@
 <template>
   <header>
     <nav class="navbar navbar-expand-lg px-3">
-      <RouterLink to="/" class="navbar-brand" href="#" data-bs-dismiss="collapse" data-bs-target="#navbarNavDropdown">
+      <RouterLink to="/" class="navbar-brand" href="#">
         <img src="../assets/logo.svg" alt="Letras J e B cortadas no meio pelo meu nome escrito" />
       </RouterLink>
       <button
