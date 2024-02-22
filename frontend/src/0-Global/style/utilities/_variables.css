@@ -5,12 +5,14 @@
     --text: #242424;
   }
   @media (prefers-color-scheme: dark) {
-    --bg: #242424;
+    --bg: #0c1f2a;
     --bg-emphasis: #3f5050;
     --text: #ebebeb;
   }
-  --primary: #00b7b7;
-  --secondary: #09afa9;
+  --primary: #164863;
+  --secondary: #427d9d;
+  --blue-300: #9bbec8;
+  --blue-100: #ddf2fd;
 
   --white: #ffffff;
 

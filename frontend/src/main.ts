@@ -8,8 +8,12 @@ import './0-Global/style/utilities/fontawesome.css';
 import './0-Global/style/base/reset.css';
 import './0-Global/style/base/global.css';
 import App from './App.vue';
+import router from './0-Global/router';
 
 const app = createApp(App);
 
+app.use(router);
+
 app.component('font-awesome-icon', FontAwesomeIcon);
+
 app.mount('#app');

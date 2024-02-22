@@ -44,16 +44,13 @@
 </template>
 
 <style scoped lang="scss">
-  * {
-    color: var(--bg-emphasis);
-  }
   footer {
     display: flex;
     justify-content: space-around;
 
     padding: 1rem 0;
 
-    background-color: var(--secondary);
+    background-color: var(--primary);
 
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
