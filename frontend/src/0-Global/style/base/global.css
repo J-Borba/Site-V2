@@ -1,4 +1,6 @@
 :root {
+  color-scheme: light dark;
+
   font-family: Poppins, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;

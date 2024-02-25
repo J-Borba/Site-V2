@@ -43,7 +43,7 @@
   <header>
     <nav class="navbar navbar-expand-lg px-3">
       <RouterLink to="/" class="navbar-brand" href="#">
-        <img src="../assets/logo.svg" alt="Letras J e B cortadas no meio pelo meu nome escrito" />
+        <img src="../assets/logo.png" alt="Letras J e B cortadas no meio pelo meu nome escrito" />
       </RouterLink>
       <button
         class="navbar-toggler"
@@ -90,8 +90,25 @@
     width: 100%;
     position: absolute;
     top: 0;
+
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+  }
+  nav {
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
   }
   img {
-    filter: invert(82%) sepia(19%) saturate(333%) hue-rotate(147deg) brightness(86%) contrast(93%);
+    width: 7rem;
+  }
+
+  @media only screen and (max-width: 768px) {
+    img {
+      width: 5rem;
+    }
+
+    .icon {
+      color: var(--text-muted);
+    }
   }
 </style>

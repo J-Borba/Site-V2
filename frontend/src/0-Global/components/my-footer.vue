@@ -8,10 +8,10 @@
 </script>
 
 <template>
-  <footer>
+  <footer class="text-muted">
     <aside class="d-flex flex-column justify-content-between">
       <div>
-        <p class="h2">João Borba</p>
+        <p class="h1">João Borba</p>
         <p>Desenvolvedor Web | .NET</p>
       </div>
       <div class="copyright">
@@ -19,9 +19,9 @@
         <a class="ms-1 fw-bold" href="https://joaoborba.com" target="_blank">joaoborba.com</a>
       </div>
     </aside>
-    <nav class="text-center">
+    <div class="text-center">
       <p class="h4 mb-2">Quick links</p>
-      <div class="d-flex flex-column gap-1">
+      <nav class="d-flex flex-column gap-1">
         <a href="#" @click="handleClickFooter">
           <font-awesome-icon class="icon" :icon="faJetFighterUp" size="lg" />
           <span>Voltar ao início</span>
@@ -38,8 +38,8 @@
           <font-awesome-icon class="icon" :icon="faEnvelope" size="lg" />
           <span>Mail</span>
         </a>
-      </div>
-    </nav>
+      </nav>
+    </div>
   </footer>
 </template>
 
@@ -50,15 +50,17 @@
 
     padding: 1rem 0;
 
-    background-color: var(--primary);
+    background-color: var(--blue-100);
 
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
   }
+
   a {
     display: flex;
     gap: 0.25rem;
     width: fit-content;
+    color: inherit;
   }
 
   .copyright {

@@ -18,15 +18,12 @@
 
 .navbar {
   --bs-navbar-color: var(--blue-100);
-  --bs-navbar-bg: var(--primary);
-  --bs-navbar-hover-color: var(--blue-300);
+  --bs-navbar-bg: transparent;
+  --bs-navbar-hover-color: var(--blue-100);
   --bs-navbar-active-color: var(--white);
   --bs-navbar-brand-color: var(--blue-100);
-  --bs-navbar-brand-hover-color: var(--blue-300);
+  --bs-navbar-brand-hover-color: var(--blue-100);
   --bs-navbar-toggler-icon-bg: '';
-
-  border-bottom-left-radius: 16px;
-  border-bottom-right-radius: 16px;
 
   background-color: var(--bs-navbar-bg);
 
@@ -40,4 +37,24 @@
 }
 .navbar-brand {
   display: flex;
+}
+
+@media only screen and (max-width: 768px) {
+  .navbar {
+    --bs-navbar-bg: var(--blue-100);
+  }
+
+  .nav-item {
+    * {
+      color: var(--text-muted);
+    }
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .navbar-brand {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
