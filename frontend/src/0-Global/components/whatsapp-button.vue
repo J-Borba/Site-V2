@@ -25,9 +25,8 @@
     width: 3.275rem !important;
     aspect-ratio: 1;
 
-    animation:
-      whatsapp-button-animation-pulse 1.25s ease-out infinite,
-      whatsapp-button-animation-scale-up 1s ease-in-out forwards;
+    animation: whatsapp-button-animation-pulse 1.25s ease-out infinite;
+    animation-delay: 500ms;
   }
   @keyframes whatsapp-button-animation-pulse {
     0% {
@@ -35,14 +34,6 @@
     }
     80% {
       box-shadow: 0 0 0 14px var(--bg-whatsapp-no-opacity);
-    }
-  }
-  @keyframes whatsapp-button-animation-scale-up {
-    0% {
-      transform: scale(0);
-    }
-    100% {
-      transform: scale(1);
     }
   }
 </style>

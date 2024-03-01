@@ -40,13 +40,13 @@
 }
 
 @media only screen and (max-width: 768px) {
-  .navbar {
+  /* .navbar {
     --bs-navbar-bg: var(--blue-100);
-  }
+  } */
 
   .nav-item {
     * {
-      color: var(--text-muted);
+      color: var(--blue-100);
     }
   }
 }

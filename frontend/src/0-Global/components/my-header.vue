@@ -40,7 +40,7 @@
 </script>
 
 <template>
-  <header>
+  <header class="w-100">
     <nav class="navbar navbar-expand-lg px-3">
       <RouterLink to="/" class="navbar-brand" href="#">
         <img src="../assets/logo.png" alt="Letras J e B cortadas no meio pelo meu nome escrito" />
@@ -86,18 +86,6 @@
 </template>
 
 <style scoped lang="scss">
-  header {
-    width: 100%;
-    position: absolute;
-    top: 0;
-
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
-  }
-  nav {
-    border-bottom-left-radius: inherit;
-    border-bottom-right-radius: inherit;
-  }
   img {
     width: 7rem;
   }
@@ -105,10 +93,6 @@
   @media only screen and (max-width: 768px) {
     img {
       width: 5rem;
-    }
-
-    .icon {
-      color: var(--text-muted);
     }
   }
 </style>

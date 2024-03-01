@@ -7,6 +7,13 @@
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* 
+  --bs-breakpoint-xs: 0;
+  --bs-breakpoint-sm: 576px;
+  --bs-breakpoint-md: 768px;
+  --bs-breakpoint-lg: 992px;
+  --bs-breakpoint-xl: 1200px;
+  --bs-breakpoint-xxl: 1400px; */
 }
 
 body {
@@ -25,7 +32,6 @@ main {
   display: flex;
   flex-direction: column;
 
-  justify-content: center;
   align-items: center;
 }
 
@@ -47,4 +53,10 @@ button {
 
 #app {
   flex: 1 0 auto;
+}
+
+@media only screen and (max-width: 768px) {
+  :root {
+    font-size: 0.875rem !important;
+  }
 }

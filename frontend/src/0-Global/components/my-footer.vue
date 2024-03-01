@@ -9,7 +9,7 @@
 
 <template>
   <footer class="text-muted">
-    <aside class="d-flex flex-column justify-content-between">
+    <aside class="d-flex flex-column justify-content-between gap-3">
       <div>
         <p class="h1">João Borba</p>
         <p>Desenvolvedor Web | .NET</p>
@@ -67,7 +67,7 @@
     display: flex;
   }
 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 576px) {
     footer {
       flex-direction: column;
       align-items: center;
