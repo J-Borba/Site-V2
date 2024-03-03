@@ -10,7 +10,7 @@
           <img src="../../0-Global/assets/my-foto.png" alt="Foto Joao Borba" />
         </a>
       </span>
-      <h1 class="h2">João Victor Borba</h1>
+      <h1 class="h2 color-blue-100">João Victor Borba</h1>
     </div>
 
     <div class="d-flex flex-column gap-3 px-2">
@@ -59,10 +59,6 @@
     align-items: center;
 
     gap: 3rem;
-  }
-
-  h1 {
-    color: var(--blue-100);
   }
 
   span {

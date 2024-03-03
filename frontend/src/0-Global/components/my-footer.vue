@@ -8,7 +8,7 @@
 </script>
 
 <template>
-  <footer class="text-muted">
+  <footer>
     <aside class="d-flex flex-column justify-content-between gap-3">
       <div>
         <p class="h1">João Borba</p>
@@ -50,7 +50,7 @@
 
     padding: 1rem 0;
 
-    background-color: var(--blue-100);
+    background-color: var(--primary);
 
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
