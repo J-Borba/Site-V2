@@ -51,9 +51,9 @@
   article {
     display: flex;
     flex-direction: column;
+    flex: 1;
 
     width: 100%;
-    flex: 1;
 
     justify-content: space-around;
     align-items: center;
