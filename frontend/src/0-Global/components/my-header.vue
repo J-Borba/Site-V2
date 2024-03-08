@@ -56,7 +56,7 @@
         <font-awesome-icon class="icon" :icon="faArrowDownShortWide" size="2xl" />
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav gap-4 gap-md-2 mt-4 mt-md-0 pb-md-0 pb-2">
+        <ul class="navbar-nav gap-2 mt-4 mt-lg-0 pb-2 pb-lg-0">
           <li class="dropdown" v-if="Projetos.length > 0">
             <a id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <font-awesome-icon class="icon" :icon="faTerminal" size="sm" />
