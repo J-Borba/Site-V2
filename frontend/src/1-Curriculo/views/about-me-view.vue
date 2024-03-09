@@ -108,20 +108,18 @@
     </div>
 
     <div class="d-flex flex-wrap text-start justify-content-center w-75 gap-4" v-else>
-      <div v-for="repo in filteredRepos" :key="repo.id" class="github-card">
-        <span class="github-card-content">
-          <a :href="repo.html_url" class="repo-title" target="_blank">
-            <font-awesome-icon class="book-icon" :icon="faBookBookmark" />
-            {{ repo.name }}
-          </a>
-          <p class="repo-desc">
-            {{ repo.description ?? 'Descrição vazia' }}
-          </p>
-          <p :id="repo.language" class="repo-lang">
-            {{ repo.language }}
-          </p>
-        </span>
-      </div>
+      <span v-for="repo in filteredRepos" :key="repo.id" class="github-card">
+        <a :href="repo.html_url" class="repo-title" target="_blank">
+          <font-awesome-icon class="book-icon" :icon="faBookBookmark" />
+          {{ repo.name }}
+        </a>
+        <p class="repo-desc">
+          {{ repo.description ?? 'Descrição vazia' }}
+        </p>
+        <p :id="repo.language" class="repo-lang">
+          {{ repo.language }}
+        </p>
+      </span>
     </div>
   </section>
 </template>
@@ -149,6 +147,10 @@
   $book-icon-clr: #768390;
 
   .github-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
     padding: 0.5rem;
     width: 17rem;
     height: 8rem;
@@ -157,18 +159,10 @@
     border: 1px solid $border-clr;
 
     box-shadow: 1px 1px 8px 1px var(--primary);
-  }
-
-  .github-card-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-
-    height: 100%;
 
     line-height: 1.25;
 
-    p {
+    & p {
       font-size: 0.8rem;
     }
   }
