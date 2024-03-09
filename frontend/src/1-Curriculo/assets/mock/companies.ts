@@ -18,7 +18,7 @@ interface ICompany {
   degrees: Array<IDegree>;
 }
 
-export const companies: Array<ICompany> = [
+export const Companies: Array<ICompany> = [
   {
     name: 'Alura',
     icon: aluraIcon,

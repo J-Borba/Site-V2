@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { faFaceSmileWink, faHandPointRight, faIdCard } from '@fortawesome/free-regular-svg-icons';
   import foto from '@/0-Global/assets/images/my-foto.png';
+  import { tiplan, uerj } from '@/0-Global/assets/mock/_variables';
 </script>
 
 <template>
@@ -17,14 +18,12 @@
     <div class="d-flex flex-column gap-3 px-2">
       <p>
         Estudante de Ciências da Computação na
-        <a class="fw-bold" href="https://www.uerj.br/" target="_blank">
-          Universidade do Estado do Rio de Janeiro (UERJ)
-        </a>
+        <a class="fw-bold" :href="uerj.url" target="_blank"> {{ uerj.title }} ({{ uerj.shortTitle }}) </a>
       </p>
 
       <p>
         Desenvolvedor .NET na
-        <a class="fw-bold" href="https://www.tiplan.com.br/" target="_blank"> TIPLAN </a>
+        <a class="fw-bold" :href="tiplan.url" target="_blank"> {{ tiplan.title }} </a>
       </p>
 
       <p>Amo desenvolver, e busco mais conhecimento a cada dia</p>
