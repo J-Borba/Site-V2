@@ -80,4 +80,10 @@
       align-items: center;
     }
   }
+
+  @media (prefers-color-scheme: light) {
+    footer {
+      color: var(--bg-emphasis);
+    }
+  }
 </style>
