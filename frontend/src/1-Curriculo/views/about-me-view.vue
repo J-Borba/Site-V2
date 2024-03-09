@@ -1,11 +1,11 @@
 <script setup lang="ts">
   import { computed, onMounted, ref } from 'vue';
-  import { githubApi } from '../../0-Global/services/api.js';
-  import GoogleMaps from '../components/google-maps.vue';
+  import { AxiosError } from 'axios';
   import { faBookBookmark, faCircleInfo, faWarning } from '@fortawesome/free-solid-svg-icons';
   import { faGitAlt, faHtml5, faReact, faSass, faSquareJs, faVuejs } from '@fortawesome/free-brands-svg-icons';
-  import { AxiosError } from 'axios';
-  import MyLoading from '../../0-Global/components/my-loading.vue';
+  import { githubApi } from '@/0-Global/services/api.js';
+  import MyLoading from '@/0-Global/components/my-loading.vue';
+  import GoogleMaps from '../components/google-maps.vue';
 
   interface IRepos {
     id: number;

@@ -1,9 +1,9 @@
 import { RouteRecordRaw, createRouter, createWebHistory } from 'vue-router';
-import HomeView from '../../1-Curriculo/views/home-view.vue';
-import ExperienciaView from '../../1-Curriculo/views/experiencia-view.vue';
-import CertificadosView from '../../1-Curriculo/views/certificados-view.vue';
-import NotFoundView from '../views/not-found-view.vue';
-import AboutMeView from '../../1-Curriculo/views/about-me-view.vue';
+import HomeView from '@/1-Curriculo/views/home-view.vue';
+import ExperienciaView from '@/1-Curriculo/views/experiencia-view.vue';
+import CertificadosView from '@/1-Curriculo/views/certificados-view.vue';
+import AboutMeView from '@/1-Curriculo/views/about-me-view.vue';
+import NotFoundView from '@/0-Global/views/not-found-view.vue';
 
 const routes: RouteRecordRaw[] = [
   { path: '/', component: HomeView },

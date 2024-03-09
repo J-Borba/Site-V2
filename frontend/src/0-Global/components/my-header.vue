@@ -1,49 +1,16 @@
 <script setup lang="ts">
-  import {
-    IconDefinition,
-    faArrowDownShortWide,
-    faCaretDown,
-    faFileContract,
-    faTerminal,
-    faUserGraduate,
-  } from '@fortawesome/free-solid-svg-icons';
+  import { faArrowDownShortWide, faCaretDown, faTerminal } from '@fortawesome/free-solid-svg-icons';
   import { RouterLink } from 'vue-router';
-
-  interface iProjetos {
-    title: string;
-    rota: string;
-  }
-  const Projetos: iProjetos[] = [
-    // {
-    //   title: 'Financeiro',
-    //   rota: 'financeiro',
-    // },
-  ];
-
-  interface iNavigation {
-    title: string;
-    rota: string;
-    icon: IconDefinition;
-  }
-  const Navigations: iNavigation[] = [
-    {
-      title: 'Certificados',
-      rota: 'certificados',
-      icon: faUserGraduate,
-    },
-    {
-      title: 'Experiências',
-      rota: 'experiencias',
-      icon: faFileContract,
-    },
-  ];
+  import { Projetos } from '@/0-Global/assets/mock/projetos';
+  import { Navigations } from '@/0-Global/assets/mock/navigations';
+  import logo from '@/0-Global/assets/images/logo.png';
 </script>
 
 <template>
   <header>
     <nav class="navbar navbar-expand-lg px-3">
       <RouterLink to="/" class="navbar-brand" href="#" tabindex="1">
-        <img src="../assets/logo.png" alt="Letras J e B cortadas no meio pelo meu nome escrito" />
+        <img :src="logo" alt="Letras J e B cortadas no meio pelo meu nome escrito" />
       </RouterLink>
       <button
         class="navbar-toggler"

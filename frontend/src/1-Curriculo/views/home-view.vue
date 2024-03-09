@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { faFaceSmileWink, faHandPointRight, faIdCard } from '@fortawesome/free-regular-svg-icons';
+  import foto from '@/0-Global/assets/images/my-foto.png';
 </script>
 
 <template>
@@ -7,7 +8,7 @@
     <div class="d-flex align-items-center gap-3">
       <span id="my-foto-container">
         <a id="my-foto" href="https://www.linkedin.com/in/joao-borba27/" target="_blank">
-          <img src="../../0-Global/assets/my-foto.png" alt="Foto Joao Borba" />
+          <img :src="foto" alt="Foto Joao Borba" />
         </a>
       </span>
       <h1 class="h2 color-blue-100">João Victor Borba</h1>
