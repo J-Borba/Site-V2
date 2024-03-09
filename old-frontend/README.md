@@ -1,6 +1,3 @@
-
-> #### Este é o frontend do meu novo portfólio 😁
+> #### Este é o ANTIGO frontend do meu novo portfólio 😁
 >
-> Ele conterá o frontend de todos os meus projetos separados por seus respectivos módulos
->
-> ##### Confira a versão antiga: [joaoborba.com](https://joaoborba.com)
+> ###### ele ficará aqui por um tempo para casos de rollback
