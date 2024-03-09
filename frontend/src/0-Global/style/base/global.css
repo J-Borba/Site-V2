@@ -34,6 +34,8 @@ button {
   text-decoration: none;
   color: var(--blue-100);
 
+  width: fit-content;
+
   transition: opacity 100ms ease;
   &:hover {
     transition: opacity 150ms ease;

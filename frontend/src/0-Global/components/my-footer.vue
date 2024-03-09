@@ -59,7 +59,7 @@
   a {
     display: flex;
     gap: 0.25rem;
-    width: fit-content;
+
     color: inherit;
   }
 
