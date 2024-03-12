@@ -6,7 +6,7 @@ import './0-Global/style/utilities/bootstrap.css';
 import './0-Global/style/utilities/_variables.css';
 import './0-Global/style/utilities/fontawesome.css';
 import './0-Global/style/base/reset.css';
-import './0-Global/style/base/global.css';
+import './0-Global/style/base/global.scss';
 import App from './App.vue';
 import router from './0-Global/router';
 
