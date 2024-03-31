@@ -1,32 +1,49 @@
 <script lang="ts" setup>
-  import { faMedal, faUserGraduate } from '@fortawesome/free-solid-svg-icons';
-  import { Companies } from '../assets/mock/companies';
+  import { faMedal, faUserGraduate, faWarning } from '@fortawesome/free-solid-svg-icons';
+  import { CertificateCompanies } from '../assets/mock/certificateCompanies';
 </script>
 
 <template>
   <section>
     <h1 class="h3 color-secondary">Certificados</h1>
     <div class="certificados-container">
-      <span v-for="(company, index) in Companies" :key="index">
+      <div v-for="(company, index) in CertificateCompanies" :key="index">
+        <!-- <Informacoes da Empresa> -->
         <span class="d-flex gap-2 mb-2">
           <img :src="company.icon" alt="company icon" />
           <p class="h5 color-blue-100">{{ company.name }}</p>
         </span>
-        <div class="d-flex flex-column gap-2" v-for="(degree, index) in company.degrees" :key="index">
-          <span v-if="!!degree.title && !!degree.url">
-            <a class="text-muted" :href="degree.url" target="_blank">
-              <font-awesome-icon class="icon" :icon="faUserGraduate" />
-              {{ degree.title }}
-            </a>
-          </span>
-          <span class="d-flex flex-column px-3" v-for="(certificate, index) in degree.certificates" :key="index">
-            <a v-if="!!certificate.title && !!certificate.url" :href="certificate.url" target="_blank">
-              <font-awesome-icon class="icon" :icon="faMedal" />
-              {{ certificate.title }}
-            </a>
-          </span>
+        <!-- </Informacoes da Empresa> -->
+
+        <!-- <Formacoes e Certificados> -->
+        <div class="d-flex flex-column gap-2">
+          <div class="d-flex flex-column gap-1" v-for="(degree, index) in company.degrees" :key="index">
+            <!-- <Formacoes> -->
+            <span v-if="!!degree.title">
+              <a class="text-muted" :href="degree.url ?? '#'" target="_blank">
+                <font-awesome-icon class="icon" :icon="faUserGraduate" />
+                {{ degree.title }}
+              </a>
+              <font-awesome-icon
+                v-if="!degree.url"
+                class="icon warning"
+                :icon="faWarning"
+                title="Formação em andamento." />
+            </span>
+            <!-- </Formacoes> -->
+
+            <!-- <Certificados> -->
+            <span class="d-flex flex-column px-3" v-for="(certificate, index) in degree.certificates" :key="index">
+              <a v-if="!!certificate.title && !!certificate.url" :href="certificate.url" target="_blank">
+                <font-awesome-icon class="icon" :icon="faMedal" />
+                {{ certificate.title }}
+              </a>
+            </span>
+            <!-- </Certificados> -->
+          </div>
         </div>
-      </span>
+        <!-- </Formacoes e Certificados> -->
+      </div>
     </div>
   </section>
 </template>
@@ -63,3 +80,4 @@
     aspect-ratio: 1;
   }
 </style>
+../assets/mock/certificateCompanies

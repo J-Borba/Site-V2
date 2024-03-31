@@ -5,17 +5,17 @@
 </script>
 
 <template>
-  <article>
-    <div class="d-flex align-items-center gap-3">
+  <section>
+    <article class="d-flex align-items-center gap-3">
       <span id="my-foto-container">
         <a id="my-foto" href="https://www.linkedin.com/in/joao-borba27/" target="_blank">
           <img :src="foto" alt="Foto Joao Borba" />
         </a>
       </span>
       <h1 class="h2 color-blue-100">João Victor Borba</h1>
-    </div>
+    </article>
 
-    <div class="d-flex flex-column gap-3 px-2">
+    <article class="d-flex flex-column gap-3 px-2">
       <p>
         Estudante de Ciências da Computação na
         <a class="fw-bold" :href="uerj.url" target="_blank"> {{ uerj.title }} ({{ uerj.shortTitle }}) </a>
@@ -33,9 +33,9 @@
         <router-link to="certificados" class="fw-bold"> certificados </router-link>
         <font-awesome-icon class="icon" :icon="faFaceSmileWink" style="color: var(--text)" />
       </p>
-    </div>
+    </article>
 
-    <div class="d-flex flex-column align-items-center gap-3">
+    <article class="d-flex flex-column align-items-center gap-3">
       <p class="h5">Mais sobre mim</p>
       <span>
         <font-awesome-icon class="icon" :icon="faHandPointRight" size="xl" />
@@ -43,12 +43,12 @@
           <font-awesome-icon id="id-card" :icon="faIdCard" size="lg" />
         </router-link>
       </span>
-    </div>
-  </article>
+    </article>
+  </section>
 </template>
 
 <style scoped lang="scss">
-  article {
+  section {
     display: flex;
     flex-direction: column;
     flex: 1;

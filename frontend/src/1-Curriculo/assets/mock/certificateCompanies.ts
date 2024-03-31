@@ -18,7 +18,7 @@ interface ICompany {
   degrees: Array<IDegree>;
 }
 
-export const Companies: Array<ICompany> = [
+export const CertificateCompanies: Array<ICompany> = [
   {
     name: 'Alura',
     icon: aluraIcon,
@@ -42,6 +42,20 @@ export const Companies: Array<ICompany> = [
           {
             title: 'HTTP: entendendo a web por baixo dos panos',
             url: 'https://cursos.alura.com.br/certificate/6251e3fc-d35f-4e7c-9c30-b5d1ab07db59',
+          },
+        ],
+      },
+      {
+        title: 'Boas práticas em C#',
+        url: undefined,
+        certificates: [
+          {
+            title: 'C#: aplique boas práticas de refatoração e torne seu código mais legível',
+            url: 'https://cursos.alura.com.br/certificate/96d2a707-1f3e-41f7-b12a-cc21995af558',
+          },
+          {
+            title: 'C#: aprenda a criar testes limpos com boas práticas',
+            url: 'https://cursos.alura.com.br/certificate/c0a9857b-bd14-4a59-ad20-3a6d59cc03d9',
           },
         ],
       },
