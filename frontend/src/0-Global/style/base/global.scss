@@ -53,6 +53,10 @@ button {
 
 .warning {
   color: var(--warning) !important;
+
+  &:hover {
+    cursor: pointer !important;
+  }
 }
 
 .color-primary {

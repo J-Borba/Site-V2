@@ -24,7 +24,7 @@ export const CertificateCompanies: Array<ICompany> = [
     icon: aluraIcon,
     degrees: [
       {
-        title: 'Formação ASP.Net Core: crie aplicações com C#, .NET, Entity Framework e LINQ',
+        title: 'Formação - ASP.Net Core: crie aplicações com C#, .NET, Entity Framework e LINQ',
         url: 'https://cursos.alura.com.br/degree/certificate/2a550f53-9880-4125-a711-a4e44f93143f',
         certificates: [
           {
@@ -46,7 +46,7 @@ export const CertificateCompanies: Array<ICompany> = [
         ],
       },
       {
-        title: 'Boas práticas em C#',
+        title: 'Formação - Boas práticas em C#',
         url: undefined,
         certificates: [
           {

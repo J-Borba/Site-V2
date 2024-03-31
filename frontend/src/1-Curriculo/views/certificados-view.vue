@@ -1,6 +1,10 @@
 <script lang="ts" setup>
   import { faMedal, faUserGraduate, faWarning } from '@fortawesome/free-solid-svg-icons';
   import { CertificateCompanies } from '../assets/mock/certificateCompanies';
+
+  function warningAlert() {
+    window.alert('Esta formação ainda está em andamento.'); //TODO - trocar por um modal
+  }
 </script>
 
 <template>
@@ -28,7 +32,8 @@
                 v-if="!degree.url"
                 class="icon warning"
                 :icon="faWarning"
-                title="Formação em andamento." />
+                title="Formação em andamento."
+                @click="warningAlert" />
             </span>
             <!-- </Formacoes> -->
 
