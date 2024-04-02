@@ -47,15 +47,19 @@ export const CertificateCompanies: Array<ICompany> = [
       },
       {
         title: 'Formação - Boas práticas em C#',
-        url: undefined,
+        url: 'https://cursos.alura.com.br/degree/certificate/b6128e3d-3567-452a-9d36-6d0fdef3914e',
         certificates: [
           {
-            title: 'C#: aplique boas práticas de refatoração e torne seu código mais legível',
-            url: 'https://cursos.alura.com.br/certificate/96d2a707-1f3e-41f7-b12a-cc21995af558',
+            title: 'C#: aplique princípios SOLID',
+            url: 'https://cursos.alura.com.br/certificate/963b22bb-d039-447c-993e-d642ba4a136d',
           },
           {
             title: 'C#: aprenda a criar testes limpos com boas práticas',
             url: 'https://cursos.alura.com.br/certificate/c0a9857b-bd14-4a59-ad20-3a6d59cc03d9',
+          },
+          {
+            title: 'C#: aplique boas práticas de refatoração e torne seu código mais legível',
+            url: 'https://cursos.alura.com.br/certificate/96d2a707-1f3e-41f7-b12a-cc21995af558',
           },
         ],
       },
