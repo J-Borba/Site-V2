@@ -20,3 +20,8 @@ export const abbr: linkObject = {
   shortTitle: 'ABBR',
   url: 'https://abbr.org.br/',
 };
+
+export const myGithub: linkObject = {
+  title: 'Github',
+  url: 'https://github.com/J-Borba',
+};

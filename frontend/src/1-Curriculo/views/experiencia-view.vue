@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { faBuilding } from '@fortawesome/free-regular-svg-icons';
-  import { Jobs } from '../assets/mock/jobs';
+  import { Jobs } from '../assets/utilities/jobs';
   import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 </script>
 
@@ -83,3 +83,4 @@
     }
   }
 </style>
+../assets/utilities/jobs

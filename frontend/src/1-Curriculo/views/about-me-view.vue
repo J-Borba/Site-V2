@@ -6,7 +6,7 @@
   import { githubApi } from '@/0-Global/services/api.js';
   import MyLoading from '@/0-Global/components/my-loading.vue';
   import GoogleMaps from '../components/google-maps.vue';
-  import { tiplan, uerj } from '@/0-Global/assets/mock/_variables';
+  import { myGithub, tiplan, uerj } from '@/0-Global/assets/utilities/_variables';
 
   interface IRepos {
     id: number;
@@ -40,13 +40,14 @@
   });
 
   const filteredRepos = computed(() => {
-    return repos.value.filter((repo) => repo.name != 'J-Borba');
+    return repos.value.filter((repo) => repo.name != 'J-Borba').slice(0, 6);
   });
 </script>
 
 <template>
+  <!-- <Experiencia> -->
   <section>
-    <span class="d-flex justify-content-center align-items-center gap-2">
+    <span class="d-flex align-items-center gap-2">
       <p class="h2 color-secondary">Última Experiência</p>
       <router-link to="/experiencias">
         <font-awesome-icon class="icon" :icon="faCircleInfo" size="lg" />
@@ -62,6 +63,9 @@
       <p>Out/2023 - Atualmente</p>
     </div>
   </section>
+  <!-- </Experiencia> -->
+
+  <!-- <Formação Acadêmica> -->
   <section>
     <p class="h2 color-secondary">Formação Acadêmica</p>
 
@@ -73,6 +77,9 @@
       <p>Set/2020 - Cursando</p>
     </div>
   </section>
+  <!-- </Formação Acadêmica> -->
+
+  <!-- <HardSkilss> -->
   <section>
     <p class="h2 color-secondary">Hard Skills</p>
 
@@ -91,12 +98,15 @@
       </router-link>
     </div>
   </section>
+  <!-- </HardSkilss> -->
+
+  <!-- <Projetos> -->
   <section>
     <p class="h2 color-secondary">Projetos</p>
 
     <MyLoading v-if="loading" />
 
-    <div class="alert alert-danger px-5" role="alert" v-else-if="!!error">
+    <div v-else-if="!!error" class="alert alert-danger px-5" role="alert">
       <span class="d-flex gap-1 align-items-center">
         <font-awesome-icon class="icon" :icon="faWarning" size="lg" />
         <p class="h5 alert-heading">
@@ -108,7 +118,7 @@
       </p>
     </div>
 
-    <div class="d-flex flex-wrap text-start justify-content-center w-75 gap-4" v-else>
+    <div v-else class="d-flex flex-wrap text-start justify-content-center w-75 gap-4">
       <span v-for="repo in filteredRepos" :key="repo.id" class="github-card">
         <a :href="repo.html_url" class="repo-title" target="_blank">
           <font-awesome-icon class="book-icon" :icon="faBookBookmark" />
@@ -122,7 +132,10 @@
         </p>
       </span>
     </div>
+
+    <a :href="myGithub.url" target="_blank" class="my-btn">Confira todos os meus projetos aqui</a>
   </section>
+  <!-- </Projetos> -->
 </template>
 
 <style scoped lang="scss">
@@ -214,3 +227,4 @@
     }
   }
 </style>
+@/0-Global/assets/utilities/_variables

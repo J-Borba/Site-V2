@@ -1,8 +1,8 @@
 <script setup lang="ts">
   import { faArrowDownShortWide, faCaretDown, faTerminal } from '@fortawesome/free-solid-svg-icons';
   import { RouterLink } from 'vue-router';
-  import { Projetos } from '@/0-Global/assets/mock/projetos';
-  import { Navigations } from '@/0-Global/assets/mock/navigations';
+  import { Projetos } from '@/0-Global/assets/utilities/projetos';
+  import { Navigations } from '@/0-Global/assets/utilities/navigations';
   import logo from '@/0-Global/assets/images/logo.png';
 </script>
 
@@ -63,3 +63,4 @@
     }
   }
 </style>
+@/0-Global/assets/utilities/projetos@/0-Global/assets/utilities/navigations

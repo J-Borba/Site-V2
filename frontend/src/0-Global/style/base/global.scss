@@ -43,6 +43,26 @@ button {
   }
 }
 
+.my-btn {
+  border: 1px solid var(--secondary);
+  border-radius: 8px;
+
+  padding: 0.5rem;
+
+  color: var(--secondary);
+
+  transition: 150ms ease;
+  &:hover {
+    transition: 200ms ease;
+
+    opacity: 1 !important;
+
+    background-color: var(--secondary);
+
+    color: var(--bg);
+  }
+}
+
 .router-link-exact-active {
   color: var(--secondary);
 }

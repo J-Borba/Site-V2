@@ -1,4 +1,4 @@
-import { abbr, tiplan } from '@/0-Global/assets/mock/_variables';
+import { abbr, tiplan } from '@/0-Global/assets/utilities/_variables';
 import abbrLogo from '../images/abbr.png';
 import tiplanLogo from '../images/tiplan.png';
 
