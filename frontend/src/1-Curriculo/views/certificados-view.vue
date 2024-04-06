@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import { faMedal, faUserGraduate, faWarning } from '@fortawesome/free-solid-svg-icons';
-  import { CertificateCompanies } from '../assets/mock/certificateCompanies';
+  import { CertificateCompanies } from '../assets/utilities/certificateCompanies';
 
   function warningAlert() {
     window.alert('Esta formação ainda está em andamento.'); //TODO - trocar por um modal
@@ -85,4 +85,4 @@
     aspect-ratio: 1;
   }
 </style>
-../assets/mock/certificateCompanies
+../assets/utilities/certificateCompanies ../assets/utilities/certificateCompanies

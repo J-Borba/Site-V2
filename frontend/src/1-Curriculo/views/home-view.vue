@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { faFaceSmileWink, faHandPointRight, faIdCard } from '@fortawesome/free-regular-svg-icons';
   import foto from '@/0-Global/assets/images/my-foto.png';
-  import { tiplan, uerj } from '@/0-Global/assets/mock/_variables';
+  import { tiplan, uerj } from '@/0-Global/assets/utilities/_variables';
 </script>
 
 <template>
@@ -151,3 +151,4 @@
     }
   }
 </style>
+@/0-Global/assets/utilities/_variables
