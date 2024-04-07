@@ -77,6 +77,14 @@ export const CertificateCompanies: Array<ICompany> = [
             title: 'NLW Unite - Csharp',
             url: 'https://app.rocketseat.com.br/certificates/ed6219d5-f7ec-4b57-9d39-115722bb49f1',
           },
+          {
+            title: 'NLW Unite - Reactjs',
+            url: 'https://app.rocketseat.com.br/certificates/a44b244e-6411-46db-b954-81437428a032',
+          },
+          {
+            title: 'NLW Unite - React Native',
+            url: 'https://app.rocketseat.com.br/certificates/79e5506b-d072-4b93-84de-5efe9756a2fc',
+          },
         ],
       },
     ],
