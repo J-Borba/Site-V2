@@ -15,7 +15,7 @@
         <!-- <Informacoes da Empresa> -->
         <span class="d-flex gap-2 mb-2">
           <img :src="company.icon" alt="company icon" />
-          <p class="h5 color-blue-100">{{ company.name }}</p>
+          <p class="h5 color-secondary">{{ company.name }}</p>
         </span>
         <!-- </Informacoes da Empresa> -->
 
@@ -70,7 +70,7 @@
     flex-direction: column;
     gap: 2rem;
 
-    border: 1px solid var(--blue-100);
+    border: 1px solid var(--secondary);
 
     border-radius: 6px;
 

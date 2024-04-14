@@ -12,7 +12,7 @@
           <img :src="foto" alt="Foto Joao Borba" />
         </a>
       </span>
-      <h1 class="h2 color-blue-100">João Victor Borba</h1>
+      <h1 class="h2 color-secondary">João Victor Borba</h1>
     </article>
 
     <article class="d-flex flex-column gap-3 px-2">
@@ -87,7 +87,7 @@
       position: absolute;
       z-index: -1;
       inset: -10px 40px;
-      background: linear-gradient(100deg, var(--blue-100), var(--primary));
+      background: linear-gradient(100deg, var(--secondary), var(--primary));
 
       transition: 1s;
       animation: spin 10s linear infinite;

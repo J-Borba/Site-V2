@@ -34,7 +34,7 @@
       text-align: center;
 
       font-size: 1.5rem;
-      color: var(--blue-100);
+      color: var(--secondary);
     }
   }
 </style>
