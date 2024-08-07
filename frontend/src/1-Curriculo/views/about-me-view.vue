@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { computed, onMounted, ref } from 'vue';
+  import { Ref, computed, onMounted, ref } from 'vue';
   import { AxiosError } from 'axios';
   import { faBookBookmark, faCircleInfo, faWarning } from '@fortawesome/free-solid-svg-icons';
   import { faGitAlt, faHtml5, faReact, faSass, faSquareJs, faVuejs } from '@fortawesome/free-brands-svg-icons';
@@ -13,13 +13,14 @@
     name: string;
     private: boolean;
     html_url: string;
-    description: string;
-    language: string;
+    description?: string;
+    language?: string;
   }
 
-  const loading = ref<boolean>(true);
-  const repos = ref<IRepos[]>([]);
-  const error = ref<AxiosError>();
+  const repos: Ref<IRepos[]> = ref<IRepos[]>([]);
+  const loading: Ref<boolean> = ref<boolean>(true);
+  const error: Ref<AxiosError | undefined> = ref<AxiosError>();
+  const notInformedText: string = 'Não Informado';
 
   async function getRepos() {
     await githubApi
@@ -59,7 +60,7 @@
 
     <div>
       <a class="fs-5 color-secondary" :href="tiplan.url" target="_blank"> {{ tiplan.title }} </a>
-      <p class="color-blue-100">Desenvolvedor de Software</p>
+      <p class="color-secondary">Desenvolvedor de Software</p>
       <p>Out/2023 - Atualmente</p>
     </div>
   </section>
@@ -125,10 +126,10 @@
           {{ repo.name }}
         </a>
         <p class="repo-desc">
-          {{ repo.description ?? 'Descrição vazia' }}
+          {{ repo.description ?? notInformedText }}
         </p>
         <p :id="repo.language" class="repo-lang">
-          {{ repo.language }}
+          {{ repo.language ?? notInformedText }}
         </p>
       </span>
     </div>

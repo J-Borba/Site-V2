@@ -1,23 +1,25 @@
 :root {
-  @media (prefers-color-scheme: light) {
+  /* TODO - Implement button to change color scheme and review colors */
+  /* @media (prefers-color-scheme: light) {
     --bg: #d7d7d7;
     --bg-emphasis: #c8c7c7;
     --text: #1f2327;
     --text-muted: #212529bf;
     --primary: #114846;
     --secondary: #1d6a68;
-    --blue-100: #269692;
+    --secondary: #269692;
   }
   @media (prefers-color-scheme: dark) {
-    --bg: #1f2327;
-    --bg-emphasis: #2e3135;
-    --text: #d7d7d7;
-    --text-muted: #a3a3a3;
-    --primary: #227673;
-    --secondary: #29a19c;
-    --blue-100: #37d3ce;
-  }
 
+  }
+  */
+
+  --bg: #222831;
+  --bg-emphasis: #393e46;
+  --text: #d7d7d7;
+  --text-muted: #a3a3a3;
+  --primary: #00adb5;
+  --secondary: #00fff5;
   --white: #ffffff;
 
   --warning: #ffd43b;

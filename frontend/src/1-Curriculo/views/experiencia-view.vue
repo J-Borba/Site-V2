@@ -15,7 +15,7 @@
 
       <div class="d-flex flex-column flex-lg-row justify-content-between w-100 gap-2 gap-lg-0">
         <div class="d-flex flex-column">
-          <p class="fw-bold color-blue-100">{{ job.role.title }}</p>
+          <p class="fw-bold color-secondary">{{ job.role.title }}</p>
 
           <a
             class="d-flex align-items-center text-muted"

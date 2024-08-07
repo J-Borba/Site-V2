@@ -50,7 +50,8 @@
 
     padding: 1rem 0;
 
-    background-color: var(--primary);
+    background-color: var(--bg-emphasis);
+    color: var(--secondary);
 
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
@@ -60,7 +61,7 @@
     display: flex;
     gap: 0.25rem;
 
-    color: inherit;
+    color: var(--primary);
   }
 
   .copyright {
@@ -81,9 +82,9 @@
     }
   }
 
-  @media (prefers-color-scheme: light) {
+  /* @media (prefers-color-scheme: light) {
     footer {
       color: var(--bg-emphasis);
     }
-  }
+  } */
 </style>

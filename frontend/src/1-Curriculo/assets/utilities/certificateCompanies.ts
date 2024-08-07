@@ -1,5 +1,6 @@
 import aluraIcon from '../images/alura.jpeg';
 import udemyIcon from '../images/udemy.jpeg';
+import rocketseatIcon from '../images/rocketseat.jpeg';
 
 interface ICertificate {
   title: string;
@@ -60,6 +61,29 @@ export const CertificateCompanies: Array<ICompany> = [
           {
             title: 'C#: aplique boas práticas de refatoração e torne seu código mais legível',
             url: 'https://cursos.alura.com.br/certificate/96d2a707-1f3e-41f7-b12a-cc21995af558',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Rocketseat',
+    icon: rocketseatIcon,
+    degrees: [
+      {
+        // Não apresenta titulo nem URL de Formação pois Rocketseat oferece cursos soltos
+        certificates: [
+          {
+            title: 'NLW Unite - Csharp',
+            url: 'https://app.rocketseat.com.br/certificates/ed6219d5-f7ec-4b57-9d39-115722bb49f1',
+          },
+          {
+            title: 'NLW Unite - Reactjs',
+            url: 'https://app.rocketseat.com.br/certificates/a44b244e-6411-46db-b954-81437428a032',
+          },
+          {
+            title: 'NLW Unite - React Native',
+            url: 'https://app.rocketseat.com.br/certificates/79e5506b-d072-4b93-84de-5efe9756a2fc',
           },
         ],
       },
