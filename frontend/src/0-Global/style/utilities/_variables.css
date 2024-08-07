@@ -1,0 +1,23 @@
+:root {
+  @media (prefers-color-scheme: light) {
+    --bg: #d7d7d7;
+    --bg-emphasis: #c8c7c7;
+    --text: #1f2327;
+    --text-muted: #212529bf;
+  }
+  @media (prefers-color-scheme: dark) {
+    --bg: #1f2327;
+    --bg-emphasis: #2e3135;
+    --text: #d7d7d7;
+    --text-muted: #a3a3a3;
+  }
+  --primary: #227673;
+  --secondary: #29a19c;
+  --blue-100: #37d3ce;
+
+  --white: #ffffff;
+
+  --bg-whatsapp-top: #5aff97;
+  --bg-whatsapp-bottom: #25d366;
+  --bg-whatsapp-no-opacity: #25d36500;
+}
