@@ -25,8 +25,21 @@ export const Jobs: IJob[] = [
     companyUrl: tiplan.url,
 
     role: {
+      title: 'Desenvolvedor Jr',
+      startDate: 'Jan/2025',
+
+      skills: ['MVC', '.NET', 'C#', 'Javascript', 'Vue.js 2', 'SQL Server'],
+    },
+  },
+  {
+    companyLogo: tiplanLogo,
+    companyName: tiplan.title,
+    companyUrl: tiplan.url,
+
+    role: {
       title: 'Estagiário de Desenvolvimento',
       startDate: 'Out/2023',
+      endDate: 'Dez/2024',
 
       skills: ['MVC', '.NET', 'C#', 'Javascript', 'Vue.js 2', 'SQL Server'],
     },

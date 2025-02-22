@@ -60,8 +60,8 @@
 
     <div>
       <a class="fs-5 color-secondary" :href="tiplan.url" target="_blank"> {{ tiplan.title }} </a>
-      <p class="color-secondary">Desenvolvedor de Software</p>
-      <p>Out/2023 - Atualmente</p>
+      <p class="color-secondary">Desenvolvedor de Software Jr</p>
+      <p>Jan/2025 - Atualmente</p>
     </div>
   </section>
   <!-- </Experiencia> -->
