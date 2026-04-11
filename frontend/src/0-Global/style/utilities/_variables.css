@@ -1,30 +1,72 @@
 :root {
-  /* TODO - Implement button to change color scheme and review colors */
-  /* @media (prefers-color-scheme: light) {
-    --bg: #d7d7d7;
-    --bg-emphasis: #c8c7c7;
-    --text: #1f2327;
-    --text-muted: #212529bf;
-    --primary: #114846;
-    --secondary: #1d6a68;
-    --secondary: #269692;
-  }
-  @media (prefers-color-scheme: dark) {
+  /* Backgrounds */
+  --bg-base:     #0d1117;
+  --bg-surface:  #161b22;
+  --bg-elevated: #1c2330;
+  --bg-card:     #1e2430;
 
-  }
-  */
+  /* Brand — Ocean Cyan */
+  --brand:        #00adb5;
+  --brand-light:  #00c9d4;
+  --brand-dim:    rgba(0, 173, 181, 0.12);
+  --brand-border: rgba(0, 173, 181, 0.35);
+  --brand-glow:   0 0 24px rgba(0, 173, 181, 0.25);
 
-  --bg: #222831;
-  --bg-emphasis: #393e46;
-  --text: #d7d7d7;
-  --text-muted: #a3a3a3;
-  --primary: #00adb5;
-  --secondary: #00fff5;
-  --white: #ffffff;
+  /* Text */
+  --text-primary:   #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted:     #484f58;
 
-  --warning: #ffd43b;
+  /* Borders */
+  --border:        rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.15);
 
-  --bg-whatsapp-top: #5aff97;
-  --bg-whatsapp-bottom: #25d366;
-  --bg-whatsapp-no-opacity: #25d36500;
+  /* Shadows */
+  --shadow-sm:    0 1px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md:    0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg:    0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-brand: 0 4px 24px rgba(0, 173, 181, 0.2);
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* Type Scale */
+  --text-xs:   clamp(0.7rem,  0.68rem + 0.12vw, 0.75rem);
+  --text-sm:   clamp(0.8rem,  0.78rem + 0.18vw, 0.875rem);
+  --text-base: clamp(0.9rem,  0.88rem + 0.22vw, 1rem);
+  --text-lg:   clamp(1rem,    0.97rem + 0.28vw, 1.125rem);
+  --text-xl:   clamp(1.1rem,  1.05rem + 0.45vw, 1.25rem);
+  --text-2xl:  clamp(1.25rem, 1.18rem + 0.72vw, 1.5rem);
+  --text-3xl:  clamp(1.5rem,  1.38rem + 1.1vw,  2rem);
+  --text-4xl:  clamp(2rem,    1.75rem + 2vw,    3rem);
+
+  /* Spacing */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* Layout */
+  --container-max: 1100px;
+  --nav-height:    64px;
+
+  /* Legacy aliases */
+  --bg:          var(--bg-base);
+  --bg-emphasis: var(--bg-elevated);
+  --text:        var(--text-primary);
+  --primary:     var(--brand);
+  --secondary:   var(--brand-light);
+  --white:       #ffffff;
+  --warning:     #e3b341;
 }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { Ref, computed, onMounted, ref } from 'vue';
   import { AxiosError } from 'axios';
-  import { faBookBookmark, faCircleInfo, faWarning } from '@fortawesome/free-solid-svg-icons';
+  import { faBookBookmark, faCircleInfo, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
   import { faGitAlt, faHtml5, faReact, faSass, faSquareJs, faVuejs } from '@fortawesome/free-brands-svg-icons';
   import { githubApi } from '@/0-Global/services/api.js';
   import MyLoading from '@/0-Global/components/my-loading.vue';
@@ -20,13 +20,13 @@
   const repos: Ref<IRepos[]> = ref<IRepos[]>([]);
   const loading: Ref<boolean> = ref<boolean>(true);
   const error: Ref<AxiosError | undefined> = ref<AxiosError>();
-  const notInformedText: string = 'Não Informado';
+  const notInformedText: string = 'Não informado';
 
   async function getRepos() {
     await githubApi
       .get('repos?sort=updated')
       .then((api) => {
-        repos.value = JSON.parse(api.request.response);
+        repos.value = api.data;
       })
       .catch((apiError) => {
         error.value = apiError;
@@ -41,191 +41,360 @@
   });
 
   const filteredRepos = computed(() => {
-    return repos.value.filter((repo) => repo.name != 'J-Borba').slice(0, 6);
+    return repos.value.filter((repo) => repo.name !== 'J-Borba').slice(0, 6);
   });
+
+  const hardSkills = [
+    { icon: faVuejs,    label: 'Vue.js' },
+    { icon: faReact,    label: 'React' },
+    { icon: faSquareJs, label: 'JavaScript' },
+    { icon: faHtml5,    label: 'HTML5' },
+    { icon: faSass,     label: 'Sass' },
+    { icon: faGitAlt,   label: 'Git' },
+  ];
 </script>
 
 <template>
-  <!-- <Experiencia> -->
-  <section>
-    <span class="d-flex align-items-center gap-2">
-      <p class="h2 color-secondary">Última Experiência</p>
-      <router-link to="/experiencias">
-        <font-awesome-icon class="icon" :icon="faCircleInfo" size="lg" />
-      </router-link>
-    </span>
+  <div class="about-page">
+    <div class="page-container">
 
-    <GoogleMaps
-      src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14700.985908340814!2d-43.178263!3d-22.904278!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x997f5fdc3e9565%3A0xe09773af0e23b78e!2sTIPLAN!5e0!3m2!1spt-BR!2sbr!4v1709422911840!5m2!1spt-BR!2sbr" />
+      <!-- Experience -->
+      <section v-fade-up class="info-section">
+        <div class="section-header">
+          <h2 class="section-title">Última Experiência</h2>
+          <router-link to="/experiencias" class="section-more" title="Ver todas as experiências">
+            <font-awesome-icon :icon="faCircleInfo" />
+            <span>Ver todas</span>
+          </router-link>
+        </div>
 
-    <div>
-      <a class="fs-5 color-secondary" :href="tiplan.url" target="_blank"> {{ tiplan.title }} </a>
-      <p class="color-secondary">Desenvolvedor de Software Jr</p>
-      <p>Jan/2025 - Atualmente</p>
-    </div>
-  </section>
-  <!-- </Experiencia> -->
+        <div class="info-card">
+          <GoogleMaps
+            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14700.985908340814!2d-43.178263!3d-22.904278!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x997f5fdc3e9565%3A0xe09773af0e23b78e!2sTIPLAN!5e0!3m2!1spt-BR!2sbr!4v1709422911840!5m2!1spt-BR!2sbr" />
+          <div class="card-body">
+            <a :href="tiplan.url" target="_blank" class="card-company">{{ tiplan.title }}</a>
+            <p class="card-role">Desenvolvedor de Software Jr</p>
+            <p class="card-date">Jan/2025 — Atualmente</p>
+          </div>
+        </div>
+      </section>
 
-  <!-- <Formação Acadêmica> -->
-  <section>
-    <p class="h2 color-secondary">Formação Acadêmica</p>
+      <!-- Education -->
+      <section v-fade-up class="info-section">
+        <h2 class="section-title">Formação Acadêmica</h2>
 
-    <GoogleMaps
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d58800.952966794444!2d-43.31234995136716!3d-22.9111739!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x997e66c5f330ad%3A0x874ed5a98cf472d1!2sUniversidade%20do%20Estado%20do%20Rio%20de%20Janeiro!5e0!3m2!1spt-BR!2sbr!4v1709481881887!5m2!1spt-BR!2sbr" />
+        <div class="info-card">
+          <GoogleMaps
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d58800.952966794444!2d-43.31234995136716!3d-22.9111739!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x997e66c5f330ad%3A0x874ed5a98cf472d1!2sUniversidade%20do%20Estado%20do%20Rio%20de%20Janeiro!5e0!3m2!1spt-BR!2sbr!4v1709481881887!5m2!1spt-BR!2sbr" />
+          <div class="card-body">
+            <a :href="uerj.url" target="_blank" class="card-company">{{ uerj.title }} ({{ uerj.shortTitle }})</a>
+            <p class="card-role">Ciências da Computação</p>
+            <p class="card-date">Set/2020 — Cursando</p>
+          </div>
+        </div>
+      </section>
 
-    <div>
-      <a class="fs-5 color-secondary" :href="uerj.url" target="_blank"> {{ uerj.title }} ({{ uerj.shortTitle }}) </a>
-      <p>Set/2020 - Cursando</p>
-    </div>
-  </section>
-  <!-- </Formação Acadêmica> -->
+      <!-- Hard Skills -->
+      <section v-fade-up class="info-section">
+        <div class="section-header">
+          <h2 class="section-title">Hard Skills</h2>
+          <router-link to="/experiencias" class="section-more" title="Ver todas as skills">
+            <font-awesome-icon :icon="faCircleInfo" />
+            <span>Ver mais</span>
+          </router-link>
+        </div>
 
-  <!-- <HardSkilss> -->
-  <section>
-    <p class="h2 color-secondary">Hard Skills</p>
+        <div class="skills-grid">
+          <div v-for="skill in hardSkills" :key="skill.label" class="skill-pill">
+            <font-awesome-icon :icon="skill.icon" class="skill-icon" />
+            <span>{{ skill.label }}</span>
+          </div>
+        </div>
+      </section>
 
-    <div class="d-flex justify-content-center flex-wrap gap-4">
-      <font-awesome-icon :icon="faVuejs" size="2xl" />
-      <font-awesome-icon :icon="faReact" size="2xl" />
-      <font-awesome-icon :icon="faSquareJs" size="2xl" />
-      <font-awesome-icon :icon="faHtml5" size="2xl" />
-      <font-awesome-icon :icon="faSass" size="2xl" />
-      <font-awesome-icon :icon="faGitAlt" size="2xl" />
-    </div>
-    <div class="d-flex gap-1">
-      <span>veja mais aqui</span>
-      <router-link to="/experiencias">
-        <font-awesome-icon class="icon" :icon="faCircleInfo" size="lg" />
-      </router-link>
-    </div>
-  </section>
-  <!-- </HardSkilss> -->
+      <!-- GitHub repos -->
+      <section v-fade-up class="info-section">
+        <h2 class="section-title">Projetos</h2>
 
-  <!-- <Projetos> -->
-  <section>
-    <p class="h2 color-secondary">Projetos</p>
+        <MyLoading v-if="loading" />
 
-    <MyLoading v-if="loading" />
+        <div v-else-if="error" class="error-banner">
+          <font-awesome-icon :icon="faTriangleExclamation" />
+          <div>
+            <p class="error-code">{{ error.code }}</p>
+            <p class="error-msg">{{ error.message }}</p>
+          </div>
+        </div>
 
-    <div v-else-if="!!error" class="alert alert-danger px-5" role="alert">
-      <span class="d-flex gap-1 align-items-center">
-        <font-awesome-icon class="icon" :icon="faWarning" size="lg" />
-        <p class="h5 alert-heading">
-          {{ error.code }}
-        </p>
-      </span>
-      <p>
-        {{ error.message }}
-      </p>
-    </div>
+        <div v-else class="repos-grid">
+          <a
+            v-for="repo in filteredRepos"
+            :key="repo.id"
+            :href="repo.html_url"
+            target="_blank"
+            class="repo-card">
+            <div class="repo-top">
+              <font-awesome-icon :icon="faBookBookmark" class="repo-book-icon" />
+              <span class="repo-name">{{ repo.name }}</span>
+            </div>
+            <p class="repo-desc">{{ repo.description ?? notInformedText }}</p>
+            <p :data-lang="repo.language" class="repo-lang">
+              {{ repo.language ?? notInformedText }}
+            </p>
+          </a>
+        </div>
 
-    <div v-else class="d-flex flex-wrap text-start justify-content-center w-75 gap-4">
-      <span v-for="repo in filteredRepos" :key="repo.id" class="github-card">
-        <a :href="repo.html_url" class="repo-title" target="_blank">
-          <font-awesome-icon class="book-icon" :icon="faBookBookmark" />
-          {{ repo.name }}
+        <a :href="myGithub.url" target="_blank" class="btn-brand">
+          Ver todos os projetos
         </a>
-        <p class="repo-desc">
-          {{ repo.description ?? notInformedText }}
-        </p>
-        <p :id="repo.language" class="repo-lang">
-          {{ repo.language ?? notInformedText }}
-        </p>
-      </span>
-    </div>
+      </section>
 
-    <a :href="myGithub.url" target="_blank" class="my-btn">Confira todos os meus projetos aqui</a>
-  </section>
-  <!-- </Projetos> -->
+    </div>
+  </div>
 </template>
 
 <style scoped lang="scss">
-  section {
-    display: flex;
-    flex-direction: column;
-
-    padding: 5rem 0;
-
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-
-    gap: 2rem;
+  .about-page {
+    flex: 1;
+    padding: var(--space-16) var(--space-6);
   }
 
-  $vue-clr: #41b883;
-  $ts-clr: #3178c6;
-  $js-clr: #f1e05a;
-  $java-clr: #b07219;
-  $csharp-clr: #178600;
-  $border-clr: #b4bac0;
-  $book-icon-clr: #768390;
-
-  .github-card {
+  .page-container {
+    max-width: var(--container-max);
+    margin-inline: auto;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    gap: var(--space-16);
+  }
 
-    padding: 0.5rem;
-    width: 17rem;
-    height: 8rem;
+  /* ── Section scaffold ──────────────────── */
 
-    border-radius: 8px;
-    border: 1px solid $border-clr;
+  .info-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
 
-    box-shadow: 1px 1px 8px 1px var(--primary);
+  .section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
 
-    line-height: 1.25;
+  .section-more {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    padding-bottom: var(--space-3);
+    width: fit-content;
+    transition: color 150ms ease;
 
-    & p {
-      font-size: 0.8rem;
+    &:hover {
+      color: var(--brand);
+      opacity: 1 !important;
     }
   }
 
-  .repo-title {
-    display: flex;
-    align-items: center;
+  /* ── Info card (experience / education) ─ */
 
-    gap: 0.25rem;
+  .info-card {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-6);
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5) var(--space-6);
+    transition: border-color 200ms ease;
+
+    &:hover {
+      border-color: var(--brand-border);
+    }
+
+    @media (max-width: 640px) {
+      flex-direction: column;
+    }
   }
 
-  .book-icon {
-    color: $book-icon-clr;
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding-top: var(--space-2);
+  }
+
+  .card-company {
+    font-weight: 600;
+    font-size: var(--text-lg);
+    color: var(--text-primary);
+    width: fit-content;
+    transition: color 150ms ease;
+
+    &:hover {
+      color: var(--brand);
+      opacity: 1 !important;
+    }
+  }
+
+  .card-role {
+    font-size: var(--text-base);
+    color: var(--brand);
+    font-weight: 500;
+  }
+
+  .card-date {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+  }
+
+  /* ── Skills grid ───────────────────────── */
+
+  .skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .skill-pill {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    font-weight: 500;
+    transition: border-color 200ms ease, color 200ms ease;
+
+    &:hover {
+      border-color: var(--brand-border);
+      color: var(--brand);
+    }
+  }
+
+  .skill-icon {
+    font-size: 1rem;
+    color: var(--brand);
+  }
+
+  /* ── GitHub repos ──────────────────────── */
+
+  .repos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+    width: 100%;
+
+    @media (max-width: 640px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 400px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .repo-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    width: 100%;
+    transition: border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+
+    &:hover {
+      border-color: var(--brand-border);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-brand);
+      opacity: 1 !important;
+    }
+  }
+
+  .repo-top {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-width: 0;
+  }
+
+  .repo-book-icon {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+
+  .repo-name {
+    font-weight: 600;
+    font-size: var(--text-sm);
+    color: var(--brand);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .repo-desc {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    line-height: 1.5;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .repo-lang {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
     display: flex;
-    gap: 0.2rem;
+    align-items: center;
+    gap: var(--space-2);
 
     &::before {
       content: '●';
+      font-size: 0.6em;
     }
   }
 
-  #Vue {
-    &::before {
-      color: $vue-clr;
-    }
+  /* Language dot colors */
+  $vue-clr: #41b883;
+  $ts-clr:  #3178c6;
+  $js-clr:  #f1e05a;
+  $cs-clr:  #178600;
+
+  [data-lang="Vue"]        { &::before { color: $vue-clr; } }
+  [data-lang="TypeScript"] { &::before { color: $ts-clr; } }
+  [data-lang="JavaScript"] { &::before { color: $js-clr; } }
+  [data-lang="C#"]         { &::before { color: $cs-clr; } }
+
+  /* ── Error banner ──────────────────────── */
+
+  .error-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    background: rgba(227, 179, 65, 0.08);
+    border: 1px solid rgba(227, 179, 65, 0.25);
+    border-radius: var(--radius-md);
+    color: var(--warning);
+    font-size: var(--text-sm);
   }
-  #TypeScript {
-    &::before {
-      color: $ts-clr;
-    }
+
+  .error-code {
+    font-weight: 600;
   }
-  #JavaScript {
-    &::before {
-      color: $js-clr;
-    }
-  }
-  #Java {
-    &::before {
-      color: $java-clr;
-    }
-  }
-  #C\# {
-    &::before {
-      color: $csharp-clr;
-    }
+
+  .error-msg {
+    color: var(--text-secondary);
+    margin-top: var(--space-1);
   }
 </style>
-@/0-Global/assets/utilities/_variables

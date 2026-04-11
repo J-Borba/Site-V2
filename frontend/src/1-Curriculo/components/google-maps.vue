@@ -8,7 +8,7 @@
 
 <template>
   <iframe
-    class="rounded-2 w-75"
+    class="maps-frame"
     :src="src"
     width="400"
     height="200"
@@ -17,4 +17,10 @@
     referrerpolicy="no-referrer-when-downgrade" />
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+  .maps-frame {
+    border-radius: var(--radius-md);
+    width: min(100%, 560px);
+    max-width: 100%;
+  }
+</style>

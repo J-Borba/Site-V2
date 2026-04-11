@@ -1,16 +1,11 @@
 import { RouteRecordRaw, createRouter, createWebHistory } from 'vue-router';
-import HomeView from '@/1-Curriculo/views/home-view.vue';
-import ExperienciaView from '@/1-Curriculo/views/experiencia-view.vue';
-import CertificadosView from '@/1-Curriculo/views/certificados-view.vue';
-import AboutMeView from '@/1-Curriculo/views/about-me-view.vue';
-import NotFoundView from '@/0-Global/views/not-found-view.vue';
 
 const routes: RouteRecordRaw[] = [
-  { path: '/', component: HomeView },
-  { path: '/experiencias', component: ExperienciaView },
-  { path: '/certificados', component: CertificadosView },
-  { path: '/about-me', component: AboutMeView },
-  { path: '/:catchAll(.*)', component: NotFoundView },
+  { path: '/', component: () => import('@/1-Curriculo/views/home-view.vue') },
+  { path: '/experiencias', component: () => import('@/1-Curriculo/views/experiencia-view.vue') },
+  { path: '/certificados', component: () => import('@/1-Curriculo/views/certificados-view.vue') },
+  { path: '/about-me', component: () => import('@/1-Curriculo/views/about-me-view.vue') },
+  { path: '/:catchAll(.*)', component: () => import('@/0-Global/views/not-found-view.vue') },
 ];
 
 const router = createRouter({
