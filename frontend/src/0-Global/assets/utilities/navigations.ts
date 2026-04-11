@@ -1,6 +1,7 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faFileContract } from '@fortawesome/free-solid-svg-icons/faFileContract';
 import { faUserGraduate } from '@fortawesome/free-solid-svg-icons/faUserGraduate';
+import { faIdCard } from '@fortawesome/free-regular-svg-icons/faIdCard';
 
 interface iNavigation {
   title: string;
@@ -11,12 +12,17 @@ interface iNavigation {
 export const Navigations: iNavigation[] = [
   {
     title: 'Certificados',
-    rota: 'certificados',
+    rota: '/certificados',
     icon: faUserGraduate,
   },
   {
     title: 'Experiências',
-    rota: 'experiencias',
+    rota: '/experiencias',
     icon: faFileContract,
+  },
+  {
+    title: 'Sobre mim',
+    rota: '/about-me',
+    icon: faIdCard,
   },
 ];
