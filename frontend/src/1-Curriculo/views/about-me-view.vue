@@ -2,7 +2,6 @@
   import { Ref, computed, onMounted, ref } from 'vue';
   import { AxiosError } from 'axios';
   import { faBookBookmark, faCircleInfo, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
-  import { faGitAlt, faHtml5, faReact, faSass, faSquareJs, faVuejs } from '@fortawesome/free-brands-svg-icons';
   import { githubApi } from '@/0-Global/services/api.js';
   import MyLoading from '@/0-Global/components/my-loading.vue';
   import GoogleMaps from '../components/google-maps.vue';
@@ -44,21 +43,13 @@
     return repos.value.filter((repo) => repo.name !== 'J-Borba').slice(0, 6);
   });
 
-  const hardSkills = [
-    { icon: faVuejs,    label: 'Vue.js' },
-    { icon: faReact,    label: 'React' },
-    { icon: faSquareJs, label: 'JavaScript' },
-    { icon: faHtml5,    label: 'HTML5' },
-    { icon: faSass,     label: 'Sass' },
-    { icon: faGitAlt,   label: 'Git' },
-  ];
 </script>
 
 <template>
   <div class="about-page">
     <div class="page-container">
 
-      <!-- Experience -->
+      <!-- Experiência -->
       <section v-fade-up class="info-section">
         <div class="section-header">
           <h2 class="section-title">Última Experiência</h2>
@@ -79,7 +70,7 @@
         </div>
       </section>
 
-      <!-- Education -->
+      <!-- Formação -->
       <section v-fade-up class="info-section">
         <h2 class="section-title">Formação Acadêmica</h2>
 
@@ -94,25 +85,8 @@
         </div>
       </section>
 
-      <!-- Hard Skills -->
-      <section v-fade-up class="info-section">
-        <div class="section-header">
-          <h2 class="section-title">Hard Skills</h2>
-          <router-link to="/experiencias" class="section-more" title="Ver todas as skills">
-            <font-awesome-icon :icon="faCircleInfo" />
-            <span>Ver mais</span>
-          </router-link>
-        </div>
 
-        <div class="skills-grid">
-          <div v-for="skill in hardSkills" :key="skill.label" class="skill-pill">
-            <font-awesome-icon :icon="skill.icon" class="skill-icon" />
-            <span>{{ skill.label }}</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- GitHub repos -->
+      <!-- Projetos -->
       <section v-fade-up class="info-section">
         <h2 class="section-title">Projetos</h2>
 
@@ -167,7 +141,7 @@
     gap: var(--space-16);
   }
 
-  /* ── Section scaffold ──────────────────── */
+  /* Section base */
 
   .info-section {
     display: flex;
@@ -198,7 +172,7 @@
     }
   }
 
-  /* ── Info card (experience / education) ─ */
+  /* Info card */
 
   .info-card {
     display: flex;
@@ -250,39 +224,7 @@
     color: var(--text-secondary);
   }
 
-  /* ── Skills grid ───────────────────────── */
-
-  .skills-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-  }
-
-  .skill-pill {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-2) var(--space-4);
-    background: var(--bg-surface);
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    font-size: var(--text-sm);
-    color: var(--text-secondary);
-    font-weight: 500;
-    transition: border-color 200ms ease, color 200ms ease;
-
-    &:hover {
-      border-color: var(--brand-border);
-      color: var(--brand);
-    }
-  }
-
-  .skill-icon {
-    font-size: 1rem;
-    color: var(--brand);
-  }
-
-  /* ── GitHub repos ──────────────────────── */
+  /* GitHub repos */
 
   .repos-grid {
     display: grid;
@@ -375,7 +317,7 @@
   [data-lang="JavaScript"] { &::before { color: $js-clr; } }
   [data-lang="C#"]         { &::before { color: $cs-clr; } }
 
-  /* ── Error banner ──────────────────────── */
+  /* Error banner */
 
   .error-banner {
     display: flex;

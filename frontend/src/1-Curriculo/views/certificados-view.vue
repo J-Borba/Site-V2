@@ -93,7 +93,7 @@
     gap: var(--space-12);
   }
 
-  /* ── Companies grid ────────────────────── */
+  /* Companies grid */
 
   .companies-grid {
     display: grid;
@@ -138,7 +138,7 @@
     color: var(--text-primary);
   }
 
-  /* ── Degrees & certs ───────────────────── */
+  /* Degrees & certs */
 
   .degrees-list {
     display: flex;

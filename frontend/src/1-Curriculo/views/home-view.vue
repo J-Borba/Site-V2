@@ -183,7 +183,7 @@
     }
   }
 
-  /* ── Profile image ─────────────────────── */
+  /* Profile image */
 
   .hero-image-wrap {
     display: flex;

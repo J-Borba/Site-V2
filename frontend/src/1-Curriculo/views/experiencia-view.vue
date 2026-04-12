@@ -100,7 +100,7 @@
     gap: var(--space-12);
   }
 
-  /* ── Timeline ──────────────────────────── */
+  /* Timeline */
 
   .timeline {
     display: flex;
@@ -159,7 +159,7 @@
     flex-shrink: 0;
   }
 
-  /* ── Job card ──────────────────────────── */
+  /* Job card */
 
   .job-card {
     background: var(--bg-surface);
@@ -236,7 +236,7 @@
     }
   }
 
-  /* ── Skill tags ────────────────────────── */
+  /* Skill tags */
 
   .skill-tags {
     display: flex;
@@ -255,7 +255,7 @@
     letter-spacing: 0.02em;
   }
 
-  /* ── Previous roles accordion ──────────── */
+  /* Previous roles accordion */
 
   .prev-roles-toggle {
     grid-column: 2;
@@ -327,7 +327,7 @@
     }
   }
 
-  /* ── Accordion transition ──────────────── */
+  /* Accordion transition */
 
   .accordion-enter-active,
   .accordion-leave-active {
