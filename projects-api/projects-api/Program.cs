@@ -1,6 +1,7 @@
 using projects_api.Common.Configurations;
 using projects_api.Data.Contexts;
 using projects_api.Data.Models;
+using projects_api.Data.Seeders;
 using projects_api.Endpoints;
 using Microsoft.AspNetCore.Identity;
 
@@ -8,7 +9,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddContextDependencies(builder.Configuration, out var appSettings)
                 .AddDependencies()
-                .AddJwt(appSettings)
                 .AddOpenApiConfigs();
 
 builder.Services.AddIdentity<User, IdentityRole>(options =>
@@ -22,6 +22,8 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
                 })
                 .AddEntityFrameworkStores<ApiDbContext>()
                 .AddDefaultTokenProviders();
+
+builder.Services.AddJwt(appSettings);
 
 builder.Services.AddAutoMapper(cfg => cfg.AddMaps(AppDomain.CurrentDomain.GetAssemblies()));
 builder.Services.AddCors(options =>
@@ -40,6 +42,9 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+    await SuperAdminSeeder.SeedAsync(scope.ServiceProvider);
 
 app.UseOpenApiConfigs();
 app.UseCors();

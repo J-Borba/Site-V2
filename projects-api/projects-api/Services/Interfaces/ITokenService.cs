@@ -4,5 +4,5 @@ namespace projects_api.Services.Interfaces;
 
 public interface ITokenService
 {
-    string GenerateToken(User user);
+    string GenerateToken(User user, IList<string> roles);
 }

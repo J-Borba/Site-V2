@@ -8,4 +8,6 @@ public class AppSettings
 public class SecretsSettings
 {
     public string SymmetricSecurityKey { get; set; } = string.Empty;
+    public string SuperAdminEmail { get; set; } = string.Empty;
+    public string SuperAdminPassword { get; set; } = string.Empty;
 }

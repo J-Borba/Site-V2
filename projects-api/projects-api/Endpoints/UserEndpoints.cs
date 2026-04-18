@@ -14,8 +14,9 @@ public static class UserEndpoints
         group.MapGet("/", GetUsers)
             .RequireAuthorization("SuperAdmin")
             .Produces<IEnumerable<ReadUserDto>>()
-            .Produces(StatusCodes.Status404NotFound)
-            .Produces(StatusCodes.Status403Forbidden);
+            .Produces(StatusCodes.Status401Unauthorized)
+            .Produces(StatusCodes.Status403Forbidden)
+            .Produces(StatusCodes.Status404NotFound);
 
         group.MapPost("/register", Register)
             .Produces(StatusCodes.Status200OK)

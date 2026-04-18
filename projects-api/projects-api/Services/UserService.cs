@@ -4,12 +4,14 @@ using projects_api.Data.Models;
 using projects_api.Data.Repositories.Interfaces;
 using projects_api.Services.Interfaces;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 
 namespace projects_api.Services;
 
 public class UserService(IUserRepository repository,
                          IMapper mapper,
-                         ITokenService tokenService) : IUserService
+                         ITokenService tokenService,
+                         UserManager<User> userManager) : IUserService
 {
     public async Task<IEnumerable<ReadUserDto>> GetUsersAsync() =>
         mapper.Map<IEnumerable<ReadUserDto>>(await repository.GetAllAsync());
@@ -45,7 +47,8 @@ public class UserService(IUserRepository repository,
             return (validation, string.Empty);
         }
 
-        return (validation, tokenService.GenerateToken(user));
+        var roles = await userManager.GetRolesAsync(user);
+        return (validation, tokenService.GenerateToken(user, roles));
     }
 
     public async Task<ValidationResult> UpdateCurrentUserAsync(UpdateUserDto dto, string currentUserEmail)

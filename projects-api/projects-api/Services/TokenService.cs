@@ -10,15 +10,16 @@ namespace projects_api.Services;
 
 public class TokenService(AppSettings appSettings) : ITokenService
 {
-    public string GenerateToken(User user)
+    public string GenerateToken(User user, IList<string> roles)
     {
-        var claims = new[]
+        var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.NameIdentifier, user.Id),
-            new Claim(ClaimTypes.Name, user.UserName!),
-            new Claim(ClaimTypes.Email, user.Email!),
-            new Claim(ClaimTypes.Role, "User")
+            new(ClaimTypes.NameIdentifier, user.Id),
+            new(ClaimTypes.Name, user.UserName!),
+            new(ClaimTypes.Email, user.Email!)
         };
+
+        claims.AddRange(roles.Select(r => new Claim(ClaimTypes.Role, r)));
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSettings.Secrets.SymmetricSecurityKey));
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
