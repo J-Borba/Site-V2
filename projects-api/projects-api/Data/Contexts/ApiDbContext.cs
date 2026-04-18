@@ -6,4 +6,5 @@ namespace projects_api.Data.Contexts;
 
 public class ApiDbContext(DbContextOptions<ApiDbContext> options) : IdentityDbContext<User>(options)
 {
+    public DbSet<RefreshToken> DbRefreshTokens { get; set; }
 }

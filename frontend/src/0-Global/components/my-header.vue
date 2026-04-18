@@ -1,9 +1,12 @@
 <script setup lang="ts">
   import { ref, onMounted, onUnmounted } from 'vue';
   import { RouterLink } from 'vue-router';
-  import { faBars, faXmark } from '@fortawesome/free-solid-svg-icons';
+  import { faBars, faXmark, faRightToBracket, faUser } from '@fortawesome/free-solid-svg-icons';
   import { Navigations } from '@/0-Global/assets/utilities/navigations';
+  import { useAuthStore } from '@/2-Auth/store/auth-store';
   import logo from '@/0-Global/assets/images/logo.png';
+
+  const authStore = useAuthStore();
 
   const mobileOpen = ref(false);
   const scrolled = ref(false);
@@ -11,13 +14,16 @@
   function toggleMobile() {
     mobileOpen.value = !mobileOpen.value;
   }
+
   function closeMobile() {
     mobileOpen.value = false;
   }
 
   function onScroll() {
     const next = window.scrollY > 8;
-    if (next !== scrolled.value) scrolled.value = next;
+    if (next !== scrolled.value) {
+      scrolled.value = next;
+    }
   }
 
   onMounted(() => window.addEventListener('scroll', onScroll, { passive: true }));
@@ -31,37 +37,27 @@
         <img :src="logo" alt="João Borba" />
       </RouterLink>
 
-      <nav class="nav-links" aria-label="Navegação principal">
-        <RouterLink
-          v-for="nav in Navigations"
-          :key="nav.rota"
-          :to="nav.rota"
-          class="nav-link">
+      <nav class="nav-menu" :class="{ open: mobileOpen }" aria-label="Navegação principal">
+        <RouterLink v-for="nav in Navigations" :key="nav.rota" :to="nav.rota" class="nav-item" @click="closeMobile">
           <font-awesome-icon :icon="nav.icon" />
           <span>{{ nav.title }}</span>
         </RouterLink>
+
+        <RouterLink v-if="authStore.isLoggedIn" to="/profile" class="nav-item nav-item--auth" @click="closeMobile">
+          <font-awesome-icon :icon="faUser" />
+          <span>{{ authStore.user?.userName }}</span>
+        </RouterLink>
+
+        <RouterLink v-else to="/login" class="nav-item" @click="closeMobile">
+          <font-awesome-icon :icon="faRightToBracket" />
+          <span>Login</span>
+        </RouterLink>
       </nav>
 
-      <button
-        class="nav-toggle"
-        @click="toggleMobile"
-        :aria-expanded="mobileOpen"
-        aria-label="Menu">
+      <button class="nav-toggle" @click="toggleMobile" :aria-expanded="mobileOpen" aria-label="Menu">
         <font-awesome-icon :icon="mobileOpen ? faXmark : faBars" />
       </button>
     </div>
-
-    <nav class="nav-mobile" :class="{ open: mobileOpen }" aria-label="Menu mobile">
-      <RouterLink
-        v-for="nav in Navigations"
-        :key="nav.rota"
-        :to="nav.rota"
-        class="nav-mobile-link"
-        @click="closeMobile">
-        <font-awesome-icon :icon="nav.icon" />
-        <span>{{ nav.title }}</span>
-      </RouterLink>
-    </nav>
   </header>
 </template>
 
@@ -73,7 +69,9 @@
     top: 0;
     z-index: 100;
     border-bottom: 1px solid transparent;
-    transition: background 200ms ease, border-color 200ms ease;
+    transition:
+      background 200ms ease,
+      border-color 200ms ease;
 
     &.scrolled {
       background: rgba(13, 17, 23, 0.82);
@@ -107,17 +105,38 @@
     }
   }
 
-  .nav-links {
+  .nav-menu {
     display: flex;
     align-items: center;
     gap: var(--space-6);
 
     @media (max-width: bp.$bp-md) {
-      display: none;
+      position: absolute;
+      top: var(--nav-height);
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--space-1);
+      padding: 0 var(--space-4);
+      background: var(--bg-surface);
+      border-bottom: 1px solid transparent;
+      max-height: 0;
+      overflow: hidden;
+      transition:
+        max-height 300ms ease,
+        padding 300ms ease,
+        border-color 300ms ease;
+
+      &.open {
+        max-height: 400px;
+        padding: var(--space-4);
+        border-bottom-color: var(--border);
+      }
     }
   }
 
-  .nav-link {
+  .nav-item {
     display: flex;
     align-items: center;
     gap: var(--space-2);
@@ -126,7 +145,10 @@
     font-weight: 500;
     padding-bottom: 3px;
     border-bottom: 2px solid transparent;
-    transition: color 150ms ease, border-color 150ms ease;
+    transition:
+      color 150ms ease,
+      border-color 150ms ease,
+      background 150ms ease;
     width: fit-content;
 
     svg {
@@ -141,6 +163,28 @@
     &.router-link-exact-active {
       color: var(--brand) !important;
       border-bottom-color: var(--brand);
+    }
+
+    &--auth {
+      color: var(--brand);
+    }
+
+    @media (max-width: bp.$bp-md) {
+      font-size: var(--text-base);
+      padding: var(--space-3) var(--space-2);
+      border-bottom: none;
+      border-radius: var(--radius-sm);
+      min-height: 44px;
+      width: 100%;
+      gap: var(--space-3);
+
+      &:hover,
+      &.router-link-exact-active {
+        color: var(--brand);
+        background: var(--brand-dim);
+        border-bottom-color: transparent;
+        opacity: 1 !important;
+      }
     }
   }
 
@@ -162,49 +206,6 @@
 
     @media (max-width: bp.$bp-md) {
       display: flex;
-    }
-  }
-
-  .nav-mobile {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
-    overflow: hidden;
-    max-height: 0;
-    padding: 0 var(--space-4);
-    background: var(--bg-surface);
-    border-bottom: 1px solid transparent;
-    transition: max-height 300ms ease, padding 300ms ease, border-color 300ms ease;
-
-    &.open {
-      max-height: 400px;
-      padding: var(--space-4);
-      border-bottom-color: var(--border);
-    }
-
-    @media (min-width: bp.$bp-md) {
-      display: none;
-    }
-  }
-
-  .nav-mobile-link {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    color: var(--text-secondary);
-    font-size: var(--text-base);
-    font-weight: 500;
-    padding: var(--space-3) var(--space-2);
-    border-radius: var(--radius-sm);
-    min-height: 44px;
-    transition: color 150ms ease, background 150ms ease;
-    width: 100%;
-
-    &:hover,
-    &.router-link-exact-active {
-      color: var(--brand);
-      background: var(--brand-dim);
-      opacity: 1 !important;
     }
   }
 </style>

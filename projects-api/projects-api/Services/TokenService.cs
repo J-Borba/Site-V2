@@ -4,13 +4,14 @@ using projects_api.Services.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace projects_api.Services;
 
 public class TokenService(AppSettings appSettings) : ITokenService
 {
-    public string GenerateToken(User user, IList<string> roles)
+    public string GenerateAccessToken(User user, IList<string> roles)
     {
         var claims = new List<Claim>
         {
@@ -25,11 +26,28 @@ public class TokenService(AppSettings appSettings) : ITokenService
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
-            expires: DateTime.UtcNow.AddHours(1),
+            issuer: appSettings.Secrets.JwtIssuer,
+            audience: appSettings.Secrets.JwtAudience,
+            expires: DateTime.UtcNow.AddMinutes(15),
             claims: claims,
             signingCredentials: credentials
         );
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
+
+    public (string RawToken, RefreshToken Entity) GenerateRefreshToken(string userId)
+    {
+        var rawToken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
+        var entity = new RefreshToken
+        {
+            TokenHash = HashToken(rawToken),
+            UserId = userId,
+            ExpiresAt = DateTimeOffset.UtcNow.AddDays(7)
+        };
+        return (rawToken, entity);
+    }
+
+    public string HashToken(string rawToken) =>
+        Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(rawToken)));
 }

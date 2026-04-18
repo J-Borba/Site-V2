@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 namespace projects_api.Services;
 
 public class UserService(IUserRepository repository,
+                         IRefreshTokenRepository refreshTokenRepository,
                          IMapper mapper,
                          ITokenService tokenService,
                          UserManager<User> userManager) : IUserService
@@ -28,27 +29,74 @@ public class UserService(IUserRepository repository,
         return validation;
     }
 
-    public async Task<(ValidationResult, string)> LoginAsync(LoginUserDto dto)
+    public async Task<LoginResponseDto> LoginAsync(LoginUserDto dto)
     {
-        var validation = new ValidationResult();
-        const string errorMsg = "Invalid credentials.";
+        var response = new LoginResponseDto();
+        const string errorMsg = "Não foi possível validar as credenciais fornecidas.";
 
         var user = await repository.GetByEmailAsync(dto.Email);
         if (user is null)
         {
-            validation.AddError(errorMsg);
-            return (validation, string.Empty);
+            response.Validation.AddError(errorMsg);
+            return response;
         }
 
         var result = await repository.LoginAsync(user, dto.Password);
         if (!result.Succeeded)
         {
-            validation.AddError(errorMsg);
-            return (validation, string.Empty);
+            response.Validation.AddError(errorMsg);
+            return response;
         }
 
         var roles = await userManager.GetRolesAsync(user);
-        return (validation, tokenService.GenerateToken(user, roles));
+        var (rawRefreshToken, refreshEntity) = tokenService.GenerateRefreshToken(user.Id);
+        await refreshTokenRepository.CreateAsync(refreshEntity);
+
+        response.AccessToken = tokenService.GenerateAccessToken(user, roles);
+        response.RefreshToken = rawRefreshToken;
+        response.UserName = user.UserName!;
+        response.Email = user.Email!;
+        response.Roles = roles;
+
+        return response;
+    }
+
+    public async Task<LoginResponseDto> RefreshAsync(string rawToken)
+    {
+        var response = new LoginResponseDto();
+        const string errorMsg = "Token inválido ou expirado.";
+
+        var tokenHash = tokenService.HashToken(rawToken);
+        var stored = await refreshTokenRepository.GetByHashAsync(tokenHash);
+
+        if (stored is null || stored.IsRevoked || stored.ExpiresAt < DateTimeOffset.UtcNow)
+        {
+            response.Validation.AddError(errorMsg);
+            return response;
+        }
+
+        await refreshTokenRepository.RevokeAsync(stored);
+
+        var roles = await userManager.GetRolesAsync(stored.User);
+        var (newRawToken, newEntity) = tokenService.GenerateRefreshToken(stored.UserId);
+        await refreshTokenRepository.CreateAsync(newEntity);
+
+        response.AccessToken = tokenService.GenerateAccessToken(stored.User, roles);
+        response.RefreshToken = newRawToken;
+        response.UserName = stored.User.UserName!;
+        response.Email = stored.User.Email!;
+        response.Roles = roles;
+
+        return response;
+    }
+
+    public async Task LogoutAsync(string rawToken)
+    {
+        var tokenHash = tokenService.HashToken(rawToken);
+        var stored = await refreshTokenRepository.GetByHashAsync(tokenHash);
+
+        if (stored is not null && !stored.IsRevoked)
+            await refreshTokenRepository.RevokeAsync(stored);
     }
 
     public async Task<ValidationResult> UpdateCurrentUserAsync(UpdateUserDto dto, string currentUserEmail)

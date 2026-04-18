@@ -9,9 +9,13 @@ public static class DIConfig
 {
     public static IServiceCollection AddDependencies(this IServiceCollection services)
     {
+        services.AddHttpContextAccessor();
+
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<ICurrentUserService, CurrentUserService>();
 
         return services;
     }

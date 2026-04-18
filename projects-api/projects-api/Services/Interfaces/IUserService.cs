@@ -7,6 +7,8 @@ public interface IUserService
 {
     Task<IEnumerable<ReadUserDto>> GetUsersAsync();
     Task<ValidationResult> CreateUserAsync(CreateUserDto dto);
-    Task<(ValidationResult, string)> LoginAsync(LoginUserDto dto);
+    Task<LoginResponseDto> LoginAsync(LoginUserDto dto);
+    Task<LoginResponseDto> RefreshAsync(string rawToken);
+    Task LogoutAsync(string rawToken);
     Task<ValidationResult> UpdateCurrentUserAsync(UpdateUserDto dto, string currentUserEmail);
 }
