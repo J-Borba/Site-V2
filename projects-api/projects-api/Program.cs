@@ -6,24 +6,22 @@ using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services
-    .AddContextDependencies(builder.Configuration, out var appSettings)
-    .AddDependencies()
-    .AddJwt(appSettings)
-    .AddOpenApiConfigs();
+builder.Services.AddContextDependencies(builder.Configuration, out var appSettings)
+                .AddDependencies()
+                .AddJwt(appSettings)
+                .AddOpenApiConfigs();
 
-builder.Services
-    .AddIdentity<User, IdentityRole>(options =>
-    {
-        options.User.RequireUniqueEmail = true;
-        options.Password.RequireDigit = true;
-        options.Password.RequireLowercase = true;
-        options.Password.RequireUppercase = false;
-        options.Password.RequireNonAlphanumeric = false;
-        options.Password.RequiredLength = 8;
-    })
-    .AddEntityFrameworkStores<ApiDbContext>()
-    .AddDefaultTokenProviders();
+builder.Services.AddIdentity<User, IdentityRole>(options =>
+                {
+                    options.User.RequireUniqueEmail = true;
+                    options.Password.RequireDigit = true;
+                    options.Password.RequireLowercase = true;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequiredLength = 8;
+                })
+                .AddEntityFrameworkStores<ApiDbContext>()
+                .AddDefaultTokenProviders();
 
 builder.Services.AddAutoMapper(cfg => cfg.AddMaps(AppDomain.CurrentDomain.GetAssemblies()));
 builder.Services.AddCors(options =>

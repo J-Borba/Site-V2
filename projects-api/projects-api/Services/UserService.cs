@@ -7,7 +7,9 @@ using AutoMapper;
 
 namespace projects_api.Services;
 
-public class UserService(IUserRepository repository, IMapper mapper, ITokenService tokenService) : IUserService
+public class UserService(IUserRepository repository,
+                         IMapper mapper,
+                         ITokenService tokenService) : IUserService
 {
     public async Task<IEnumerable<ReadUserDto>> GetUsersAsync() =>
         mapper.Map<IEnumerable<ReadUserDto>>(await repository.GetAllAsync());
