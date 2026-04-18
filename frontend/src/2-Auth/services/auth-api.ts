@@ -28,7 +28,7 @@ api.interceptors.response.use(
     if (isRefreshing) {
       return new Promise((resolve, reject) => {
         pendingQueue.push({
-          resolve: () => resolve(api({ ...originalConfig, _retry: true })),
+          resolve: () => resolve(api({ ...(originalConfig as AxiosRequestConfig & { _retry?: boolean }) })),
           reject,
         });
       });
