@@ -16,7 +16,6 @@
         <p class="footer-big-name">João Victor</p>
         <p class="footer-big-name footer-big-name--accent">Borba</p>
         <p class="footer-role">Desenvolvedor .NET · Vue.js</p>
-        <p class="footer-copy">&copy; {{ new Date().getFullYear() }} · joaoborba.com</p>
       </div>
 
       <div class="footer-links">
@@ -32,19 +31,31 @@
       <div class="footer-social">
         <p class="footer-col-title">Contato</p>
         <div class="social-list">
-          <a href="https://www.linkedin.com/in/joao-borba27/" target="_blank" aria-label="LinkedIn">
+          <a
+            href="https://www.linkedin.com/in/joao-borba27/"
+            target="_blank"
+            aria-label="LinkedIn"
+            class="social-link social-link--linkedin">
             <font-awesome-icon :icon="faLinkedin" />
             <span>LinkedIn</span>
           </a>
-          <a href="https://github.com/J-Borba" target="_blank" aria-label="GitHub">
+          <a
+            href="https://github.com/J-Borba"
+            target="_blank"
+            aria-label="GitHub"
+            class="social-link social-link--github">
             <font-awesome-icon :icon="faGithub" />
             <span>GitHub</span>
           </a>
-          <a href="mailto:jvfborba+contato@gmail.com" aria-label="Email">
+          <a href="mailto:jvfborba+contato@gmail.com" aria-label="Email" class="social-link social-link--email">
             <font-awesome-icon :icon="faEnvelope" />
             <span>jvfborba+contato@gmail.com</span>
           </a>
-          <a href="https://wa.me/+5521981920082" target="_blank" aria-label="WhatsApp">
+          <a
+            href="https://wa.me/+5521981920082"
+            target="_blank"
+            aria-label="WhatsApp"
+            class="social-link social-link--whatsapp">
             <font-awesome-icon :icon="faWhatsapp" />
             <span>WhatsApp</span>
           </a>
@@ -53,6 +64,7 @@
     </div>
 
     <div class="footer-bottom">
+      <p class="footer-copy">&copy; {{ new Date().getFullYear() }} João Victor Borba</p>
       <button class="back-to-top" @click="scrollToTop" aria-label="Voltar ao início">
         <font-awesome-icon :icon="faArrowUp" />
         <span>Voltar ao início</span>
@@ -96,8 +108,6 @@
     }
   }
 
-  /* Brand column */
-
   .footer-brand {
     display: flex;
     flex-direction: column;
@@ -126,14 +136,6 @@
     margin-top: var(--space-2);
   }
 
-  .footer-copy {
-    font-size: var(--text-xs);
-    color: var(--text-muted);
-    margin-top: var(--space-2);
-  }
-
-  /* Columns */
-
   .footer-col-title {
     font-family: 'Space Mono', monospace;
     font-size: var(--text-xs);
@@ -155,7 +157,6 @@
       width: fit-content;
       transition: color 150ms ease;
       position: relative;
-      padding-left: 0;
 
       &::before {
         content: '';
@@ -184,27 +185,56 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
+  }
 
-    a {
-      display: flex;
-      align-items: center;
-      gap: var(--space-3);
-      font-size: var(--text-sm);
-      color: var(--text-secondary);
-      width: fit-content;
-      transition: color 150ms ease, transform 150ms ease;
+  .social-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    width: fit-content;
+    transition:
+      color 150ms ease,
+      transform 150ms ease;
+    opacity: 1 !important;
 
+    svg {
+      font-size: 1rem;
+      flex-shrink: 0;
+      transition: color 150ms ease;
+      color: var(--text-muted);
+    }
+
+    &:hover {
+      transform: translateX(3px);
+    }
+
+    &--linkedin:hover {
+      color: #0077b5;
       svg {
-        font-size: 1rem;
-        color: var(--brand);
-        flex-shrink: 0;
-        transition: color 150ms ease;
+        color: #0077b5;
       }
+    }
 
-      &:hover {
+    &--github:hover {
+      color: var(--text-primary);
+      svg {
+        color: var(--text-primary);
+      }
+    }
+
+    &--email:hover {
+      color: var(--brand);
+      svg {
         color: var(--brand);
-        transform: translateX(3px);
-        opacity: 1 !important;
+      }
+    }
+
+    &--whatsapp:hover {
+      color: var(--bg-whatsapp-top);
+      svg {
+        color: var(--bg-whatsapp-top);
       }
     }
   }
@@ -214,7 +244,14 @@
     margin-inline: auto;
     padding-top: var(--space-6);
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-copy {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    font-family: 'Space Mono', monospace;
   }
 
   .back-to-top {
@@ -227,7 +264,10 @@
     padding: var(--space-2) var(--space-3);
     border-radius: var(--radius-sm);
     border: 1px solid transparent;
-    transition: color 150ms ease, background 150ms ease, border-color 150ms ease;
+    transition:
+      color 150ms ease,
+      background 150ms ease,
+      border-color 150ms ease;
     min-height: 44px;
     letter-spacing: 0.04em;
 

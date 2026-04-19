@@ -37,7 +37,7 @@
       <div class="auth-grid"></div>
     </div>
 
-    <div class="auth-card">
+    <div class="auth-card" v-fade-up>
       <div class="auth-terminal-bar">
         <span class="terminal-dot terminal-dot--red"></span>
         <span class="terminal-dot terminal-dot--yellow"></span>

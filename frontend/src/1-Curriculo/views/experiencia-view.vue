@@ -21,7 +21,7 @@
         <h1 class="section-title">Experiências<br />Profissionais</h1>
       </div>
 
-      <div class="timeline">
+      <div class="timeline" v-fade-up>
         <div
           v-for="(job, index) in Jobs"
           :key="index"
@@ -105,8 +105,6 @@
     gap: var(--space-12);
   }
 
-  /* Page header with oversized number */
-
   .page-header {
     position: relative;
   }
@@ -124,8 +122,6 @@
     user-select: none;
     letter-spacing: -0.05em;
   }
-
-  /* Timeline */
 
   .timeline {
     display: flex;
@@ -183,8 +179,6 @@
     background: linear-gradient(to bottom, var(--brand-border), transparent);
     min-height: 3rem;
   }
-
-  /* Job card */
 
   .job-card {
     background: var(--bg-surface);
@@ -273,8 +267,6 @@
     }
   }
 
-  /* Skill tags */
-
   .skill-tags {
     display: flex;
     flex-wrap: wrap;
@@ -292,8 +284,6 @@
     font-weight: 400;
     letter-spacing: 0.04em;
   }
-
-  /* Previous roles accordion */
 
   .prev-roles-toggle {
     grid-column: 2;
@@ -367,8 +357,6 @@
       flex-wrap: wrap;
     }
   }
-
-  /* Accordion transition */
 
   .accordion-enter-active,
   .accordion-leave-active {

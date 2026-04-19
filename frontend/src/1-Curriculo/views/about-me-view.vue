@@ -1,7 +1,12 @@
 <script setup lang="ts">
   import { Ref, computed, onMounted, ref } from 'vue';
   import { AxiosError } from 'axios';
-  import { faBookBookmark, faCircleInfo, faTriangleExclamation, faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
+  import {
+    faBookBookmark,
+    faCircleInfo,
+    faTriangleExclamation,
+    faArrowUpRightFromSquare,
+  } from '@fortawesome/free-solid-svg-icons';
   import { githubApi } from '@/0-Global/services/api.js';
   import MyLoading from '@/0-Global/components/my-loading.vue';
   import GoogleMaps from '../components/google-maps.vue';
@@ -52,7 +57,6 @@
         <h1 class="section-title">Sobre Mim</h1>
       </div>
 
-      <!-- Experiência -->
       <section v-fade-up class="info-section">
         <div class="section-header">
           <h2 class="section-subtitle">Última Experiência</h2>
@@ -73,7 +77,6 @@
         </div>
       </section>
 
-      <!-- Formação -->
       <section v-fade-up class="info-section">
         <h2 class="section-subtitle">Formação Acadêmica</h2>
 
@@ -88,7 +91,6 @@
         </div>
       </section>
 
-      <!-- Projetos -->
       <section v-fade-up class="info-section">
         <h2 class="section-subtitle">Projetos</h2>
 
@@ -103,12 +105,7 @@
         </div>
 
         <div v-else class="repos-grid">
-          <a
-            v-for="repo in filteredRepos"
-            :key="repo.id"
-            :href="repo.html_url"
-            target="_blank"
-            class="repo-card">
+          <a v-for="repo in filteredRepos" :key="repo.id" :href="repo.html_url" target="_blank" class="repo-card">
             <div class="repo-top">
               <font-awesome-icon :icon="faBookBookmark" class="repo-book-icon" />
               <span class="repo-name">{{ repo.name }}</span>
@@ -121,9 +118,7 @@
           </a>
         </div>
 
-        <a :href="myGithub.url" target="_blank" class="btn-brand">
-          Ver todos os projetos
-        </a>
+        <a :href="myGithub.url" target="_blank" class="btn-brand"> Ver todos os projetos </a>
       </section>
     </div>
   </div>
@@ -143,8 +138,6 @@
     gap: var(--space-16);
   }
 
-  /* Page header */
-
   .page-header {
     position: relative;
   }
@@ -162,8 +155,6 @@
     user-select: none;
     letter-spacing: -0.05em;
   }
-
-  /* Section base */
 
   .info-section {
     display: flex;
@@ -202,8 +193,6 @@
     }
   }
 
-  /* Info card */
-
   .info-card {
     display: flex;
     align-items: flex-start;
@@ -212,7 +201,9 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     padding: var(--space-5) var(--space-6);
-    transition: border-color 220ms ease, box-shadow 220ms ease;
+    transition:
+      border-color 220ms ease,
+      box-shadow 220ms ease;
 
     &:hover {
       border-color: var(--brand-border);
@@ -258,8 +249,6 @@
     letter-spacing: 0.04em;
   }
 
-  /* GitHub repos */
-
   .repos-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -284,7 +273,10 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     width: 100%;
-    transition: border-color 220ms ease, transform 220ms ease, box-shadow 220ms ease;
+    transition:
+      border-color 220ms ease,
+      transform 220ms ease,
+      box-shadow 220ms ease;
 
     .repo-ext-icon {
       opacity: 0;
@@ -360,18 +352,31 @@
     }
   }
 
-  /* Language dot colors */
   $vue-clr: #41b883;
-  $ts-clr:  #3178c6;
-  $js-clr:  #f1e05a;
-  $cs-clr:  #178600;
+  $ts-clr: #3178c6;
+  $js-clr: #f1e05a;
+  $cs-clr: #178600;
 
-  [data-lang="Vue"]        { &::before { color: $vue-clr; } }
-  [data-lang="TypeScript"] { &::before { color: $ts-clr; } }
-  [data-lang="JavaScript"] { &::before { color: $js-clr; } }
-  [data-lang="C#"]         { &::before { color: $cs-clr; } }
-
-  /* Error banner */
+  [data-lang='Vue'] {
+    &::before {
+      color: $vue-clr;
+    }
+  }
+  [data-lang='TypeScript'] {
+    &::before {
+      color: $ts-clr;
+    }
+  }
+  [data-lang='JavaScript'] {
+    &::before {
+      color: $js-clr;
+    }
+  }
+  [data-lang='C#'] {
+    &::before {
+      color: $cs-clr;
+    }
+  }
 
   .error-banner {
     display: flex;

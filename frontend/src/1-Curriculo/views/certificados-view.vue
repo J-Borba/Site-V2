@@ -18,7 +18,7 @@
         <h1 class="section-title">Certificados</h1>
       </div>
 
-      <div class="companies-grid">
+      <div class="companies-grid" v-fade-up>
         <div
           v-for="(company, ci) in CertificateCompanies"
           :key="ci"
@@ -98,8 +98,6 @@
     gap: var(--space-12);
   }
 
-  /* Page header */
-
   .page-header {
     position: relative;
   }
@@ -117,8 +115,6 @@
     user-select: none;
     letter-spacing: -0.05em;
   }
-
-  /* Companies grid */
 
   .companies-grid {
     display: grid;
@@ -176,8 +172,6 @@
     font-weight: 700;
     color: var(--text-primary);
   }
-
-  /* Degrees & certs */
 
   .degrees-list {
     display: flex;
