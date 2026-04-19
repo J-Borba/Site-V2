@@ -11,14 +11,14 @@ interface iNavigation {
 
 export const Navigations: iNavigation[] = [
   {
-    title: 'Certificados',
-    rota: '/certificados',
-    icon: faUserGraduate,
-  },
-  {
     title: 'Experiências',
     rota: '/experiencias',
     icon: faFileContract,
+  },
+  {
+    title: 'Certificados',
+    rota: '/certificados',
+    icon: faUserGraduate,
   },
   {
     title: 'Sobre mim',

@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { Ref, computed, onMounted, ref } from 'vue';
   import { AxiosError } from 'axios';
-  import { faBookBookmark, faCircleInfo, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+  import { faBookBookmark, faCircleInfo, faTriangleExclamation, faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
   import { githubApi } from '@/0-Global/services/api.js';
   import MyLoading from '@/0-Global/components/my-loading.vue';
   import GoogleMaps from '../components/google-maps.vue';
@@ -42,18 +42,21 @@
   const filteredRepos = computed(() => {
     return repos.value.filter((repo) => repo.name !== 'J-Borba').slice(0, 6);
   });
-
 </script>
 
 <template>
   <div class="about-page">
     <div class="page-container">
+      <div class="page-header">
+        <span class="page-num">03</span>
+        <h1 class="section-title">Sobre Mim</h1>
+      </div>
 
       <!-- Experiência -->
       <section v-fade-up class="info-section">
         <div class="section-header">
-          <h2 class="section-title">Última Experiência</h2>
-          <router-link to="/experiencias" class="section-more" title="Ver todas as experiências">
+          <h2 class="section-subtitle">Última Experiência</h2>
+          <router-link to="/experiencias" class="section-more">
             <font-awesome-icon :icon="faCircleInfo" />
             <span>Ver todas</span>
           </router-link>
@@ -72,7 +75,7 @@
 
       <!-- Formação -->
       <section v-fade-up class="info-section">
-        <h2 class="section-title">Formação Acadêmica</h2>
+        <h2 class="section-subtitle">Formação Acadêmica</h2>
 
         <div class="info-card">
           <GoogleMaps
@@ -85,10 +88,9 @@
         </div>
       </section>
 
-
       <!-- Projetos -->
       <section v-fade-up class="info-section">
-        <h2 class="section-title">Projetos</h2>
+        <h2 class="section-subtitle">Projetos</h2>
 
         <MyLoading v-if="loading" />
 
@@ -110,6 +112,7 @@
             <div class="repo-top">
               <font-awesome-icon :icon="faBookBookmark" class="repo-book-icon" />
               <span class="repo-name">{{ repo.name }}</span>
+              <font-awesome-icon :icon="faArrowUpRightFromSquare" class="repo-ext-icon" />
             </div>
             <p class="repo-desc">{{ repo.description ?? notInformedText }}</p>
             <p :data-lang="repo.language" class="repo-lang">
@@ -122,7 +125,6 @@
           Ver todos os projetos
         </a>
       </section>
-
     </div>
   </div>
 </template>
@@ -141,6 +143,26 @@
     gap: var(--space-16);
   }
 
+  /* Page header */
+
+  .page-header {
+    position: relative;
+  }
+
+  .page-num {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(5rem, 15vw, 10rem);
+    font-weight: 800;
+    color: var(--border);
+    position: absolute;
+    top: -0.6em;
+    left: -0.05em;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -0.05em;
+  }
+
   /* Section base */
 
   .info-section {
@@ -156,15 +178,23 @@
     gap: var(--space-4);
   }
 
+  .section-subtitle {
+    font-family: 'Syne', sans-serif;
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+
   .section-more {
     display: flex;
     align-items: center;
     gap: var(--space-2);
     font-size: var(--text-sm);
-    color: var(--text-secondary);
-    padding-bottom: var(--space-3);
+    color: var(--text-muted);
     width: fit-content;
     transition: color 150ms ease;
+    padding-bottom: var(--space-1);
 
     &:hover {
       color: var(--brand);
@@ -182,10 +212,11 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     padding: var(--space-5) var(--space-6);
-    transition: border-color 200ms ease;
+    transition: border-color 220ms ease, box-shadow 220ms ease;
 
     &:hover {
       border-color: var(--brand-border);
+      box-shadow: var(--shadow-brand);
     }
 
     @media (max-width: 640px) {
@@ -201,7 +232,8 @@
   }
 
   .card-company {
-    font-weight: 600;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
     font-size: var(--text-lg);
     color: var(--text-primary);
     width: fit-content;
@@ -220,8 +252,10 @@
   }
 
   .card-date {
-    font-size: var(--text-sm);
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-xs);
     color: var(--text-secondary);
+    letter-spacing: 0.04em;
   }
 
   /* GitHub repos */
@@ -250,13 +284,22 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     width: 100%;
-    transition: border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+    transition: border-color 220ms ease, transform 220ms ease, box-shadow 220ms ease;
+
+    .repo-ext-icon {
+      opacity: 0;
+      transition: opacity 150ms ease;
+    }
 
     &:hover {
       border-color: var(--brand-border);
       transform: translateY(-3px);
       box-shadow: var(--shadow-brand);
       opacity: 1 !important;
+
+      .repo-ext-icon {
+        opacity: 1;
+      }
     }
   }
 
@@ -274,12 +317,21 @@
   }
 
   .repo-name {
-    font-weight: 600;
-    font-size: var(--text-sm);
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: var(--text-xs);
     color: var(--brand);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    flex: 1;
+    letter-spacing: 0.02em;
+  }
+
+  .repo-ext-icon {
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    flex-shrink: 0;
   }
 
   .repo-desc {
@@ -294,15 +346,17 @@
   }
 
   .repo-lang {
+    font-family: 'Space Mono', monospace;
     font-size: var(--text-xs);
-    color: var(--text-secondary);
+    color: var(--text-muted);
     display: flex;
     align-items: center;
     gap: var(--space-2);
+    letter-spacing: 0.02em;
 
     &::before {
       content: '●';
-      font-size: 0.6em;
+      font-size: 0.55em;
     }
   }
 
@@ -332,7 +386,9 @@
   }
 
   .error-code {
-    font-weight: 600;
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: var(--text-xs);
   }
 
   .error-msg {

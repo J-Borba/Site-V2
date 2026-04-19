@@ -11,6 +11,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   function setUser(data: AuthUser) {
     user.value = data;
+    localStorage.setItem('auth:hasSession', '1');
   }
 
   async function initSession() {
@@ -18,13 +19,16 @@ export const useAuthStore = defineStore('auth', () => {
       return;
     }
 
-    try {
-      user.value = await getMe();
-    } catch {
-      user.value = null;
-    } finally {
-      initialized.value = true;
+    if (localStorage.getItem('auth:hasSession')) {
+      try {
+        user.value = await getMe();
+      } catch {
+        user.value = null;
+        localStorage.removeItem('auth:hasSession');
+      }
     }
+
+    initialized.value = true;
   }
 
   async function logout() {
@@ -32,6 +36,7 @@ export const useAuthStore = defineStore('auth', () => {
       await logoutApi();
     } finally {
       user.value = null;
+      localStorage.removeItem('auth:hasSession');
     }
   }
 

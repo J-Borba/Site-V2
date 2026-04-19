@@ -1,4 +1,4 @@
-import axios, { AxiosError, type AxiosRequestConfig } from 'axios';
+import axios, { isAxiosError, type AxiosRequestConfig } from 'axios';
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL as string,
@@ -8,14 +8,19 @@ const api = axios.create({
 let isRefreshing = false;
 let pendingQueue: Array<{ resolve: () => void; reject: (e: unknown) => void }> = [];
 
-export async function refresh(): Promise<void> {
+async function refresh(): Promise<void> {
   await api.post('/user/refresh');
+}
+
+export function parseApiErrors(e: unknown): string[] {
+  const fallback = ['Algo deu errado. Tente novamente.'];
+  return isAxiosError(e) ? (e.response?.data ?? fallback) : fallback;
 }
 
 api.interceptors.response.use(
   (res) => res,
   (error: unknown) => {
-    const axiosError = error instanceof AxiosError ? error : null;
+    const axiosError = isAxiosError(error) ? error : null;
     const status = axiosError?.response?.status;
     const originalConfig = axiosError?.config as AxiosRequestConfig & { _retry?: boolean };
 
@@ -28,7 +33,7 @@ api.interceptors.response.use(
     if (isRefreshing) {
       return new Promise((resolve, reject) => {
         pendingQueue.push({
-          resolve: () => resolve(api({ ...(originalConfig as AxiosRequestConfig & { _retry?: boolean }) })),
+          resolve: () => resolve(api(originalConfig)),
           reject,
         });
       });

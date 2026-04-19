@@ -13,7 +13,10 @@
 <template>
   <section class="certs-page">
     <div class="page-container">
-      <h1 class="section-title">Certificados</h1>
+      <div class="page-header">
+        <span class="page-num">02</span>
+        <h1 class="section-title">Certificados</h1>
+      </div>
 
       <div class="companies-grid">
         <div
@@ -21,7 +24,9 @@
           :key="ci"
           class="company-card">
           <div class="company-header">
-            <img :src="company.icon" :alt="company.name" class="company-icon" />
+            <div class="company-icon-wrap">
+              <img :src="company.icon" :alt="company.name" class="company-icon" />
+            </div>
             <h2 class="company-name">{{ company.name }}</h2>
           </div>
 
@@ -93,6 +98,26 @@
     gap: var(--space-12);
   }
 
+  /* Page header */
+
+  .page-header {
+    position: relative;
+  }
+
+  .page-num {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(5rem, 15vw, 10rem);
+    font-weight: 800;
+    color: var(--border);
+    position: absolute;
+    top: -0.6em;
+    left: -0.05em;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -0.05em;
+  }
+
   /* Companies grid */
 
   .companies-grid {
@@ -109,11 +134,12 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-5);
-    transition: border-color 200ms ease, box-shadow 200ms ease;
+    transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
 
     &:hover {
       border-color: var(--brand-border);
       box-shadow: var(--shadow-brand);
+      transform: translateY(-2px);
     }
   }
 
@@ -125,16 +151,29 @@
     border-bottom: 1px solid var(--border);
   }
 
-  .company-icon {
-    width: 2rem;
-    height: 2rem;
-    object-fit: contain;
+  .company-icon-wrap {
+    width: 2.2rem;
+    height: 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
     border-radius: var(--radius-sm);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .company-icon {
+    width: 1.8rem;
+    height: 1.8rem;
+    object-fit: contain;
   }
 
   .company-name {
+    font-family: 'Syne', sans-serif;
     font-size: var(--text-lg);
-    font-weight: 600;
+    font-weight: 700;
     color: var(--text-primary);
   }
 
@@ -203,9 +242,11 @@
   }
 
   .warn-msg {
+    font-family: 'Space Mono', monospace;
     font-size: var(--text-xs);
     color: var(--warning);
     padding-left: var(--space-5);
+    letter-spacing: 0.02em;
   }
 
   .cert-list {
@@ -226,16 +267,17 @@
     font-size: var(--text-sm);
     color: var(--text-secondary);
     width: fit-content;
-    transition: color 150ms ease;
+    transition: color 150ms ease, transform 150ms ease;
 
     &:hover {
       color: var(--brand);
+      transform: translateX(3px);
       opacity: 1 !important;
     }
   }
 
   .cert-icon {
-    color: var(--brand);
+    color: var(--gold);
     font-size: 0.8em;
     flex-shrink: 0;
   }

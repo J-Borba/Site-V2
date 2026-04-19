@@ -9,15 +9,18 @@
 
 <template>
   <footer class="site-footer">
+    <div class="footer-top-line"></div>
+
     <div class="footer-inner">
       <div class="footer-brand">
-        <p class="footer-name">João Victor Borba</p>
+        <p class="footer-big-name">João Victor</p>
+        <p class="footer-big-name footer-big-name--accent">Borba</p>
         <p class="footer-role">Desenvolvedor .NET · Vue.js</p>
         <p class="footer-copy">&copy; {{ new Date().getFullYear() }} · joaoborba.com</p>
       </div>
 
       <div class="footer-links">
-        <p class="footer-links-title">Acesso rápido</p>
+        <p class="footer-col-title">Acesso rápido</p>
         <nav>
           <router-link to="/">Início</router-link>
           <router-link to="/experiencias">Experiências</router-link>
@@ -27,7 +30,7 @@
       </div>
 
       <div class="footer-social">
-        <p class="footer-links-title">Contato</p>
+        <p class="footer-col-title">Contato</p>
         <div class="social-list">
           <a href="https://www.linkedin.com/in/joao-borba27/" target="_blank" aria-label="LinkedIn">
             <font-awesome-icon :icon="faLinkedin" />
@@ -61,14 +64,26 @@
 <style scoped lang="scss">
   .site-footer {
     background: var(--bg-surface);
-    border-top: 1px solid var(--brand-border);
+    border-top: 1px solid var(--border);
     padding: var(--space-12) var(--space-6) var(--space-6);
     margin-top: auto;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .footer-top-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--brand), var(--brand-light), transparent);
+    opacity: 0.6;
   }
 
   .footer-inner {
     display: grid;
-    grid-template-columns: 1.5fr 1fr 1.5fr;
+    grid-template-columns: 1.8fr 1fr 1.5fr;
     gap: var(--space-10);
     max-width: var(--container-max);
     margin-inline: auto;
@@ -81,32 +96,52 @@
     }
   }
 
-  .footer-name {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: var(--text-xl);
-    font-weight: 700;
+  /* Brand column */
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .footer-big-name {
+    font-family: 'Syne', sans-serif;
+    font-size: var(--text-3xl);
+    font-weight: 800;
     color: var(--text-primary);
-    margin-bottom: var(--space-1);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+
+    &--accent {
+      color: var(--brand);
+    }
   }
 
   .footer-role {
-    font-size: var(--text-sm);
-    color: var(--brand);
-    margin-bottom: var(--space-4);
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: var(--space-2);
   }
 
   .footer-copy {
     font-size: var(--text-xs);
     color: var(--text-muted);
+    margin-top: var(--space-2);
   }
 
-  .footer-links-title {
+  /* Columns */
+
+  .footer-col-title {
+    font-family: 'Space Mono', monospace;
     font-size: var(--text-xs);
-    font-weight: 600;
+    font-weight: 700;
     color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: var(--space-4);
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-5);
   }
 
   .footer-links nav {
@@ -119,11 +154,28 @@
       color: var(--text-secondary);
       width: fit-content;
       transition: color 150ms ease;
+      position: relative;
+      padding-left: 0;
+
+      &::before {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: var(--brand);
+        transition: width 200ms ease;
+      }
 
       &:hover,
       &.router-link-exact-active {
         color: var(--brand);
         opacity: 1 !important;
+
+        &::before {
+          width: 100%;
+        }
       }
     }
   }
@@ -140,16 +192,18 @@
       font-size: var(--text-sm);
       color: var(--text-secondary);
       width: fit-content;
-      transition: color 150ms ease;
+      transition: color 150ms ease, transform 150ms ease;
 
       svg {
         font-size: 1rem;
         color: var(--brand);
         flex-shrink: 0;
+        transition: color 150ms ease;
       }
 
       &:hover {
         color: var(--brand);
+        transform: translateX(3px);
         opacity: 1 !important;
       }
     }
@@ -168,15 +222,19 @@
     align-items: center;
     gap: var(--space-2);
     font-size: var(--text-sm);
-    color: var(--text-secondary);
+    font-family: 'Space Mono', monospace;
+    color: var(--text-muted);
     padding: var(--space-2) var(--space-3);
     border-radius: var(--radius-sm);
-    transition: color 150ms ease, background 150ms ease;
+    border: 1px solid transparent;
+    transition: color 150ms ease, background 150ms ease, border-color 150ms ease;
     min-height: 44px;
+    letter-spacing: 0.04em;
 
     &:hover {
       color: var(--brand);
       background: var(--brand-dim);
+      border-color: var(--brand-border);
     }
   }
 </style>

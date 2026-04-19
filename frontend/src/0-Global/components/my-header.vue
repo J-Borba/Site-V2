@@ -10,6 +10,7 @@
 
   const mobileOpen = ref(false);
   const scrolled = ref(false);
+  const scrollProgress = ref(0);
 
   function toggleMobile() {
     mobileOpen.value = !mobileOpen.value;
@@ -20,10 +21,13 @@
   }
 
   function onScroll() {
-    const next = window.scrollY > 8;
+    const y = window.scrollY;
+    const next = y > 8;
     if (next !== scrolled.value) {
       scrolled.value = next;
     }
+    const docH = document.documentElement.scrollHeight - window.innerHeight;
+    scrollProgress.value = docH > 0 ? (y / docH) * 100 : 0;
   }
 
   onMounted(() => window.addEventListener('scroll', onScroll, { passive: true }));
@@ -32,29 +36,50 @@
 
 <template>
   <header :class="['site-nav', { scrolled }]">
+    <div class="nav-progress">
+      <div class="nav-progress-bar" :style="{ width: scrollProgress + '%' }"></div>
+    </div>
+
     <div class="nav-inner">
       <RouterLink to="/" class="nav-logo" @click="closeMobile">
         <img :src="logo" alt="João Borba" />
       </RouterLink>
 
       <nav class="nav-menu" :class="{ open: mobileOpen }" aria-label="Navegação principal">
-        <RouterLink v-for="nav in Navigations" :key="nav.rota" :to="nav.rota" class="nav-item" @click="closeMobile">
+        <RouterLink
+          v-for="nav in Navigations"
+          :key="nav.rota"
+          :to="nav.rota"
+          class="nav-item"
+          @click="closeMobile">
           <font-awesome-icon :icon="nav.icon" />
           <span>{{ nav.title }}</span>
         </RouterLink>
 
-        <RouterLink v-if="authStore.isLoggedIn" to="/profile" class="nav-item nav-item--auth" @click="closeMobile">
+        <RouterLink
+          v-if="authStore.isLoggedIn"
+          to="/profile"
+          class="nav-item nav-item--auth"
+          @click="closeMobile">
           <font-awesome-icon :icon="faUser" />
           <span>{{ authStore.user?.userName }}</span>
         </RouterLink>
 
-        <RouterLink v-else to="/login" class="nav-item" @click="closeMobile">
+        <RouterLink
+          v-else
+          to="/login"
+          class="nav-item nav-item--login"
+          @click="closeMobile">
           <font-awesome-icon :icon="faRightToBracket" />
           <span>Login</span>
         </RouterLink>
       </nav>
 
-      <button class="nav-toggle" @click="toggleMobile" :aria-expanded="mobileOpen" aria-label="Menu">
+      <button
+        class="nav-toggle"
+        @click="toggleMobile"
+        :aria-expanded="mobileOpen"
+        aria-label="Menu">
         <font-awesome-icon :icon="mobileOpen ? faXmark : faBars" />
       </button>
     </div>
@@ -70,15 +95,35 @@
     z-index: 100;
     border-bottom: 1px solid transparent;
     transition:
-      background 200ms ease,
-      border-color 200ms ease;
+      background 250ms ease,
+      border-color 250ms ease;
 
     &.scrolled {
-      background: rgba(13, 17, 23, 0.82);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      background: rgba(7, 8, 12, 0.85);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
       border-bottom-color: var(--border);
     }
+  }
+
+  /* Scroll progress */
+
+  .nav-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--border);
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .nav-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--brand), var(--brand-light));
+    transition: width 80ms linear;
+    box-shadow: 0 0 8px rgba(13, 216, 228, 0.5);
   }
 
   .nav-inner {
@@ -97,10 +142,11 @@
 
     img {
       width: 6rem;
-      transition: opacity 150ms ease;
+      transition: opacity 150ms ease, filter 150ms ease;
 
       &:hover {
-        opacity: 0.8;
+        opacity: 0.75;
+        filter: brightness(1.15);
       }
     }
   }
@@ -147,12 +193,12 @@
     border-bottom: 2px solid transparent;
     transition:
       color 150ms ease,
-      border-color 150ms ease,
-      background 150ms ease;
+      border-color 200ms ease;
     width: fit-content;
 
     svg {
       font-size: 0.8em;
+      transition: color 150ms ease;
     }
 
     &:hover {
@@ -167,6 +213,30 @@
 
     &--auth {
       color: var(--brand);
+      font-family: 'Space Mono', monospace;
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    &--login {
+      padding: var(--space-2) var(--space-4);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      border-bottom: 1px solid var(--border-strong);
+      transition: border-color 150ms ease, color 150ms ease, background 150ms ease;
+
+      &:hover {
+        border-color: var(--brand);
+        color: var(--brand);
+        background: var(--brand-dim);
+      }
+
+      &.router-link-exact-active {
+        border-color: var(--brand);
+        background: var(--brand-dim);
+        border-bottom-color: var(--brand);
+      }
     }
 
     @media (max-width: bp.$bp-md) {
@@ -177,6 +247,11 @@
       min-height: 44px;
       width: 100%;
       gap: var(--space-3);
+
+      &--login {
+        border: 1px solid var(--border-strong);
+        border-radius: var(--radius-sm);
+      }
 
       &:hover,
       &.router-link-exact-active {

@@ -1,8 +1,7 @@
 <script setup lang="ts">
   import { ref } from 'vue';
-  import { isAxiosError } from 'axios';
   import { useRouter } from 'vue-router';
-  import { login } from '../services/auth-api';
+  import { login, parseApiErrors } from '../services/auth-api';
   import { useAuthStore } from '../store/auth-store';
 
   const router = useRouter();
@@ -22,9 +21,7 @@
       authStore.setUser(user);
       router.push('/profile');
     } catch (e) {
-      errors.value = isAxiosError(e)
-        ? e.response?.data ?? ['Algo deu errado. Tente novamente.']
-        : ['Algo deu errado. Tente novamente.'];
+      errors.value = parseApiErrors(e);
     } finally {
       loading.value = false;
     }
@@ -33,9 +30,22 @@
 
 <template>
   <div class="auth-page">
+    <div class="auth-bg">
+      <div class="auth-orb auth-orb--cyan"></div>
+      <div class="auth-orb auth-orb--indigo"></div>
+      <div class="auth-grid"></div>
+    </div>
+
     <div class="auth-card">
+      <div class="auth-terminal-bar">
+        <span class="terminal-dot terminal-dot--red"></span>
+        <span class="terminal-dot terminal-dot--yellow"></span>
+        <span class="terminal-dot terminal-dot--green"></span>
+        <span class="terminal-label">auth.connect</span>
+      </div>
+
       <div class="auth-header">
-        <h1 class="auth-title">Bem vindo!</h1>
+        <h1 class="auth-title">Bem vindo<span class="cursor">_</span></h1>
         <p class="auth-subtitle">Entre na sua conta</p>
       </div>
 

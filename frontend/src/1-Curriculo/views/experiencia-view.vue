@@ -16,7 +16,10 @@
 <template>
   <section class="experience-page">
     <div class="page-container">
-      <h1 class="section-title">Experiências Profissionais</h1>
+      <div class="page-header">
+        <span class="page-num">01</span>
+        <h1 class="section-title">Experiências<br />Profissionais</h1>
+      </div>
 
       <div class="timeline">
         <div
@@ -24,12 +27,13 @@
           :key="index"
           class="timeline-item">
           <div class="timeline-marker">
-            <div class="marker-dot"></div>
+            <div class="marker-num">{{ String(index + 1).padStart(2, '0') }}</div>
+            <div class="marker-line"></div>
           </div>
 
           <a :href="job.companyUrl" target="_blank" class="job-card">
             <div class="job-header">
-              <span class="company-logo-link">
+              <span class="company-logo-wrap">
                 <img :src="job.companyLogo" :alt="job.companyName" class="company-logo" />
               </span>
               <div class="job-meta">
@@ -87,6 +91,7 @@
 
 <style scoped lang="scss">
   @use '@/0-Global/style/utilities/breakpoints' as bp;
+
   .experience-page {
     flex: 1;
     padding: var(--space-16) var(--space-6);
@@ -100,20 +105,39 @@
     gap: var(--space-12);
   }
 
+  /* Page header with oversized number */
+
+  .page-header {
+    position: relative;
+  }
+
+  .page-num {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(5rem, 15vw, 10rem);
+    font-weight: 800;
+    color: var(--border);
+    position: absolute;
+    top: -0.6em;
+    left: -0.05em;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -0.05em;
+  }
+
   /* Timeline */
 
   .timeline {
     display: flex;
     flex-direction: column;
-    gap: 0;
     position: relative;
   }
 
   .timeline-item {
     display: grid;
-    grid-template-columns: 2rem 1fr;
-    gap: var(--space-4);
-    padding-bottom: var(--space-8);
+    grid-template-columns: 3.5rem 1fr;
+    gap: var(--space-5);
+    padding-bottom: var(--space-10);
     align-items: start;
 
     @media (max-width: bp.$bp-md) {
@@ -123,7 +147,7 @@
     &:last-child {
       padding-bottom: 0;
 
-      .timeline-marker::after {
+      .marker-line {
         display: none;
       }
     }
@@ -140,23 +164,24 @@
     @media (max-width: bp.$bp-md) {
       display: none;
     }
-
-    &::after {
-      content: '';
-      flex: 1;
-      width: 1px;
-      background: var(--border);
-      margin-top: var(--space-2);
-    }
   }
 
-  .marker-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--brand);
-    box-shadow: 0 0 0 3px var(--brand-dim);
+  .marker-num {
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-xs);
+    font-weight: 700;
+    color: var(--brand);
+    letter-spacing: 0.06em;
+    line-height: 1;
     flex-shrink: 0;
+  }
+
+  .marker-line {
+    flex: 1;
+    width: 1px;
+    margin-top: var(--space-3);
+    background: linear-gradient(to bottom, var(--brand-border), transparent);
+    min-height: 3rem;
   }
 
   /* Job card */
@@ -172,11 +197,12 @@
     width: 100%;
     text-decoration: none;
     color: inherit;
-    transition: border-color 200ms ease, box-shadow 200ms ease;
+    transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
 
     &:hover {
       border-color: var(--brand-border);
       box-shadow: var(--shadow-brand);
+      transform: translateY(-2px);
     }
   }
 
@@ -190,15 +216,23 @@
     }
   }
 
-  .company-logo-link {
+  .company-logo-wrap {
     flex-shrink: 0;
+    width: 3rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
   }
 
   .company-logo {
-    width: 3rem;
-    height: 2.5rem;
+    width: 2.4rem;
+    height: 2rem;
     object-fit: contain;
-    border-radius: var(--radius-sm);
   }
 
   .job-meta {
@@ -209,7 +243,8 @@
   }
 
   .job-role {
-    font-weight: 600;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
     font-size: var(--text-base);
     color: var(--text-primary);
   }
@@ -221,7 +256,8 @@
   }
 
   .job-dates {
-    font-size: var(--text-sm);
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-xs);
     color: var(--text-secondary);
     background: var(--bg-elevated);
     border: 1px solid var(--border);
@@ -229,6 +265,7 @@
     border-radius: var(--radius-sm);
     white-space: nowrap;
     flex-shrink: 0;
+    letter-spacing: 0.04em;
 
     @media (max-width: bp.$bp-md) {
       width: 100%;
@@ -245,14 +282,15 @@
   }
 
   .skill-tag {
+    font-family: 'Space Mono', monospace;
     font-size: var(--text-xs);
     color: var(--brand);
     background: var(--brand-dim);
     border: 1px solid var(--brand-border);
     padding: var(--space-1) var(--space-3);
     border-radius: 100px;
-    font-weight: 500;
-    letter-spacing: 0.02em;
+    font-weight: 400;
+    letter-spacing: 0.04em;
   }
 
   /* Previous roles accordion */
@@ -263,12 +301,13 @@
     @media (max-width: bp.$bp-md) {
       grid-column: 1;
     }
+
     display: flex;
     align-items: center;
     gap: var(--space-2);
     background: none;
     border: none;
-    color: var(--text-secondary);
+    color: var(--text-muted);
     font-size: var(--text-sm);
     cursor: pointer;
     padding: var(--space-1) 0;
@@ -284,7 +323,7 @@
     font-size: 1rem;
     line-height: 1;
     display: inline-block;
-    transition: transform 200ms ease;
+    transition: transform 220ms ease;
     transform: rotate(0deg);
 
     &.rotated {
@@ -298,6 +337,7 @@
     @media (max-width: bp.$bp-md) {
       grid-column: 1;
     }
+
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
@@ -311,6 +351,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
+    border-left: 2px solid var(--brand-border);
   }
 
   .prev-role-header {
@@ -331,12 +372,12 @@
 
   .accordion-enter-active,
   .accordion-leave-active {
-    transition: opacity 200ms ease, transform 200ms ease;
+    transition: opacity 220ms ease, transform 220ms ease;
   }
 
   .accordion-enter-from,
   .accordion-leave-to {
     opacity: 0;
-    transform: translateY(-6px);
+    transform: translateY(-8px);
   }
 </style>
