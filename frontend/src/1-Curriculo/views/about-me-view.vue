@@ -1,11 +1,16 @@
 <script setup lang="ts">
   import { Ref, computed, onMounted, ref } from 'vue';
   import { AxiosError } from 'axios';
-  import { faBookBookmark, faCircleInfo, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
-  import { faGitAlt, faHtml5, faReact, faSass, faSquareJs, faVuejs } from '@fortawesome/free-brands-svg-icons';
+  import {
+    faBookBookmark,
+    faCircleInfo,
+    faTriangleExclamation,
+    faArrowUpRightFromSquare,
+  } from '@fortawesome/free-solid-svg-icons';
   import { githubApi } from '@/0-Global/services/api.js';
   import MyLoading from '@/0-Global/components/my-loading.vue';
   import GoogleMaps from '../components/google-maps.vue';
+  import PageShell from '@/0-Global/components/page-shell.vue';
   import { myGithub, tiplan, uerj } from '@/0-Global/assets/utilities/_variables';
 
   interface IRepos {
@@ -43,131 +48,78 @@
   const filteredRepos = computed(() => {
     return repos.value.filter((repo) => repo.name !== 'J-Borba').slice(0, 6);
   });
-
-  const hardSkills = [
-    { icon: faVuejs,    label: 'Vue.js' },
-    { icon: faReact,    label: 'React' },
-    { icon: faSquareJs, label: 'JavaScript' },
-    { icon: faHtml5,    label: 'HTML5' },
-    { icon: faSass,     label: 'Sass' },
-    { icon: faGitAlt,   label: 'Git' },
-  ];
 </script>
 
 <template>
-  <div class="about-page">
-    <div class="page-container">
+  <PageShell num="03" title="Sobre Mim" gap="var(--space-16)">
+    <section v-fade-up class="info-section">
+      <div class="section-header">
+        <h2 class="section-subtitle">Última Experiência</h2>
+        <router-link to="/experiencias" class="section-more">
+          <font-awesome-icon :icon="faCircleInfo" />
+          <span>Ver todas</span>
+        </router-link>
+      </div>
 
-      <!-- Experience -->
-      <section v-fade-up class="info-section">
-        <div class="section-header">
-          <h2 class="section-title">Última Experiência</h2>
-          <router-link to="/experiencias" class="section-more" title="Ver todas as experiências">
-            <font-awesome-icon :icon="faCircleInfo" />
-            <span>Ver todas</span>
-          </router-link>
+      <div class="info-card">
+        <GoogleMaps
+          src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14700.985908340814!2d-43.178263!3d-22.904278!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x997f5fdc3e9565%3A0xe09773af0e23b78e!2sTIPLAN!5e0!3m2!1spt-BR!2sbr!4v1709422911840!5m2!1spt-BR!2sbr" />
+        <div class="card-body">
+          <a :href="tiplan.url" target="_blank" class="card-company">{{ tiplan.title }}</a>
+          <p class="card-role">Desenvolvedor de Software Jr</p>
+          <p class="card-date">Jan/2025 — Atualmente</p>
         </div>
+      </div>
+    </section>
 
-        <div class="info-card">
-          <GoogleMaps
-            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14700.985908340814!2d-43.178263!3d-22.904278!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x997f5fdc3e9565%3A0xe09773af0e23b78e!2sTIPLAN!5e0!3m2!1spt-BR!2sbr!4v1709422911840!5m2!1spt-BR!2sbr" />
-          <div class="card-body">
-            <a :href="tiplan.url" target="_blank" class="card-company">{{ tiplan.title }}</a>
-            <p class="card-role">Desenvolvedor de Software Jr</p>
-            <p class="card-date">Jan/2025 — Atualmente</p>
+    <section v-fade-up class="info-section">
+      <h2 class="section-subtitle">Formação Acadêmica</h2>
+
+      <div class="info-card">
+        <GoogleMaps
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d58800.952966794444!2d-43.31234995136716!3d-22.9111739!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x997e66c5f330ad%3A0x874ed5a98cf472d1!2sUniversidade%20do%20Estado%20do%20Rio%20de%20Janeiro!5e0!3m2!1spt-BR!2sbr!4v1709481881887!5m2!1spt-BR!2sbr" />
+        <div class="card-body">
+          <a :href="uerj.url" target="_blank" class="card-company">{{ uerj.title }} ({{ uerj.shortTitle }})</a>
+          <p class="card-role">Ciências da Computação</p>
+          <p class="card-date">Set/2020 — Cursando</p>
+        </div>
+      </div>
+    </section>
+
+    <section v-fade-up class="info-section">
+      <h2 class="section-subtitle">Projetos</h2>
+
+      <MyLoading v-if="loading" />
+
+      <div v-else-if="error" class="error-banner">
+        <font-awesome-icon :icon="faTriangleExclamation" />
+        <div>
+          <p class="error-code">{{ error.code }}</p>
+          <p class="error-msg">{{ error.message }}</p>
+        </div>
+      </div>
+
+      <div v-else class="repos-grid">
+        <a v-for="repo in filteredRepos" :key="repo.id" :href="repo.html_url" target="_blank" class="repo-card">
+          <div class="repo-top">
+            <font-awesome-icon :icon="faBookBookmark" class="repo-book-icon" />
+            <span class="repo-name">{{ repo.name }}</span>
+            <font-awesome-icon :icon="faArrowUpRightFromSquare" class="repo-ext-icon" />
           </div>
-        </div>
-      </section>
-
-      <!-- Education -->
-      <section v-fade-up class="info-section">
-        <h2 class="section-title">Formação Acadêmica</h2>
-
-        <div class="info-card">
-          <GoogleMaps
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d58800.952966794444!2d-43.31234995136716!3d-22.9111739!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x997e66c5f330ad%3A0x874ed5a98cf472d1!2sUniversidade%20do%20Estado%20do%20Rio%20de%20Janeiro!5e0!3m2!1spt-BR!2sbr!4v1709481881887!5m2!1spt-BR!2sbr" />
-          <div class="card-body">
-            <a :href="uerj.url" target="_blank" class="card-company">{{ uerj.title }} ({{ uerj.shortTitle }})</a>
-            <p class="card-role">Ciências da Computação</p>
-            <p class="card-date">Set/2020 — Cursando</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Hard Skills -->
-      <section v-fade-up class="info-section">
-        <div class="section-header">
-          <h2 class="section-title">Hard Skills</h2>
-          <router-link to="/experiencias" class="section-more" title="Ver todas as skills">
-            <font-awesome-icon :icon="faCircleInfo" />
-            <span>Ver mais</span>
-          </router-link>
-        </div>
-
-        <div class="skills-grid">
-          <div v-for="skill in hardSkills" :key="skill.label" class="skill-pill">
-            <font-awesome-icon :icon="skill.icon" class="skill-icon" />
-            <span>{{ skill.label }}</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- GitHub repos -->
-      <section v-fade-up class="info-section">
-        <h2 class="section-title">Projetos</h2>
-
-        <MyLoading v-if="loading" />
-
-        <div v-else-if="error" class="error-banner">
-          <font-awesome-icon :icon="faTriangleExclamation" />
-          <div>
-            <p class="error-code">{{ error.code }}</p>
-            <p class="error-msg">{{ error.message }}</p>
-          </div>
-        </div>
-
-        <div v-else class="repos-grid">
-          <a
-            v-for="repo in filteredRepos"
-            :key="repo.id"
-            :href="repo.html_url"
-            target="_blank"
-            class="repo-card">
-            <div class="repo-top">
-              <font-awesome-icon :icon="faBookBookmark" class="repo-book-icon" />
-              <span class="repo-name">{{ repo.name }}</span>
-            </div>
-            <p class="repo-desc">{{ repo.description ?? notInformedText }}</p>
-            <p :data-lang="repo.language" class="repo-lang">
-              {{ repo.language ?? notInformedText }}
-            </p>
-          </a>
-        </div>
-
-        <a :href="myGithub.url" target="_blank" class="btn-brand">
-          Ver todos os projetos
+          <p class="repo-desc">{{ repo.description ?? notInformedText }}</p>
+          <p :data-lang="repo.language" class="repo-lang">
+            {{ repo.language ?? notInformedText }}
+          </p>
         </a>
-      </section>
+      </div>
 
-    </div>
-  </div>
+      <a :href="myGithub.url" target="_blank" class="btn-brand"> Ver todos os projetos </a>
+    </section>
+  </PageShell>
 </template>
 
 <style scoped lang="scss">
-  .about-page {
-    flex: 1;
-    padding: var(--space-16) var(--space-6);
-  }
-
-  .page-container {
-    max-width: var(--container-max);
-    margin-inline: auto;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-16);
-  }
-
-  /* ── Section scaffold ──────────────────── */
+  @use '@/0-Global/style/utilities/mixins' as mx;
 
   .info-section {
     display: flex;
@@ -182,15 +134,23 @@
     gap: var(--space-4);
   }
 
+  .section-subtitle {
+    font-family: 'Syne', sans-serif;
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+
   .section-more {
     display: flex;
     align-items: center;
     gap: var(--space-2);
     font-size: var(--text-sm);
-    color: var(--text-secondary);
-    padding-bottom: var(--space-3);
+    color: var(--text-muted);
     width: fit-content;
     transition: color 150ms ease;
+    padding-bottom: var(--space-1);
 
     &:hover {
       color: var(--brand);
@@ -198,9 +158,8 @@
     }
   }
 
-  /* ── Info card (experience / education) ─ */
-
   .info-card {
+    @include mx.card-interactive(0px);
     display: flex;
     align-items: flex-start;
     gap: var(--space-6);
@@ -208,11 +167,6 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     padding: var(--space-5) var(--space-6);
-    transition: border-color 200ms ease;
-
-    &:hover {
-      border-color: var(--brand-border);
-    }
 
     @media (max-width: 640px) {
       flex-direction: column;
@@ -227,7 +181,8 @@
   }
 
   .card-company {
-    font-weight: 600;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
     font-size: var(--text-lg);
     color: var(--text-primary);
     width: fit-content;
@@ -246,43 +201,11 @@
   }
 
   .card-date {
-    font-size: var(--text-sm);
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-xs);
     color: var(--text-secondary);
+    letter-spacing: 0.04em;
   }
-
-  /* ── Skills grid ───────────────────────── */
-
-  .skills-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-  }
-
-  .skill-pill {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-2) var(--space-4);
-    background: var(--bg-surface);
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    font-size: var(--text-sm);
-    color: var(--text-secondary);
-    font-weight: 500;
-    transition: border-color 200ms ease, color 200ms ease;
-
-    &:hover {
-      border-color: var(--brand-border);
-      color: var(--brand);
-    }
-  }
-
-  .skill-icon {
-    font-size: 1rem;
-    color: var(--brand);
-  }
-
-  /* ── GitHub repos ──────────────────────── */
 
   .repos-grid {
     display: grid;
@@ -300,6 +223,7 @@
   }
 
   .repo-card {
+    @include mx.card-interactive(-3px);
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
@@ -308,13 +232,15 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     width: 100%;
-    transition: border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+    opacity: 1 !important;
 
-    &:hover {
-      border-color: var(--brand-border);
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-brand);
-      opacity: 1 !important;
+    .repo-ext-icon {
+      opacity: 0;
+      transition: opacity 150ms ease;
+    }
+
+    &:hover .repo-ext-icon {
+      opacity: 1;
     }
   }
 
@@ -332,12 +258,21 @@
   }
 
   .repo-name {
-    font-weight: 600;
-    font-size: var(--text-sm);
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: var(--text-xs);
     color: var(--brand);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    flex: 1;
+    letter-spacing: 0.02em;
+  }
+
+  .repo-ext-icon {
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    flex-shrink: 0;
   }
 
   .repo-desc {
@@ -347,35 +282,46 @@
     flex: 1;
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
 
   .repo-lang {
+    font-family: 'Space Mono', monospace;
     font-size: var(--text-xs);
-    color: var(--text-secondary);
+    color: var(--text-muted);
     display: flex;
     align-items: center;
     gap: var(--space-2);
+    letter-spacing: 0.02em;
 
     &::before {
       content: '●';
-      font-size: 0.6em;
+      font-size: 0.55em;
     }
   }
 
-  /* Language dot colors */
-  $vue-clr: #41b883;
-  $ts-clr:  #3178c6;
-  $js-clr:  #f1e05a;
-  $cs-clr:  #178600;
-
-  [data-lang="Vue"]        { &::before { color: $vue-clr; } }
-  [data-lang="TypeScript"] { &::before { color: $ts-clr; } }
-  [data-lang="JavaScript"] { &::before { color: $js-clr; } }
-  [data-lang="C#"]         { &::before { color: $cs-clr; } }
-
-  /* ── Error banner ──────────────────────── */
+  [data-lang='Vue'] {
+    &::before {
+      color: var(--lang-vue);
+    }
+  }
+  [data-lang='TypeScript'] {
+    &::before {
+      color: var(--lang-ts);
+    }
+  }
+  [data-lang='JavaScript'] {
+    &::before {
+      color: var(--lang-js);
+    }
+  }
+  [data-lang='C#'] {
+    &::before {
+      color: var(--lang-cs);
+    }
+  }
 
   .error-banner {
     display: flex;
@@ -390,7 +336,9 @@
   }
 
   .error-code {
-    font-weight: 600;
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: var(--text-xs);
   }
 
   .error-msg {

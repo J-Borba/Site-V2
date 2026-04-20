@@ -1,31 +1,47 @@
 :root {
   /* Backgrounds */
-  --bg-base:     #0d1117;
-  --bg-surface:  #161b22;
-  --bg-elevated: #1c2330;
-  --bg-card:     #1e2430;
+  --bg-base: #07080c;
+  --bg-surface: #0c0f18;
+  --bg-elevated: #111420;
+  --bg-card: #141827;
 
-  /* Brand — Ocean Cyan */
-  --brand:        #00adb5;
-  --brand-light:  #00c9d4;
-  --brand-dim:    rgba(0, 173, 181, 0.12);
-  --brand-border: rgba(0, 173, 181, 0.35);
-  --brand-glow:   0 0 24px rgba(0, 173, 181, 0.25);
+  /* Brand — Electric Cyan */
+  --brand: #0dd8e4;
+  --brand-light: #38e8f2;
+  --brand-dim: rgba(13, 216, 228, 0.1);
+  --brand-border: rgba(13, 216, 228, 0.28);
+  --brand-glow: 0 0 32px rgba(13, 216, 228, 0.18);
+
+  /* Gold accent */
+  --gold: #e8b84b;
+  --gold-dim: rgba(232, 184, 75, 0.12);
+  --gold-border: rgba(232, 184, 75, 0.3);
+  --gold-glow: 0 0 28px rgba(232, 184, 75, 0.18);
+
+  /* Purple accent (.NET) */
+  --purple: #a855f7;
+  --purple-dim: rgba(168, 85, 247, 0.1);
+  --purple-border: rgba(168, 85, 247, 0.28);
+
+  /* Vue green accent */
+  --vue: #42b883;
+  --vue-dim: rgba(66, 184, 131, 0.1);
+  --vue-border: rgba(66, 184, 131, 0.28);
 
   /* Text */
-  --text-primary:   #e6edf3;
-  --text-secondary: #8b949e;
-  --text-muted:     #484f58;
+  --text-primary: #ecf0f6;
+  --text-secondary: #8892a4;
+  --text-muted: #40495a;
 
   /* Borders */
-  --border:        rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.15);
+  --border: rgba(255, 255, 255, 0.07);
+  --border-strong: rgba(255, 255, 255, 0.12);
 
   /* Shadows */
-  --shadow-sm:    0 1px 4px rgba(0, 0, 0, 0.3);
-  --shadow-md:    0 4px 16px rgba(0, 0, 0, 0.4);
-  --shadow-lg:    0 8px 32px rgba(0, 0, 0, 0.5);
-  --shadow-brand: 0 4px 24px rgba(0, 173, 181, 0.2);
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.6);
+  --shadow-brand: 0 4px 28px rgba(13, 216, 228, 0.18);
 
   /* Radius */
   --radius-sm: 6px;
@@ -34,23 +50,24 @@
   --radius-xl: 24px;
 
   /* Type Scale */
-  --text-xs:   clamp(0.7rem,  0.68rem + 0.12vw, 0.75rem);
-  --text-sm:   clamp(0.8rem,  0.78rem + 0.18vw, 0.875rem);
-  --text-base: clamp(0.9rem,  0.88rem + 0.22vw, 1rem);
-  --text-lg:   clamp(1rem,    0.97rem + 0.28vw, 1.125rem);
-  --text-xl:   clamp(1.1rem,  1.05rem + 0.45vw, 1.25rem);
-  --text-2xl:  clamp(1.25rem, 1.18rem + 0.72vw, 1.5rem);
-  --text-3xl:  clamp(1.5rem,  1.38rem + 1.1vw,  2rem);
-  --text-4xl:  clamp(2rem,    1.75rem + 2vw,    3rem);
+  --text-xs: clamp(0.7rem, 0.68rem + 0.12vw, 0.75rem);
+  --text-sm: clamp(0.8rem, 0.78rem + 0.18vw, 0.875rem);
+  --text-base: clamp(0.9rem, 0.88rem + 0.22vw, 1rem);
+  --text-lg: clamp(1rem, 0.97rem + 0.28vw, 1.125rem);
+  --text-xl: clamp(1.1rem, 1.05rem + 0.45vw, 1.25rem);
+  --text-2xl: clamp(1.25rem, 1.18rem + 0.72vw, 1.5rem);
+  --text-3xl: clamp(1.5rem, 1.38rem + 1.1vw, 2rem);
+  --text-4xl: clamp(2rem, 1.75rem + 2vw, 3rem);
+  --text-5xl: clamp(2.5rem, 2rem + 3vw, 4.5rem);
 
   /* Spacing */
-  --space-1:  0.25rem;
-  --space-2:  0.5rem;
-  --space-3:  0.75rem;
-  --space-4:  1rem;
-  --space-5:  1.25rem;
-  --space-6:  1.5rem;
-  --space-8:  2rem;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
   --space-10: 2.5rem;
   --space-12: 3rem;
   --space-16: 4rem;
@@ -59,14 +76,28 @@
 
   /* Layout */
   --container-max: 1100px;
-  --nav-height:    64px;
+  --nav-height: 64px;
 
-  /* Legacy aliases */
-  --bg:          var(--bg-base);
-  --bg-emphasis: var(--bg-elevated);
-  --text:        var(--text-primary);
-  --primary:     var(--brand);
-  --secondary:   var(--brand-light);
-  --white:       #ffffff;
-  --warning:     #e3b341;
+  /* Error */
+  --error: #f85149;
+  --error-dim: rgba(248, 81, 73, 0.07);
+  --error-border: rgba(248, 81, 73, 0.22);
+
+  /* Social */
+  --linkedin: #0077b5;
+
+  /* Language dot colors */
+  --lang-vue: #41b883;
+  --lang-ts: #3178c6;
+  --lang-js: #f1e05a;
+  --lang-cs: #178600;
+
+  /* WhatsApp */
+  --bg-whatsapp-top: #25d366;
+  --bg-whatsapp-bottom: #128c7e;
+  --bg-whatsapp-no-opacity: rgba(37, 211, 102, 0);
+
+  /* Utility */
+  --white: #ffffff;
+  --warning: #e3b341;
 }

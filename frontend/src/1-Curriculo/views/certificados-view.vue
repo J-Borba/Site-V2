@@ -1,99 +1,57 @@
 <script lang="ts" setup>
-  import { ref } from 'vue';
   import { faMedal, faUserGraduate, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
   import { CertificateCompanies } from '../assets/utilities/certificateCompanies';
+  import { useSingleToggle } from '@/0-Global/composables/useToggle';
+  import PageShell from '@/0-Global/components/page-shell.vue';
 
-  const expandedWarning = ref<string | null>(null);
-
-  function toggleWarning(id: string) {
-    expandedWarning.value = expandedWarning.value === id ? null : id;
-  }
+  const { active: expandedWarning, toggle: toggleWarning } = useSingleToggle<string>();
 </script>
 
 <template>
-  <section class="certs-page">
-    <div class="page-container">
-      <h1 class="section-title">Certificados</h1>
-
-      <div class="companies-grid">
-        <div
-          v-for="(company, ci) in CertificateCompanies"
-          :key="ci"
-          class="company-card">
-          <div class="company-header">
+  <PageShell num="02" title="Certificados">
+    <div class="companies-grid" v-fade-up>
+      <div v-for="(company, ci) in CertificateCompanies" :key="ci" class="company-card">
+        <div class="company-header">
+          <div class="company-icon-wrap">
             <img :src="company.icon" :alt="company.name" class="company-icon" />
-            <h2 class="company-name">{{ company.name }}</h2>
           </div>
+          <h2 class="company-name">{{ company.name }}</h2>
+        </div>
 
-          <div class="degrees-list">
-            <div
-              v-for="(degree, di) in company.degrees"
-              :key="di"
-              class="degree-block">
-              <div class="degree-title-row" v-if="degree.title">
-                <a
-                  v-if="degree.url"
-                  :href="degree.url"
-                  target="_blank"
-                  class="degree-title">
-                  <font-awesome-icon :icon="faUserGraduate" class="deg-icon" />
-                  {{ degree.title }}
-                </a>
-                <span v-else class="degree-title incomplete">
-                  <font-awesome-icon :icon="faUserGraduate" class="deg-icon" />
-                  {{ degree.title }}
-                  <button
-                    class="warn-btn"
-                    :title="'Formação em andamento'"
-                    @click="toggleWarning(`${ci}-${di}`)">
-                    <font-awesome-icon :icon="faTriangleExclamation" />
-                  </button>
-                </span>
-                <p
-                  v-if="expandedWarning === `${ci}-${di}`"
-                  class="warn-msg">
-                  Esta formação ainda está em andamento.
-                </p>
-              </div>
-
-              <ul class="cert-list">
-                <li
-                  v-for="(cert, i) in degree.certificates"
-                  :key="i"
-                  class="cert-item">
-                  <a
-                    v-if="cert.title && cert.url"
-                    :href="cert.url"
-                    target="_blank"
-                    class="cert-link">
-                    <font-awesome-icon :icon="faMedal" class="cert-icon" />
-                    {{ cert.title }}
-                  </a>
-                </li>
-              </ul>
+        <div class="degrees-list">
+          <div v-for="(degree, di) in company.degrees" :key="di" class="degree-block">
+            <div class="degree-title-row" v-if="degree.title">
+              <a v-if="degree.url" :href="degree.url" target="_blank" class="degree-title">
+                <font-awesome-icon :icon="faUserGraduate" class="deg-icon" />
+                {{ degree.title }}
+              </a>
+              <span v-else class="degree-title incomplete">
+                <font-awesome-icon :icon="faUserGraduate" class="deg-icon" />
+                {{ degree.title }}
+                <button class="warn-btn" :title="'Formação em andamento'" @click="toggleWarning(`${ci}-${di}`)">
+                  <font-awesome-icon :icon="faTriangleExclamation" />
+                </button>
+              </span>
+              <p v-if="expandedWarning === `${ci}-${di}`" class="warn-msg">Esta formação ainda está em andamento.</p>
             </div>
+
+            <ul class="cert-list">
+              <li v-for="(cert, i) in degree.certificates" :key="i" class="cert-item">
+                <a v-if="cert.title && cert.url" :href="cert.url" target="_blank" class="cert-link">
+                  <font-awesome-icon :icon="faMedal" class="cert-icon" />
+                  {{ cert.title }}
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </PageShell>
 </template>
 
 <style scoped lang="scss">
-  .certs-page {
-    flex: 1;
-    padding: var(--space-16) var(--space-6);
-  }
-
-  .page-container {
-    max-width: var(--container-max);
-    margin-inline: auto;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-12);
-  }
-
-  /* ── Companies grid ────────────────────── */
+  @use '@/0-Global/style/utilities/mixins' as mx;
 
   .companies-grid {
     display: grid;
@@ -102,6 +60,7 @@
   }
 
   .company-card {
+    @include mx.card-interactive;
     background: var(--bg-surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
@@ -109,12 +68,6 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-5);
-    transition: border-color 200ms ease, box-shadow 200ms ease;
-
-    &:hover {
-      border-color: var(--brand-border);
-      box-shadow: var(--shadow-brand);
-    }
   }
 
   .company-header {
@@ -125,20 +78,31 @@
     border-bottom: 1px solid var(--border);
   }
 
-  .company-icon {
-    width: 2rem;
-    height: 2rem;
-    object-fit: contain;
+  .company-icon-wrap {
+    width: 2.2rem;
+    height: 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
     border-radius: var(--radius-sm);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .company-icon {
+    width: 1.8rem;
+    height: 1.8rem;
+    object-fit: contain;
   }
 
   .company-name {
+    font-family: 'Syne', sans-serif;
     font-size: var(--text-lg);
-    font-weight: 600;
+    font-weight: 700;
     color: var(--text-primary);
   }
-
-  /* ── Degrees & certs ───────────────────── */
 
   .degrees-list {
     display: flex;
@@ -203,9 +167,11 @@
   }
 
   .warn-msg {
+    font-family: 'Space Mono', monospace;
     font-size: var(--text-xs);
     color: var(--warning);
     padding-left: var(--space-5);
+    letter-spacing: 0.02em;
   }
 
   .cert-list {
@@ -226,16 +192,19 @@
     font-size: var(--text-sm);
     color: var(--text-secondary);
     width: fit-content;
-    transition: color 150ms ease;
+    transition:
+      color 150ms ease,
+      transform 150ms ease;
 
     &:hover {
       color: var(--brand);
+      transform: translateX(3px);
       opacity: 1 !important;
     }
   }
 
   .cert-icon {
-    color: var(--brand);
+    color: var(--gold);
     font-size: 0.8em;
     flex-shrink: 0;
   }

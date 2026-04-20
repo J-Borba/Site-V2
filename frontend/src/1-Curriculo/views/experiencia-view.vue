@@ -1,119 +1,87 @@
 <script setup lang="ts">
-  import { ref } from 'vue';
   import { Jobs } from '../assets/utilities/jobs';
+  import { useMultiToggle } from '@/0-Global/composables/useToggle';
+  import PageShell from '@/0-Global/components/page-shell.vue';
 
-  const expanded = ref<Set<number>>(new Set());
-
-  function toggle(index: number) {
-    if (expanded.value.has(index)) {
-      expanded.value.delete(index);
-    } else {
-      expanded.value.add(index);
-    }
-  }
+  const { expanded, toggle } = useMultiToggle();
 </script>
 
 <template>
-  <section class="experience-page">
-    <div class="page-container">
-      <h1 class="section-title">Experiências Profissionais</h1>
+  <PageShell num="01" title="Experiências<br />Profissionais">
+    <div class="timeline" v-fade-up>
+      <div v-for="(job, index) in Jobs" :key="index" class="timeline-item">
+        <div class="timeline-marker">
+          <div class="marker-num">{{ String(index + 1).padStart(2, '0') }}</div>
+          <div class="marker-line"></div>
+        </div>
 
-      <div class="timeline">
-        <div
-          v-for="(job, index) in Jobs"
-          :key="index"
-          class="timeline-item">
-          <div class="timeline-marker">
-            <div class="marker-dot"></div>
+        <a :href="job.companyUrl" target="_blank" class="job-card">
+          <div class="job-header">
+            <span class="company-logo-wrap">
+              <img :src="job.companyLogo" :alt="job.companyName" class="company-logo" />
+            </span>
+            <div class="job-meta">
+              <p class="job-role">{{ job.roles[0].title }}</p>
+              <span class="company-name">{{ job.companyName }}</span>
+            </div>
+            <span class="job-dates">
+              {{ job.roles[job.roles.length - 1].startDate }}&nbsp;→&nbsp;{{ job.roles[0].endDate ?? 'Atualmente' }}
+            </span>
           </div>
 
-          <a :href="job.companyUrl" target="_blank" class="job-card">
-            <div class="job-header">
-              <span class="company-logo-link">
-                <img :src="job.companyLogo" :alt="job.companyName" class="company-logo" />
-              </span>
-              <div class="job-meta">
-                <p class="job-role">{{ job.roles[0].title }}</p>
-                <span class="company-name">{{ job.companyName }}</span>
+          <div class="skill-tags" v-if="job.roles[0].skills?.length">
+            <span v-for="(skill, i) in job.roles[0].skills" :key="i" class="skill-tag">
+              {{ skill }}
+            </span>
+          </div>
+        </a>
+
+        <button v-if="job.roles.length > 1" class="prev-roles-toggle" @click="toggle(index)">
+          <span class="toggle-icon" :class="{ rotated: expanded.has(index) }">›</span>
+          {{
+            expanded.has(index)
+              ? 'Ocultar'
+              : job.roles.length - 1 === 1
+                ? '1 cargo anterior'
+                : `${job.roles.length - 1} cargos anteriores`
+          }}
+        </button>
+
+        <transition name="accordion">
+          <div v-if="job.roles.length > 1 && expanded.has(index)" class="prev-roles">
+            <div v-for="(role, ri) in job.roles.slice(1)" :key="ri" class="prev-role-card">
+              <div class="prev-role-header">
+                <p class="job-role">{{ role.title }}</p>
+                <span class="job-dates"> {{ role.startDate }}&nbsp;→&nbsp;{{ role.endDate ?? 'Atualmente' }} </span>
               </div>
-              <span class="job-dates">
-                {{ job.roles[job.roles.length - 1].startDate }}&nbsp;→&nbsp;{{ job.roles[0].endDate ?? 'Atualmente' }}
-              </span>
-            </div>
-
-            <div class="skill-tags" v-if="job.roles[0].skills?.length">
-              <span
-                v-for="(skill, i) in job.roles[0].skills"
-                :key="i"
-                class="skill-tag">
-                {{ skill }}
-              </span>
-            </div>
-          </a>
-
-          <button
-            v-if="job.roles.length > 1"
-            class="prev-roles-toggle"
-            @click="toggle(index)">
-            <span class="toggle-icon" :class="{ rotated: expanded.has(index) }">›</span>
-            {{ expanded.has(index) ? 'Ocultar' : job.roles.length - 1 === 1 ? '1 cargo anterior' : `${job.roles.length - 1} cargos anteriores` }}
-          </button>
-
-          <transition name="accordion">
-            <div v-if="job.roles.length > 1 && expanded.has(index)" class="prev-roles">
-              <div
-                v-for="(role, ri) in job.roles.slice(1)"
-                :key="ri"
-                class="prev-role-card">
-                <div class="prev-role-header">
-                  <p class="job-role">{{ role.title }}</p>
-                  <span class="job-dates">
-                    {{ role.startDate }}&nbsp;→&nbsp;{{ role.endDate ?? 'Atualmente' }}
-                  </span>
-                </div>
-                <div class="skill-tags" v-if="role.skills?.length">
-                  <span v-for="(skill, si) in role.skills" :key="si" class="skill-tag">
-                    {{ skill }}
-                  </span>
-                </div>
+              <div class="skill-tags" v-if="role.skills?.length">
+                <span v-for="(skill, si) in role.skills" :key="si" class="skill-tag">
+                  {{ skill }}
+                </span>
               </div>
             </div>
-          </transition>
-        </div>
+          </div>
+        </transition>
       </div>
     </div>
-  </section>
+  </PageShell>
 </template>
 
 <style scoped lang="scss">
   @use '@/0-Global/style/utilities/breakpoints' as bp;
-  .experience-page {
-    flex: 1;
-    padding: var(--space-16) var(--space-6);
-  }
-
-  .page-container {
-    max-width: var(--container-max);
-    margin-inline: auto;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-12);
-  }
-
-  /* ── Timeline ──────────────────────────── */
+  @use '@/0-Global/style/utilities/mixins' as mx;
 
   .timeline {
     display: flex;
     flex-direction: column;
-    gap: 0;
     position: relative;
   }
 
   .timeline-item {
     display: grid;
-    grid-template-columns: 2rem 1fr;
-    gap: var(--space-4);
-    padding-bottom: var(--space-8);
+    grid-template-columns: 3.5rem 1fr;
+    gap: var(--space-5);
+    padding-bottom: var(--space-10);
     align-items: start;
 
     @media (max-width: bp.$bp-md) {
@@ -123,7 +91,7 @@
     &:last-child {
       padding-bottom: 0;
 
-      .timeline-marker::after {
+      .marker-line {
         display: none;
       }
     }
@@ -140,28 +108,28 @@
     @media (max-width: bp.$bp-md) {
       display: none;
     }
-
-    &::after {
-      content: '';
-      flex: 1;
-      width: 1px;
-      background: var(--border);
-      margin-top: var(--space-2);
-    }
   }
 
-  .marker-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--brand);
-    box-shadow: 0 0 0 3px var(--brand-dim);
+  .marker-num {
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-xs);
+    font-weight: 700;
+    color: var(--brand);
+    letter-spacing: 0.06em;
+    line-height: 1;
     flex-shrink: 0;
   }
 
-  /* ── Job card ──────────────────────────── */
+  .marker-line {
+    flex: 1;
+    width: 1px;
+    margin-top: var(--space-3);
+    background: linear-gradient(to bottom, var(--brand-border), transparent);
+    min-height: 3rem;
+  }
 
   .job-card {
+    @include mx.card-interactive;
     background: var(--bg-surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
@@ -172,12 +140,6 @@
     width: 100%;
     text-decoration: none;
     color: inherit;
-    transition: border-color 200ms ease, box-shadow 200ms ease;
-
-    &:hover {
-      border-color: var(--brand-border);
-      box-shadow: var(--shadow-brand);
-    }
   }
 
   .job-header {
@@ -190,15 +152,23 @@
     }
   }
 
-  .company-logo-link {
+  .company-logo-wrap {
     flex-shrink: 0;
+    width: 3rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
   }
 
   .company-logo {
-    width: 3rem;
-    height: 2.5rem;
+    width: 2.4rem;
+    height: 2rem;
     object-fit: contain;
-    border-radius: var(--radius-sm);
   }
 
   .job-meta {
@@ -209,7 +179,8 @@
   }
 
   .job-role {
-    font-weight: 600;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
     font-size: var(--text-base);
     color: var(--text-primary);
   }
@@ -221,7 +192,8 @@
   }
 
   .job-dates {
-    font-size: var(--text-sm);
+    font-family: 'Space Mono', monospace;
+    font-size: var(--text-xs);
     color: var(--text-secondary);
     background: var(--bg-elevated);
     border: 1px solid var(--border);
@@ -229,14 +201,13 @@
     border-radius: var(--radius-sm);
     white-space: nowrap;
     flex-shrink: 0;
+    letter-spacing: 0.04em;
 
     @media (max-width: bp.$bp-md) {
       width: 100%;
       text-align: center;
     }
   }
-
-  /* ── Skill tags ────────────────────────── */
 
   .skill-tags {
     display: flex;
@@ -245,17 +216,16 @@
   }
 
   .skill-tag {
+    font-family: 'Space Mono', monospace;
     font-size: var(--text-xs);
     color: var(--brand);
     background: var(--brand-dim);
     border: 1px solid var(--brand-border);
     padding: var(--space-1) var(--space-3);
     border-radius: 100px;
-    font-weight: 500;
-    letter-spacing: 0.02em;
+    font-weight: 400;
+    letter-spacing: 0.04em;
   }
-
-  /* ── Previous roles accordion ──────────── */
 
   .prev-roles-toggle {
     grid-column: 2;
@@ -263,12 +233,13 @@
     @media (max-width: bp.$bp-md) {
       grid-column: 1;
     }
+
     display: flex;
     align-items: center;
     gap: var(--space-2);
     background: none;
     border: none;
-    color: var(--text-secondary);
+    color: var(--text-muted);
     font-size: var(--text-sm);
     cursor: pointer;
     padding: var(--space-1) 0;
@@ -284,7 +255,7 @@
     font-size: 1rem;
     line-height: 1;
     display: inline-block;
-    transition: transform 200ms ease;
+    transition: transform 220ms ease;
     transform: rotate(0deg);
 
     &.rotated {
@@ -298,6 +269,7 @@
     @media (max-width: bp.$bp-md) {
       grid-column: 1;
     }
+
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
@@ -311,6 +283,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
+    border-left: 2px solid var(--brand-border);
   }
 
   .prev-role-header {
@@ -327,16 +300,16 @@
     }
   }
 
-  /* ── Accordion transition ──────────────── */
-
   .accordion-enter-active,
   .accordion-leave-active {
-    transition: opacity 200ms ease, transform 200ms ease;
+    transition:
+      opacity 220ms ease,
+      transform 220ms ease;
   }
 
   .accordion-enter-from,
   .accordion-leave-to {
     opacity: 0;
-    transform: translateY(-6px);
+    transform: translateY(-8px);
   }
 </style>

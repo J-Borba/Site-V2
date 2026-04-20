@@ -1,0 +1,33 @@
+@mixin card-interactive($translate: -2px) {
+  transition:
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms ease;
+
+  &:hover {
+    border-color: var(--brand-border);
+    box-shadow: var(--shadow-brand);
+    transform: translateY($translate);
+  }
+}
+
+@mixin page-num-style {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(5rem, 15vw, 10rem);
+  font-weight: 800;
+  color: var(--border);
+  position: absolute;
+  top: -0.6em;
+  left: -0.05em;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -0.05em;
+}
+
+@mixin page-container {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+}

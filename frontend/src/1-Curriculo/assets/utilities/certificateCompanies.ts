@@ -113,3 +113,9 @@ export const CertificateCompanies: Array<ICompany> = [
     ],
   },
 ];
+
+export const totalCertCount = CertificateCompanies.reduce((sum, company) => {
+  return sum + company.degrees.reduce((dSum, degree) => {
+    return dSum + (degree.url ? 1 : 0) + degree.certificates.length;
+  }, 0);
+}, 0);
