@@ -81,29 +81,6 @@
     }
   }
 
-  .ambient-bg--auth {
-    .ambient-orb {
-      opacity: 0.22;
-      filter: blur(80px);
-    }
-
-    .ambient-orb--cyan {
-      width: 500px;
-      height: 500px;
-      top: -180px;
-      right: -100px;
-      animation-duration: 16s;
-    }
-
-    .ambient-orb--indigo {
-      width: 400px;
-      height: 400px;
-      bottom: -150px;
-      left: -80px;
-      animation-duration: 20s;
-    }
-  }
-
   .ambient-bg--hero {
     .ambient-orb {
       display: none;
