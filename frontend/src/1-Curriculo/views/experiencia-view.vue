@@ -1,99 +1,75 @@
 <script setup lang="ts">
   import { Jobs } from '../assets/utilities/jobs';
   import { useMultiToggle } from '@/0-Global/composables/useToggle';
+  import PageShell from '@/0-Global/components/page-shell.vue';
 
   const { expanded, toggle } = useMultiToggle();
 </script>
 
 <template>
-  <section class="experience-page">
-    <div class="page-container">
-      <div class="page-header">
-        <span class="page-num">01</span>
-        <h1 class="section-title">Experiências<br />Profissionais</h1>
-      </div>
+  <PageShell num="01" title="Experiências<br />Profissionais">
+    <div class="timeline" v-fade-up>
+      <div v-for="(job, index) in Jobs" :key="index" class="timeline-item">
+        <div class="timeline-marker">
+          <div class="marker-num">{{ String(index + 1).padStart(2, '0') }}</div>
+          <div class="marker-line"></div>
+        </div>
 
-      <div class="timeline" v-fade-up>
-        <div v-for="(job, index) in Jobs" :key="index" class="timeline-item">
-          <div class="timeline-marker">
-            <div class="marker-num">{{ String(index + 1).padStart(2, '0') }}</div>
-            <div class="marker-line"></div>
+        <a :href="job.companyUrl" target="_blank" class="job-card">
+          <div class="job-header">
+            <span class="company-logo-wrap">
+              <img :src="job.companyLogo" :alt="job.companyName" class="company-logo" />
+            </span>
+            <div class="job-meta">
+              <p class="job-role">{{ job.roles[0].title }}</p>
+              <span class="company-name">{{ job.companyName }}</span>
+            </div>
+            <span class="job-dates">
+              {{ job.roles[job.roles.length - 1].startDate }}&nbsp;→&nbsp;{{ job.roles[0].endDate ?? 'Atualmente' }}
+            </span>
           </div>
 
-          <a :href="job.companyUrl" target="_blank" class="job-card">
-            <div class="job-header">
-              <span class="company-logo-wrap">
-                <img :src="job.companyLogo" :alt="job.companyName" class="company-logo" />
-              </span>
-              <div class="job-meta">
-                <p class="job-role">{{ job.roles[0].title }}</p>
-                <span class="company-name">{{ job.companyName }}</span>
+          <div class="skill-tags" v-if="job.roles[0].skills?.length">
+            <span v-for="(skill, i) in job.roles[0].skills" :key="i" class="skill-tag">
+              {{ skill }}
+            </span>
+          </div>
+        </a>
+
+        <button v-if="job.roles.length > 1" class="prev-roles-toggle" @click="toggle(index)">
+          <span class="toggle-icon" :class="{ rotated: expanded.has(index) }">›</span>
+          {{
+            expanded.has(index)
+              ? 'Ocultar'
+              : job.roles.length - 1 === 1
+                ? '1 cargo anterior'
+                : `${job.roles.length - 1} cargos anteriores`
+          }}
+        </button>
+
+        <transition name="accordion">
+          <div v-if="job.roles.length > 1 && expanded.has(index)" class="prev-roles">
+            <div v-for="(role, ri) in job.roles.slice(1)" :key="ri" class="prev-role-card">
+              <div class="prev-role-header">
+                <p class="job-role">{{ role.title }}</p>
+                <span class="job-dates"> {{ role.startDate }}&nbsp;→&nbsp;{{ role.endDate ?? 'Atualmente' }} </span>
               </div>
-              <span class="job-dates">
-                {{ job.roles[job.roles.length - 1].startDate }}&nbsp;→&nbsp;{{ job.roles[0].endDate ?? 'Atualmente' }}
-              </span>
-            </div>
-
-            <div class="skill-tags" v-if="job.roles[0].skills?.length">
-              <span v-for="(skill, i) in job.roles[0].skills" :key="i" class="skill-tag">
-                {{ skill }}
-              </span>
-            </div>
-          </a>
-
-          <button v-if="job.roles.length > 1" class="prev-roles-toggle" @click="toggle(index)">
-            <span class="toggle-icon" :class="{ rotated: expanded.has(index) }">›</span>
-            {{
-              expanded.has(index)
-                ? 'Ocultar'
-                : job.roles.length - 1 === 1
-                  ? '1 cargo anterior'
-                  : `${job.roles.length - 1} cargos anteriores`
-            }}
-          </button>
-
-          <transition name="accordion">
-            <div v-if="job.roles.length > 1 && expanded.has(index)" class="prev-roles">
-              <div v-for="(role, ri) in job.roles.slice(1)" :key="ri" class="prev-role-card">
-                <div class="prev-role-header">
-                  <p class="job-role">{{ role.title }}</p>
-                  <span class="job-dates"> {{ role.startDate }}&nbsp;→&nbsp;{{ role.endDate ?? 'Atualmente' }} </span>
-                </div>
-                <div class="skill-tags" v-if="role.skills?.length">
-                  <span v-for="(skill, si) in role.skills" :key="si" class="skill-tag">
-                    {{ skill }}
-                  </span>
-                </div>
+              <div class="skill-tags" v-if="role.skills?.length">
+                <span v-for="(skill, si) in role.skills" :key="si" class="skill-tag">
+                  {{ skill }}
+                </span>
               </div>
             </div>
-          </transition>
-        </div>
+          </div>
+        </transition>
       </div>
     </div>
-  </section>
+  </PageShell>
 </template>
 
 <style scoped lang="scss">
   @use '@/0-Global/style/utilities/breakpoints' as bp;
   @use '@/0-Global/style/utilities/mixins' as mx;
-
-  .experience-page {
-    flex: 1;
-    padding: var(--space-16) var(--space-6);
-  }
-
-  .page-container {
-    @include mx.page-container;
-    gap: var(--space-12);
-  }
-
-  .page-header {
-    position: relative;
-  }
-
-  .page-num {
-    @include mx.page-num-style;
-  }
 
   .timeline {
     display: flex;

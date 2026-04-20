@@ -77,5 +77,15 @@ export function useTerminalTyper(charSpeed = 28, lineGap = 350) {
     return runSequence(inputLines);
   }
 
-  return { lines, done, runSequence, showInstant, cleanup, runOnce };
+  function runOnceDelayed(inputLines: TyperInputLine[], sessionKey: string, delay = 600): void {
+    const alreadySeen =
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches || !!sessionStorage.getItem(sessionKey);
+    if (alreadySeen) {
+      runOnce(inputLines, sessionKey);
+    } else {
+      setTimeout(() => runOnce(inputLines, sessionKey), delay);
+    }
+  }
+
+  return { lines, done, runSequence, showInstant, cleanup, runOnce, runOnceDelayed };
 }

@@ -2,80 +2,56 @@
   import { faMedal, faUserGraduate, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
   import { CertificateCompanies } from '../assets/utilities/certificateCompanies';
   import { useSingleToggle } from '@/0-Global/composables/useToggle';
+  import PageShell from '@/0-Global/components/page-shell.vue';
 
   const { active: expandedWarning, toggle: toggleWarning } = useSingleToggle<string>();
 </script>
 
 <template>
-  <section class="certs-page">
-    <div class="page-container">
-      <div class="page-header">
-        <span class="page-num">02</span>
-        <h1 class="section-title">Certificados</h1>
-      </div>
-
-      <div class="companies-grid" v-fade-up>
-        <div v-for="(company, ci) in CertificateCompanies" :key="ci" class="company-card">
-          <div class="company-header">
-            <div class="company-icon-wrap">
-              <img :src="company.icon" :alt="company.name" class="company-icon" />
-            </div>
-            <h2 class="company-name">{{ company.name }}</h2>
+  <PageShell num="02" title="Certificados">
+    <div class="companies-grid" v-fade-up>
+      <div v-for="(company, ci) in CertificateCompanies" :key="ci" class="company-card">
+        <div class="company-header">
+          <div class="company-icon-wrap">
+            <img :src="company.icon" :alt="company.name" class="company-icon" />
           </div>
+          <h2 class="company-name">{{ company.name }}</h2>
+        </div>
 
-          <div class="degrees-list">
-            <div v-for="(degree, di) in company.degrees" :key="di" class="degree-block">
-              <div class="degree-title-row" v-if="degree.title">
-                <a v-if="degree.url" :href="degree.url" target="_blank" class="degree-title">
-                  <font-awesome-icon :icon="faUserGraduate" class="deg-icon" />
-                  {{ degree.title }}
-                </a>
-                <span v-else class="degree-title incomplete">
-                  <font-awesome-icon :icon="faUserGraduate" class="deg-icon" />
-                  {{ degree.title }}
-                  <button class="warn-btn" :title="'Formação em andamento'" @click="toggleWarning(`${ci}-${di}`)">
-                    <font-awesome-icon :icon="faTriangleExclamation" />
-                  </button>
-                </span>
-                <p v-if="expandedWarning === `${ci}-${di}`" class="warn-msg">Esta formação ainda está em andamento.</p>
-              </div>
-
-              <ul class="cert-list">
-                <li v-for="(cert, i) in degree.certificates" :key="i" class="cert-item">
-                  <a v-if="cert.title && cert.url" :href="cert.url" target="_blank" class="cert-link">
-                    <font-awesome-icon :icon="faMedal" class="cert-icon" />
-                    {{ cert.title }}
-                  </a>
-                </li>
-              </ul>
+        <div class="degrees-list">
+          <div v-for="(degree, di) in company.degrees" :key="di" class="degree-block">
+            <div class="degree-title-row" v-if="degree.title">
+              <a v-if="degree.url" :href="degree.url" target="_blank" class="degree-title">
+                <font-awesome-icon :icon="faUserGraduate" class="deg-icon" />
+                {{ degree.title }}
+              </a>
+              <span v-else class="degree-title incomplete">
+                <font-awesome-icon :icon="faUserGraduate" class="deg-icon" />
+                {{ degree.title }}
+                <button class="warn-btn" :title="'Formação em andamento'" @click="toggleWarning(`${ci}-${di}`)">
+                  <font-awesome-icon :icon="faTriangleExclamation" />
+                </button>
+              </span>
+              <p v-if="expandedWarning === `${ci}-${di}`" class="warn-msg">Esta formação ainda está em andamento.</p>
             </div>
+
+            <ul class="cert-list">
+              <li v-for="(cert, i) in degree.certificates" :key="i" class="cert-item">
+                <a v-if="cert.title && cert.url" :href="cert.url" target="_blank" class="cert-link">
+                  <font-awesome-icon :icon="faMedal" class="cert-icon" />
+                  {{ cert.title }}
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </PageShell>
 </template>
 
 <style scoped lang="scss">
   @use '@/0-Global/style/utilities/mixins' as mx;
-
-  .certs-page {
-    flex: 1;
-    padding: var(--space-16) var(--space-6);
-  }
-
-  .page-container {
-    @include mx.page-container;
-    gap: var(--space-12);
-  }
-
-  .page-header {
-    position: relative;
-  }
-
-  .page-num {
-    @include mx.page-num-style;
-  }
 
   .companies-grid {
     display: grid;

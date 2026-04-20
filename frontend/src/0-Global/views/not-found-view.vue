@@ -1,7 +1,8 @@
 <script setup lang="ts">
   import { onMounted } from 'vue';
   import { useTerminalTyper } from '@/0-Global/composables/useTerminalTyper';
-  import TerminalCard from '@/0-Global/components/TerminalCard.vue';
+  import TerminalCard from '@/0-Global/components/terminal-card.vue';
+  import TerminalOutput from '@/0-Global/components/terminal-output.vue';
 
   const LINES = [
     { full: '$ cd /pagina-que-voce-procura', type: 'cmd' },
@@ -19,7 +20,7 @@
     { full: '$ _', type: 'cmd', instant: true },
   ];
 
-  const { lines: visible, done: typingDone, runOnce } = useTerminalTyper();
+  const { lines: visible, done: typingDone, runOnceDelayed } = useTerminalTyper();
 
   const boat = [
     '                  |                 ',
@@ -31,20 +32,12 @@
     ' ~~ ~~ ~~~~ ~~~ ~~~ ~~ ~~~ ~~~~ ~ ~',
   ].join('\n');
 
-  const LOGIN_TERMINAL_KEY = 'login_terminal_shown';
+  const NOT_FOUND_TERMINAL_KEY = 'not_found_terminal_shown';
 
   onMounted(() => {
-    const alreadySeen =
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches || !!sessionStorage.getItem(LOGIN_TERMINAL_KEY);
-    if (alreadySeen) {
-      runOnce(LINES, LOGIN_TERMINAL_KEY);
-    } else {
-      setTimeout(() => runOnce(LINES, LOGIN_TERMINAL_KEY), 600);
-    }
+    runOnceDelayed(LINES, NOT_FOUND_TERMINAL_KEY);
   });
 </script>
-
-<!-- TODO: try to remove duplicate code between this and other views (the terminal lines and the onMounted logic) -->
 <template>
   <section>
     <div class="glitch-wrap" aria-label="404">
@@ -56,26 +49,7 @@
     <p class="subtitle">Página perdida em alto mar</p>
 
     <TerminalCard label="lost.4ever" v-fade-up>
-      <div class="terminal-output">
-        <template v-for="(line, idx) in visible" :key="idx">
-          <div v-if="line.type === 'box'" class="terminal-box">
-            <span v-for="(l, li) in line.text.split('\n')" :key="li">{{ l }}</span>
-          </div>
-          <p v-else :class="['terminal-line', `terminal-line--${line.type}`]">
-            <template v-if="line.type === 'gap'">&nbsp;</template>
-            <template v-else-if="line.text === '$ _'">
-              <span class="t-prompt">$</span>
-              <span class="terminal-cursor" aria-hidden="true">▋</span>
-            </template>
-            <template v-else>
-              {{ line.text
-              }}<span v-if="idx === visible.length - 1 && !typingDone" class="terminal-cursor" aria-hidden="true"
-                >▋</span
-              >
-            </template>
-          </p>
-        </template>
-      </div>
+      <TerminalOutput :lines="visible" :typing-done="typingDone" />
     </TerminalCard>
   </section>
 </template>
@@ -93,11 +67,6 @@
 
   .glitch-wrap {
     line-height: 1;
-  }
-
-  .t-prompt {
-    color: var(--brand);
-    margin-right: 0.5ch;
   }
 
   .glitch {
@@ -127,14 +96,6 @@
       color: var(--gold);
       animation: glitch-bottom 3s infinite linear;
     }
-  }
-
-  .terminal-output {
-    padding: 0 var(--space-6);
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    min-height: 220px;
   }
 
   @keyframes glitch-top {

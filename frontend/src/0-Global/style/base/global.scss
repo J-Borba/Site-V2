@@ -142,24 +142,3 @@ main {
   width: 1.25rem;
   flex-shrink: 0;
 }
-
-.warning {
-  color: var(--warning) !important;
-  cursor: pointer !important;
-}
-
-.color-primary {
-  color: var(--brand) !important;
-}
-.color-secondary {
-  color: var(--brand-light) !important;
-}
-.color-text {
-  color: var(--text-primary) !important;
-}
-.text-muted {
-  color: var(--text-secondary) !important;
-}
-.bg-emphasis {
-  background-color: var(--bg-elevated) !important;
-}

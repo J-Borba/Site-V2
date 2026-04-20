@@ -97,12 +97,7 @@
   --bg-whatsapp-bottom: #128c7e;
   --bg-whatsapp-no-opacity: rgba(37, 211, 102, 0);
 
-  /* Legacy aliases */
-  --bg: var(--bg-base);
-  --bg-emphasis: var(--bg-elevated);
-  --text: var(--text-primary);
-  --primary: var(--brand);
-  --secondary: var(--brand-light);
+  /* Utility */
   --white: #ffffff;
   --warning: #e3b341;
 }

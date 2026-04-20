@@ -4,7 +4,9 @@
   import { login, parseApiErrors } from '../services/auth-api';
   import { useAuthStore } from '../store/auth-store';
   import { useTerminalTyper } from '@/0-Global/composables/useTerminalTyper';
-  import TerminalCard from '@/0-Global/components/TerminalCard.vue';
+  import TerminalCard from '@/0-Global/components/terminal-card.vue';
+  import TerminalOutput from '@/0-Global/components/terminal-output.vue';
+  import AmbientBackground from '@/0-Global/components/ambient-background.vue';
 
   // TODO: turn API_ONLINE = true when deployed
   const API_ONLINE = false;
@@ -49,7 +51,7 @@
     { full: '$ _', type: 'cmd', instant: true },
   ];
 
-  const { lines: visible, done: typingDone, runOnce } = useTerminalTyper();
+  const { lines: visible, done: typingDone, runOnceDelayed } = useTerminalTyper();
 
   const LOGIN_TERMINAL_KEY = 'login_terminal_shown';
 
@@ -57,47 +59,18 @@
     if (API_ONLINE) {
       return;
     }
-    const alreadySeen =
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches || !!sessionStorage.getItem(LOGIN_TERMINAL_KEY);
-    if (alreadySeen) {
-      runOnce(LINES, LOGIN_TERMINAL_KEY);
-    } else {
-      setTimeout(() => runOnce(LINES, LOGIN_TERMINAL_KEY), 600);
-    }
+    runOnceDelayed(LINES, LOGIN_TERMINAL_KEY);
   });
 </script>
 
 <template>
   <div class="auth-page">
-    <div class="auth-bg">
-      <div class="auth-orb auth-orb--cyan"></div>
-      <div class="auth-orb auth-orb--indigo"></div>
-      <div class="auth-grid"></div>
-    </div>
+    <AmbientBackground variant="auth" show-grid />
 
     <!-- maintenance view  -->
     <div v-if="!API_ONLINE" class="auth-card-wrap">
       <TerminalCard label="auth.connect — em manutenção" v-fade-up>
-        <div class="terminal-output">
-          <template v-for="(line, idx) in visible" :key="idx">
-            <div v-if="line.type === 'box'" class="terminal-box">
-              <span v-for="(l, li) in line.text.split('\n')" :key="li">{{ l }}</span>
-            </div>
-            <p v-else :class="['terminal-line', `terminal-line--${line.type}`]">
-              <template v-if="line.type === 'gap'">&nbsp;</template>
-              <template v-else-if="line.text === '$ _'">
-                <span class="t-prompt">$</span>
-                <span class="terminal-cursor" aria-hidden="true">▋</span>
-              </template>
-              <template v-else>
-                {{ line.text
-                }}<span v-if="idx === visible.length - 1 && !typingDone" class="terminal-cursor" aria-hidden="true"
-                  >▋</span
-                >
-              </template>
-            </p>
-          </template>
-        </div>
+        <TerminalOutput :lines="visible" :typing-done="typingDone" />
         <p class="offline-note">Obrigado pela visita — em breve tem novidade por aqui.</p>
       </TerminalCard>
     </div>
@@ -159,19 +132,6 @@
   .auth-card-wrap {
     width: 100%;
     max-width: 480px;
-  }
-
-  .terminal-output {
-    padding: 0 var(--space-6);
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    min-height: 220px;
-  }
-
-  .t-prompt {
-    color: var(--brand);
-    margin-right: 0.5ch;
   }
 
   .offline-note {

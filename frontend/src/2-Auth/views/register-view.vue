@@ -3,6 +3,8 @@
   import { useRouter } from 'vue-router';
   import { register, parseApiErrors } from '../services/auth-api';
   import { useAuthStore } from '../store/auth-store';
+  import TerminalCard from '@/0-Global/components/terminal-card.vue';
+  import AmbientBackground from '@/0-Global/components/ambient-background.vue';
 
   const router = useRouter();
   const authStore = useAuthStore();
@@ -31,79 +33,75 @@
 
 <template>
   <div class="auth-page">
-    <div class="auth-bg">
-      <div class="auth-orb auth-orb--cyan"></div>
-      <div class="auth-orb auth-orb--indigo"></div>
-      <div class="auth-grid"></div>
-    </div>
+    <AmbientBackground variant="auth" show-grid />
 
-    <div class="auth-card" v-fade-up>
-      <div class="auth-terminal-bar">
-        <span class="terminal-dot terminal-dot--red"></span>
-        <span class="terminal-dot terminal-dot--yellow"></span>
-        <span class="terminal-dot terminal-dot--green"></span>
-        <span class="terminal-label">auth.register</span>
-      </div>
-
-      <div class="auth-header">
-        <h1 class="auth-title">Crie sua conta<span class="cursor">_</span></h1>
-        <p class="auth-subtitle">Junte-se e comece a usar meus projetos.</p>
-      </div>
-
-      <form class="auth-form" @submit.prevent="handleRegister">
-        <div class="form-group">
-          <label class="form-label" for="username">Usuário</label>
-          <input
-            id="username"
-            v-model="userName"
-            class="form-input"
-            type="text"
-            placeholder="Nome de usuário"
-            autocomplete="username"
-            required />
+    <div class="auth-card-wrap">
+      <TerminalCard label="auth.register" v-fade-up>
+        <div class="auth-header">
+          <h1 class="auth-title">Crie sua conta<span class="cursor">_</span></h1>
+          <p class="auth-subtitle">Junte-se e comece a usar meus projetos.</p>
         </div>
 
-        <div class="form-group">
-          <label class="form-label" for="email">Email</label>
-          <input
-            id="email"
-            v-model="email"
-            class="form-input"
-            type="email"
-            placeholder="seu-email@exemplo.com"
-            autocomplete="email"
-            required />
-        </div>
+        <form class="auth-form" @submit.prevent="handleRegister">
+          <div class="form-group">
+            <label class="form-label" for="username">Usuário</label>
+            <input
+              id="username"
+              v-model="userName"
+              class="form-input"
+              type="text"
+              placeholder="Nome de usuário"
+              autocomplete="username"
+              required />
+          </div>
 
-        <div class="form-group">
-          <label class="form-label" for="password">Senha</label>
-          <input
-            id="password"
-            v-model="password"
-            class="form-input"
-            type="password"
-            placeholder="••••••••"
-            autocomplete="new-password"
-            required />
-        </div>
+          <div class="form-group">
+            <label class="form-label" for="email">Email</label>
+            <input
+              id="email"
+              v-model="email"
+              class="form-input"
+              type="email"
+              placeholder="seu-email@exemplo.com"
+              autocomplete="email"
+              required />
+          </div>
 
-        <ul v-if="errors.length" class="error-list">
-          <li v-for="err in errors" :key="err">{{ err }}</li>
-        </ul>
+          <div class="form-group">
+            <label class="form-label" for="password">Senha</label>
+            <input
+              id="password"
+              v-model="password"
+              class="form-input"
+              type="password"
+              placeholder="••••••••"
+              autocomplete="new-password"
+              required />
+          </div>
 
-        <button class="btn-submit" type="submit" :disabled="loading">
-          {{ loading ? 'Criando conta…' : 'Crie sua conta' }}
-        </button>
-      </form>
+          <ul v-if="errors.length" class="error-list">
+            <li v-for="err in errors" :key="err">{{ err }}</li>
+          </ul>
 
-      <p class="auth-footer">
-        Já possui uma conta?
-        <RouterLink to="/login" class="auth-link">Entrar</RouterLink>
-      </p>
+          <button class="btn-submit" type="submit" :disabled="loading">
+            {{ loading ? 'Criando conta…' : 'Crie sua conta' }}
+          </button>
+        </form>
+
+        <p class="auth-footer">
+          Já possui uma conta?
+          <RouterLink to="/login" class="auth-link">Entrar</RouterLink>
+        </p>
+      </TerminalCard>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
   @use '../assets/auth';
+
+  .auth-card-wrap {
+    width: 100%;
+    max-width: 480px;
+  }
 </style>

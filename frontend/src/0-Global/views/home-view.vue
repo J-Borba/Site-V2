@@ -6,7 +6,8 @@
   import { tiplan, uerj } from '@/0-Global/assets/utilities/_variables';
   import { totalCertCount } from '@/1-Curriculo/assets/utilities/certificateCompanies';
   import { useTerminalTyper } from '@/0-Global/composables/useTerminalTyper';
-  import TerminalCard from '@/0-Global/components/TerminalCard.vue';
+  import TerminalCard from '@/0-Global/components/terminal-card.vue';
+  import AmbientBackground from '@/0-Global/components/ambient-background.vue';
 
   const terminalVisible = ref(false);
   const identityVisible = ref(false);
@@ -101,10 +102,7 @@
 <template>
   <div class="home">
     <section class="hero">
-      <div class="hero-bg" aria-hidden="true">
-        <div class="hero-grid"></div>
-        <div class="hero-noise"></div>
-      </div>
+      <AmbientBackground variant="hero" :show-orbs="false" show-grid show-noise />
 
       <div class="hero-deco" :class="{ 'hero-deco--visible': heroReady }" aria-hidden="true">{ }</div>
 
@@ -246,32 +244,6 @@
     display: flex;
     align-items: center;
     padding: var(--space-20) var(--space-6) var(--space-16);
-  }
-
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .hero-grid {
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-    background-size: 32px 32px;
-    mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 20%, transparent 80%);
-  }
-
-  .hero-noise {
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
-    background-repeat: repeat;
-    background-size: 200px;
-    opacity: 0.35;
-    mix-blend-mode: overlay;
-    pointer-events: none;
   }
 
   @keyframes deco-fade {
