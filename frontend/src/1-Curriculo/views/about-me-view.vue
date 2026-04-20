@@ -10,6 +10,7 @@
   import { githubApi } from '@/0-Global/services/api.js';
   import MyLoading from '@/0-Global/components/my-loading.vue';
   import GoogleMaps from '../components/google-maps.vue';
+  import PageShell from '@/0-Global/components/page-shell.vue';
   import { myGithub, tiplan, uerj } from '@/0-Global/assets/utilities/_variables';
 
   interface IRepos {
@@ -50,100 +51,75 @@
 </script>
 
 <template>
-  <div class="about-page">
-    <div class="page-container">
-      <div class="page-header">
-        <span class="page-num">03</span>
-        <h1 class="section-title">Sobre Mim</h1>
+  <PageShell num="03" title="Sobre Mim" gap="var(--space-16)">
+    <section v-fade-up class="info-section">
+      <div class="section-header">
+        <h2 class="section-subtitle">Última Experiência</h2>
+        <router-link to="/experiencias" class="section-more">
+          <font-awesome-icon :icon="faCircleInfo" />
+          <span>Ver todas</span>
+        </router-link>
       </div>
 
-      <section v-fade-up class="info-section">
-        <div class="section-header">
-          <h2 class="section-subtitle">Última Experiência</h2>
-          <router-link to="/experiencias" class="section-more">
-            <font-awesome-icon :icon="faCircleInfo" />
-            <span>Ver todas</span>
-          </router-link>
+      <div class="info-card">
+        <GoogleMaps
+          src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14700.985908340814!2d-43.178263!3d-22.904278!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x997f5fdc3e9565%3A0xe09773af0e23b78e!2sTIPLAN!5e0!3m2!1spt-BR!2sbr!4v1709422911840!5m2!1spt-BR!2sbr" />
+        <div class="card-body">
+          <a :href="tiplan.url" target="_blank" class="card-company">{{ tiplan.title }}</a>
+          <p class="card-role">Desenvolvedor de Software Jr</p>
+          <p class="card-date">Jan/2025 — Atualmente</p>
         </div>
+      </div>
+    </section>
 
-        <div class="info-card">
-          <GoogleMaps
-            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14700.985908340814!2d-43.178263!3d-22.904278!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x997f5fdc3e9565%3A0xe09773af0e23b78e!2sTIPLAN!5e0!3m2!1spt-BR!2sbr!4v1709422911840!5m2!1spt-BR!2sbr" />
-          <div class="card-body">
-            <a :href="tiplan.url" target="_blank" class="card-company">{{ tiplan.title }}</a>
-            <p class="card-role">Desenvolvedor de Software Jr</p>
-            <p class="card-date">Jan/2025 — Atualmente</p>
+    <section v-fade-up class="info-section">
+      <h2 class="section-subtitle">Formação Acadêmica</h2>
+
+      <div class="info-card">
+        <GoogleMaps
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d58800.952966794444!2d-43.31234995136716!3d-22.9111739!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x997e66c5f330ad%3A0x874ed5a98cf472d1!2sUniversidade%20do%20Estado%20do%20Rio%20de%20Janeiro!5e0!3m2!1spt-BR!2sbr!4v1709481881887!5m2!1spt-BR!2sbr" />
+        <div class="card-body">
+          <a :href="uerj.url" target="_blank" class="card-company">{{ uerj.title }} ({{ uerj.shortTitle }})</a>
+          <p class="card-role">Ciências da Computação</p>
+          <p class="card-date">Set/2020 — Cursando</p>
+        </div>
+      </div>
+    </section>
+
+    <section v-fade-up class="info-section">
+      <h2 class="section-subtitle">Projetos</h2>
+
+      <MyLoading v-if="loading" />
+
+      <div v-else-if="error" class="error-banner">
+        <font-awesome-icon :icon="faTriangleExclamation" />
+        <div>
+          <p class="error-code">{{ error.code }}</p>
+          <p class="error-msg">{{ error.message }}</p>
+        </div>
+      </div>
+
+      <div v-else class="repos-grid">
+        <a v-for="repo in filteredRepos" :key="repo.id" :href="repo.html_url" target="_blank" class="repo-card">
+          <div class="repo-top">
+            <font-awesome-icon :icon="faBookBookmark" class="repo-book-icon" />
+            <span class="repo-name">{{ repo.name }}</span>
+            <font-awesome-icon :icon="faArrowUpRightFromSquare" class="repo-ext-icon" />
           </div>
-        </div>
-      </section>
+          <p class="repo-desc">{{ repo.description ?? notInformedText }}</p>
+          <p :data-lang="repo.language" class="repo-lang">
+            {{ repo.language ?? notInformedText }}
+          </p>
+        </a>
+      </div>
 
-      <section v-fade-up class="info-section">
-        <h2 class="section-subtitle">Formação Acadêmica</h2>
-
-        <div class="info-card">
-          <GoogleMaps
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d58800.952966794444!2d-43.31234995136716!3d-22.9111739!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x997e66c5f330ad%3A0x874ed5a98cf472d1!2sUniversidade%20do%20Estado%20do%20Rio%20de%20Janeiro!5e0!3m2!1spt-BR!2sbr!4v1709481881887!5m2!1spt-BR!2sbr" />
-          <div class="card-body">
-            <a :href="uerj.url" target="_blank" class="card-company">{{ uerj.title }} ({{ uerj.shortTitle }})</a>
-            <p class="card-role">Ciências da Computação</p>
-            <p class="card-date">Set/2020 — Cursando</p>
-          </div>
-        </div>
-      </section>
-
-      <section v-fade-up class="info-section">
-        <h2 class="section-subtitle">Projetos</h2>
-
-        <MyLoading v-if="loading" />
-
-        <div v-else-if="error" class="error-banner">
-          <font-awesome-icon :icon="faTriangleExclamation" />
-          <div>
-            <p class="error-code">{{ error.code }}</p>
-            <p class="error-msg">{{ error.message }}</p>
-          </div>
-        </div>
-
-        <div v-else class="repos-grid">
-          <a v-for="repo in filteredRepos" :key="repo.id" :href="repo.html_url" target="_blank" class="repo-card">
-            <div class="repo-top">
-              <font-awesome-icon :icon="faBookBookmark" class="repo-book-icon" />
-              <span class="repo-name">{{ repo.name }}</span>
-              <font-awesome-icon :icon="faArrowUpRightFromSquare" class="repo-ext-icon" />
-            </div>
-            <p class="repo-desc">{{ repo.description ?? notInformedText }}</p>
-            <p :data-lang="repo.language" class="repo-lang">
-              {{ repo.language ?? notInformedText }}
-            </p>
-          </a>
-        </div>
-
-        <a :href="myGithub.url" target="_blank" class="btn-brand"> Ver todos os projetos </a>
-      </section>
-    </div>
-  </div>
+      <a :href="myGithub.url" target="_blank" class="btn-brand"> Ver todos os projetos </a>
+    </section>
+  </PageShell>
 </template>
 
 <style scoped lang="scss">
   @use '@/0-Global/style/utilities/mixins' as mx;
-
-  .about-page {
-    flex: 1;
-    padding: var(--space-16) var(--space-6);
-  }
-
-  .page-container {
-    @include mx.page-container;
-    gap: var(--space-16);
-  }
-
-  .page-header {
-    position: relative;
-  }
-
-  .page-num {
-    @include mx.page-num-style;
-  }
 
   .info-section {
     display: flex;
@@ -306,6 +282,7 @@
     flex: 1;
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
