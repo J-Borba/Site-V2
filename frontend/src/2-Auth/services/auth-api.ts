@@ -25,8 +25,7 @@ api.interceptors.response.use(
     const originalConfig = axiosError?.config as AxiosRequestConfig & { _retry?: boolean };
 
     const isRefreshEndpoint = originalConfig?.url?.includes('/user/refresh');
-    const isMeEndpoint = originalConfig?.url?.includes('/user/me');
-    if (status !== 401 || originalConfig?._retry || isRefreshEndpoint || isMeEndpoint) {
+    if (status !== 401 || originalConfig?._retry || isRefreshEndpoint) {
       return Promise.reject(error);
     }
 

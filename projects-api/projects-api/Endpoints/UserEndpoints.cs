@@ -15,11 +15,13 @@ public static class UserEndpoints
              .Produces<IEnumerable<ReadUserDto>>()
              .Produces(StatusCodes.Status401Unauthorized)
              .Produces(StatusCodes.Status403Forbidden)
-             .Produces(StatusCodes.Status404NotFound);
+             .Produces(StatusCodes.Status200OK);
 
         group.MapPost("/register", Register)
+            .RequireRateLimiting("login")
             .Produces(StatusCodes.Status200OK)
-            .Produces<IEnumerable<string>>(StatusCodes.Status400BadRequest);
+            .Produces<IEnumerable<string>>(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status429TooManyRequests);
 
         group.MapPost("/login", Login)
              .RequireRateLimiting("login")
@@ -50,7 +52,7 @@ public static class UserEndpoints
     private static async Task<IResult> GetUsers(IUserService userService)
     {
         var users = await userService.GetUsersAsync();
-        return users.Any() ? Results.Ok(users) : Results.NotFound();
+        return Results.Ok(users);
     }
 
     private static async Task<IResult> Register(CreateUserDto dto, IUserService userService, HttpContext context)
