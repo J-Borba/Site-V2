@@ -1,13 +1,9 @@
 <script lang="ts" setup>
-  import { ref } from 'vue';
   import { faMedal, faUserGraduate, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
   import { CertificateCompanies } from '../assets/utilities/certificateCompanies';
+  import { useSingleToggle } from '@/0-Global/composables/useToggle';
 
-  const expandedWarning = ref<string | null>(null);
-
-  function toggleWarning(id: string) {
-    expandedWarning.value = expandedWarning.value === id ? null : id;
-  }
+  const { active: expandedWarning, toggle: toggleWarning } = useSingleToggle<string>();
 </script>
 
 <template>
@@ -19,10 +15,7 @@
       </div>
 
       <div class="companies-grid" v-fade-up>
-        <div
-          v-for="(company, ci) in CertificateCompanies"
-          :key="ci"
-          class="company-card">
+        <div v-for="(company, ci) in CertificateCompanies" :key="ci" class="company-card">
           <div class="company-header">
             <div class="company-icon-wrap">
               <img :src="company.icon" :alt="company.name" class="company-icon" />
@@ -31,46 +24,25 @@
           </div>
 
           <div class="degrees-list">
-            <div
-              v-for="(degree, di) in company.degrees"
-              :key="di"
-              class="degree-block">
+            <div v-for="(degree, di) in company.degrees" :key="di" class="degree-block">
               <div class="degree-title-row" v-if="degree.title">
-                <a
-                  v-if="degree.url"
-                  :href="degree.url"
-                  target="_blank"
-                  class="degree-title">
+                <a v-if="degree.url" :href="degree.url" target="_blank" class="degree-title">
                   <font-awesome-icon :icon="faUserGraduate" class="deg-icon" />
                   {{ degree.title }}
                 </a>
                 <span v-else class="degree-title incomplete">
                   <font-awesome-icon :icon="faUserGraduate" class="deg-icon" />
                   {{ degree.title }}
-                  <button
-                    class="warn-btn"
-                    :title="'Formação em andamento'"
-                    @click="toggleWarning(`${ci}-${di}`)">
+                  <button class="warn-btn" :title="'Formação em andamento'" @click="toggleWarning(`${ci}-${di}`)">
                     <font-awesome-icon :icon="faTriangleExclamation" />
                   </button>
                 </span>
-                <p
-                  v-if="expandedWarning === `${ci}-${di}`"
-                  class="warn-msg">
-                  Esta formação ainda está em andamento.
-                </p>
+                <p v-if="expandedWarning === `${ci}-${di}`" class="warn-msg">Esta formação ainda está em andamento.</p>
               </div>
 
               <ul class="cert-list">
-                <li
-                  v-for="(cert, i) in degree.certificates"
-                  :key="i"
-                  class="cert-item">
-                  <a
-                    v-if="cert.title && cert.url"
-                    :href="cert.url"
-                    target="_blank"
-                    class="cert-link">
+                <li v-for="(cert, i) in degree.certificates" :key="i" class="cert-item">
+                  <a v-if="cert.title && cert.url" :href="cert.url" target="_blank" class="cert-link">
                     <font-awesome-icon :icon="faMedal" class="cert-icon" />
                     {{ cert.title }}
                   </a>
@@ -85,16 +57,15 @@
 </template>
 
 <style scoped lang="scss">
+  @use '@/0-Global/style/utilities/mixins' as mx;
+
   .certs-page {
     flex: 1;
     padding: var(--space-16) var(--space-6);
   }
 
   .page-container {
-    max-width: var(--container-max);
-    margin-inline: auto;
-    display: flex;
-    flex-direction: column;
+    @include mx.page-container;
     gap: var(--space-12);
   }
 
@@ -103,17 +74,7 @@
   }
 
   .page-num {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(5rem, 15vw, 10rem);
-    font-weight: 800;
-    color: var(--border);
-    position: absolute;
-    top: -0.6em;
-    left: -0.05em;
-    line-height: 1;
-    pointer-events: none;
-    user-select: none;
-    letter-spacing: -0.05em;
+    @include mx.page-num-style;
   }
 
   .companies-grid {
@@ -123,6 +84,7 @@
   }
 
   .company-card {
+    @include mx.card-interactive;
     background: var(--bg-surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
@@ -130,13 +92,6 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-5);
-    transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
-
-    &:hover {
-      border-color: var(--brand-border);
-      box-shadow: var(--shadow-brand);
-      transform: translateY(-2px);
-    }
   }
 
   .company-header {
@@ -261,7 +216,9 @@
     font-size: var(--text-sm);
     color: var(--text-secondary);
     width: fit-content;
-    transition: color 150ms ease, transform 150ms ease;
+    transition:
+      color 150ms ease,
+      transform 150ms ease;
 
     &:hover {
       color: var(--brand);

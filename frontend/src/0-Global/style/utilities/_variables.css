@@ -18,6 +18,16 @@
   --gold-border: rgba(232, 184, 75, 0.3);
   --gold-glow: 0 0 28px rgba(232, 184, 75, 0.18);
 
+  /* Purple accent (.NET) */
+  --purple: #a855f7;
+  --purple-dim: rgba(168, 85, 247, 0.1);
+  --purple-border: rgba(168, 85, 247, 0.28);
+
+  /* Vue green accent */
+  --vue: #42b883;
+  --vue-dim: rgba(66, 184, 131, 0.1);
+  --vue-border: rgba(66, 184, 131, 0.28);
+
   /* Text */
   --text-primary: #ecf0f6;
   --text-secondary: #8892a4;
@@ -67,6 +77,20 @@
   /* Layout */
   --container-max: 1100px;
   --nav-height: 64px;
+
+  /* Error */
+  --error: #f85149;
+  --error-dim: rgba(248, 81, 73, 0.07);
+  --error-border: rgba(248, 81, 73, 0.22);
+
+  /* Social */
+  --linkedin: #0077b5;
+
+  /* Language dot colors */
+  --lang-vue: #41b883;
+  --lang-ts: #3178c6;
+  --lang-js: #f1e05a;
+  --lang-cs: #178600;
 
   /* WhatsApp */
   --bg-whatsapp-top: #25d366;

@@ -5,16 +5,15 @@
   import foto from '@/0-Global/assets/images/my-foto.png';
   import { tiplan, uerj } from '@/0-Global/assets/utilities/_variables';
   import { totalCertCount } from '@/1-Curriculo/assets/utilities/certificateCompanies';
+  import { useTerminalTyper } from '@/0-Global/composables/useTerminalTyper';
+  import TerminalCard from '@/0-Global/components/TerminalCard.vue';
 
   const terminalVisible = ref(false);
-  const terminalLines = ref<Array<{ text: string; type?: string }>>([]);
-  const typingDone = ref(false);
   const identityVisible = ref(false);
   const photoVisible = ref(false);
   const ctasVisible = ref(false);
   const heroReady = ref(false);
   const statsRowEl = ref<HTMLElement | null>(null);
-  let activeInterval: ReturnType<typeof setInterval> | null = null;
   let statsObserver: IntersectionObserver | null = null;
 
   const thisYear = new Date().getFullYear();
@@ -28,44 +27,9 @@
     { full: '> WARNING: CSS broke 2 laws of physics today', type: 'error' },
     { full: '> git status: everything is fine (probably)', type: 'comment' },
     { full: '> STATUS: ready_to_ship ✓', type: 'ok' },
-  ] as const;
+  ];
 
-  const CHAR_SPEED = 28;
-  const LINE_GAP = 350;
-
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function runTypingSequence(): Promise<void> {
-    return new Promise((resolve) => {
-      let lineIndex = 0;
-
-      function typeLine() {
-        if (lineIndex >= BOOT_LINES.length) {
-          typingDone.value = true;
-          setTimeout(resolve, 800);
-          return;
-        }
-
-        const { full, type } = BOOT_LINES[lineIndex];
-        terminalLines.value.push({ text: '', type });
-        const idx = terminalLines.value.length - 1;
-        let charIndex = 0;
-
-        activeInterval = setInterval(() => {
-          charIndex++;
-          terminalLines.value[idx].text = full.slice(0, charIndex);
-          if (charIndex >= full.length) {
-            clearInterval(activeInterval!);
-            activeInterval = null;
-            lineIndex++;
-            setTimeout(typeLine, LINE_GAP);
-          }
-        }, CHAR_SPEED);
-      }
-
-      typeLine();
-    });
-  }
+  const { lines: terminalLines, done: typingDone, runOnce, showInstant } = useTerminalTyper();
 
   function animateCounters(container: HTMLElement) {
     container.querySelectorAll<HTMLElement>('.stat-counter').forEach((el) => {
@@ -86,31 +50,25 @@
     });
   }
 
-  function showInstant() {
-    terminalLines.value = BOOT_LINES.map(({ full, type }) => ({
-      text: full,
-      type,
-    }));
-    typingDone.value = true;
-    terminalVisible.value = true;
-    identityVisible.value = true;
-    photoVisible.value = true;
-    ctasVisible.value = true;
-    heroReady.value = true;
-  }
-
   onMounted(async () => {
     await nextTick();
 
-    const alreadySeen = sessionStorage.getItem(BOOT_SHOWN_KEY);
+    const alreadySeen =
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches || !!sessionStorage.getItem(BOOT_SHOWN_KEY);
 
-    if (prefersReducedMotion || alreadySeen) {
-      showInstant();
+    if (alreadySeen) {
+      showInstant(BOOT_LINES);
+      terminalVisible.value = true;
+      identityVisible.value = true;
+      photoVisible.value = true;
+      ctasVisible.value = true;
+      heroReady.value = true;
     } else {
-      sessionStorage.setItem(BOOT_SHOWN_KEY, '1');
-      setTimeout(() => { terminalVisible.value = true; }, 300);
+      setTimeout(() => {
+        terminalVisible.value = true;
+      }, 300);
       await new Promise<void>((r) => setTimeout(r, 700));
-      await runTypingSequence();
+      await runOnce(BOOT_LINES, BOOT_SHOWN_KEY);
       await new Promise<void>((r) => setTimeout(r, 300));
       identityVisible.value = true;
       await new Promise<void>((r) => setTimeout(r, 300));
@@ -136,9 +94,6 @@
   });
 
   onUnmounted(() => {
-    if (activeInterval !== null) {
-      clearInterval(activeInterval);
-    }
     statsObserver?.disconnect();
   });
 </script>
@@ -154,13 +109,7 @@
       <div class="hero-deco" :class="{ 'hero-deco--visible': heroReady }" aria-hidden="true">{ }</div>
 
       <div class="hero-content">
-        <div class="terminal" :class="{ 'terminal--visible': terminalVisible }">
-          <div class="terminal-titlebar" aria-hidden="true">
-            <span class="terminal-dot terminal-dot--red"></span>
-            <span class="terminal-dot terminal-dot--yellow"></span>
-            <span class="terminal-dot terminal-dot--green"></span>
-            <span class="terminal-title">portfolio.exe — bash</span>
-          </div>
+        <TerminalCard label="portfolio.exe — bash" :visible="terminalVisible">
           <div class="terminal-body" aria-live="polite" aria-label="Terminal de inicialização">
             <p
               v-for="(line, i) in terminalLines"
@@ -168,24 +117,21 @@
               class="terminal-line"
               :class="line.type ? `terminal-line--${line.type}` : ''">
               {{ line.text
-              }}<span
-                v-if="i === terminalLines.length - 1 && !typingDone"
-                class="terminal-cursor"
-                aria-hidden="true"
+              }}<span v-if="i === terminalLines.length - 1 && !typingDone" class="terminal-cursor" aria-hidden="true"
                 >█</span
               >
             </p>
-            <span v-if="typingDone" class="terminal-cursor terminal-cursor--final" aria-hidden="true">█</span>
+            <span v-if="typingDone" class="terminal-cursor" aria-hidden="true">█</span>
           </div>
-        </div>
+        </TerminalCard>
 
         <div class="hero-identity" :class="{ 'hero-identity--visible': identityVisible }">
           <p class="hero-greeting">Olá, sou</p>
           <h1 class="hero-name">João Victor <span class="hero-name--accent">Borba</span></h1>
           <div class="hero-roles">
-            <span class="role-chip role-chip--primary">.NET</span>
+            <span class="role-chip role-chip--purple">.NET</span>
             <span class="role-sep">×</span>
-            <span class="role-chip">Vue.js</span>
+            <span class="role-chip role-chip--vue">Vue.js</span>
             <span class="role-sep">×</span>
             <span class="role-chip role-chip--gold">Backend Dev</span>
           </div>
@@ -227,10 +173,7 @@
         </div>
       </div>
 
-      <div
-        class="hero-scroll-hint"
-        :class="{ 'hero-scroll-hint--visible': ctasVisible }"
-        aria-hidden="true">
+      <div class="hero-scroll-hint" :class="{ 'hero-scroll-hint--visible': ctasVisible }" aria-hidden="true">
         <span class="scroll-arrow"></span>
       </div>
     </section>
@@ -239,23 +182,17 @@
       <div class="below-fold-inner">
         <div class="stats-row" ref="statsRowEl" v-fade-up>
           <div class="stat-item">
-            <span class="stat-num">
-              <span class="stat-counter" :data-target="anosExp">0</span>+
-            </span>
+            <span class="stat-num"> <span class="stat-counter" :data-target="anosExp">0</span>+ </span>
             <span class="stat-label">Anos de exp.</span>
           </div>
           <div class="stat-divider"></div>
           <div class="stat-item">
-            <span class="stat-num">
-              <span class="stat-counter" :data-target="totalCertCount">0</span>+
-            </span>
+            <span class="stat-num"> <span class="stat-counter" :data-target="totalCertCount">0</span>+ </span>
             <span class="stat-label">Certificados</span>
           </div>
           <div class="stat-divider"></div>
           <div class="stat-item">
-            <span class="stat-num">
-              <span class="stat-counter" data-target="10">0</span>+
-            </span>
+            <span class="stat-num"> <span class="stat-counter" data-target="10">0</span>+ </span>
             <span class="stat-label">Projetos</span>
           </div>
         </div>
@@ -338,8 +275,12 @@
   }
 
   @keyframes deco-fade {
-    from { opacity: 0; }
-    to   { opacity: 0.04; }
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 0.04;
+    }
   }
 
   .hero-deco {
@@ -390,52 +331,8 @@
     }
   }
 
-  .terminal {
+  .terminal-card {
     grid-area: terminal;
-    background: var(--bg-card);
-    border: 1px solid var(--border-strong);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: var(--shadow-lg), 0 0 0 1px rgba(13, 216, 228, 0.06);
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-    max-width: 640px;
-    width: 100%;
-    justify-self: center;
-
-    &--visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .terminal-titlebar {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-3) var(--space-4);
-    background: var(--bg-elevated);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .terminal-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
-
-    &--red    { background: #ff5f56; }
-    &--yellow { background: #ffbd2e; }
-    &--green  { background: #27c93f; }
-  }
-
-  .terminal-title {
-    font-family: 'Space Mono', monospace;
-    font-size: var(--text-xs);
-    color: var(--text-muted);
-    margin-left: auto;
-    letter-spacing: 0.04em;
   }
 
   .terminal-body {
@@ -449,37 +346,8 @@
     scrollbar-width: none;
     text-align: left;
 
-    &::-webkit-scrollbar { display: none; }
-  }
-
-  .terminal-line {
-    font-family: 'Space Mono', monospace;
-    font-size: var(--text-xs);
-    line-height: 1.7;
-    color: var(--text-secondary);
-    white-space: pre-wrap;
-    word-break: break-all;
-    margin: 0;
-
-    &--warn    { color: var(--gold); }
-    &--error   { color: #e05c5c; }
-    &--ok      { color: var(--brand); }
-    &--comment { color: var(--text-muted); }
-  }
-
-  @keyframes cursor-blink {
-    0%, 100% { opacity: 1; }
-    50%       { opacity: 0; }
-  }
-
-  .terminal-cursor {
-    display: inline-block;
-    color: var(--brand);
-    animation: cursor-blink 0.7s step-end infinite;
-    margin-left: 1px;
-
-    &--final {
-      animation: cursor-blink 1s step-end infinite;
+    &::-webkit-scrollbar {
+      display: none;
     }
   }
 
@@ -490,7 +358,9 @@
     gap: var(--space-4);
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
+    transition:
+      opacity 0.5s ease,
+      transform 0.5s ease;
 
     &--visible {
       opacity: 1;
@@ -541,10 +411,16 @@
     color: var(--text-secondary);
     text-transform: uppercase;
 
-    &--primary {
-      background: var(--brand-dim);
-      border-color: var(--brand-border);
-      color: var(--brand);
+    &--purple {
+      background: var(--purple-dim);
+      border-color: var(--purple-border);
+      color: var(--purple);
+    }
+
+    &--vue {
+      background: var(--vue-dim);
+      border-color: var(--vue-border);
+      color: var(--vue);
     }
 
     &--gold {
@@ -574,7 +450,9 @@
       background-size: 0% 1px;
       background-position: bottom left;
       padding-bottom: 1px;
-      transition: background-size 220ms ease, color 220ms ease;
+      transition:
+        background-size 220ms ease,
+        color 220ms ease;
 
       &:hover {
         background-size: 100% 1px;
@@ -597,7 +475,9 @@
     align-self: center;
     opacity: 0;
     transform: scale(0.88);
-    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition:
+      opacity 0.5s ease,
+      transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 
     &--visible {
       opacity: 1;
@@ -613,11 +493,15 @@
   }
 
   @keyframes ring-spin {
-    to { transform: rotate(360deg); }
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   @keyframes ring-unspin {
-    to { transform: rotate(-360deg); }
+    to {
+      transform: rotate(-360deg);
+    }
   }
 
   .image-ring {
@@ -688,16 +572,18 @@
     font-size: var(--text-xs);
     color: var(--text-secondary);
     font-weight: 500;
-    transition: border-color 150ms ease, color 150ms ease;
+    transition:
+      border-color 150ms ease,
+      color 150ms ease;
     opacity: 1 !important;
 
     svg {
-      color: #0077b5;
+      color: var(--linkedin);
       font-size: 0.9rem;
     }
 
     &:hover {
-      border-color: #0077b5;
+      border-color: var(--linkedin);
       color: var(--text-primary);
     }
   }
@@ -710,7 +596,9 @@
     flex-wrap: wrap;
     opacity: 0;
     transform: translateY(12px);
-    transition: opacity 0.45s ease, transform 0.45s ease;
+    transition:
+      opacity 0.45s ease,
+      transform 0.45s ease;
 
     &--visible {
       opacity: 1;
@@ -764,8 +652,13 @@
   }
 
   @keyframes scroll-bounce {
-    0%, 100% { transform: rotate(45deg) translate(0, 0); }
-    50%       { transform: rotate(45deg) translate(3px, 3px); }
+    0%,
+    100% {
+      transform: rotate(45deg) translate(0, 0);
+    }
+    50% {
+      transform: rotate(45deg) translate(3px, 3px);
+    }
   }
 
   .hero-scroll-hint {
@@ -776,9 +669,13 @@
     opacity: 0;
     transition: opacity 0.5s ease 0.3s;
 
-    &--visible { opacity: 0.35; }
+    &--visible {
+      opacity: 0.35;
+    }
 
-    @media (max-width: 768px) { display: none; }
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 
   .scroll-arrow {
@@ -790,7 +687,9 @@
     transform: rotate(45deg);
     animation: scroll-bounce 1.8s ease-in-out infinite;
 
-    @media (prefers-reduced-motion: reduce) { animation: none; }
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
   }
 
   .below-fold {
@@ -909,7 +808,10 @@
     opacity: 1 !important;
     width: 100%;
     box-sizing: border-box;
-    transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+    transition:
+      transform 200ms ease,
+      border-color 200ms ease,
+      box-shadow 200ms ease;
 
     &::before {
       content: '';
@@ -928,9 +830,16 @@
       border-color: var(--brand-border);
       box-shadow: var(--shadow-brand), var(--shadow-lg);
 
-      &::before { opacity: 1; }
-      .nav-card-num { color: var(--brand-dim); }
-      .nav-card-arrow { transform: translateX(4px); color: var(--brand); }
+      &::before {
+        opacity: 1;
+      }
+      .nav-card-num {
+        color: var(--brand-dim);
+      }
+      .nav-card-arrow {
+        transform: translateX(4px);
+        color: var(--brand);
+      }
     }
   }
 
@@ -969,7 +878,9 @@
   .nav-card-arrow {
     font-size: var(--text-xl);
     color: var(--text-muted);
-    transition: transform 200ms ease, color 200ms ease;
+    transition:
+      transform 200ms ease,
+      color 200ms ease;
     align-self: flex-start;
   }
 </style>

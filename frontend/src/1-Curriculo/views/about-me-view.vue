@@ -125,16 +125,15 @@
 </template>
 
 <style scoped lang="scss">
+  @use '@/0-Global/style/utilities/mixins' as mx;
+
   .about-page {
     flex: 1;
     padding: var(--space-16) var(--space-6);
   }
 
   .page-container {
-    max-width: var(--container-max);
-    margin-inline: auto;
-    display: flex;
-    flex-direction: column;
+    @include mx.page-container;
     gap: var(--space-16);
   }
 
@@ -143,17 +142,7 @@
   }
 
   .page-num {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(5rem, 15vw, 10rem);
-    font-weight: 800;
-    color: var(--border);
-    position: absolute;
-    top: -0.6em;
-    left: -0.05em;
-    line-height: 1;
-    pointer-events: none;
-    user-select: none;
-    letter-spacing: -0.05em;
+    @include mx.page-num-style;
   }
 
   .info-section {
@@ -194,6 +183,7 @@
   }
 
   .info-card {
+    @include mx.card-interactive(0px);
     display: flex;
     align-items: flex-start;
     gap: var(--space-6);
@@ -201,14 +191,6 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     padding: var(--space-5) var(--space-6);
-    transition:
-      border-color 220ms ease,
-      box-shadow 220ms ease;
-
-    &:hover {
-      border-color: var(--brand-border);
-      box-shadow: var(--shadow-brand);
-    }
 
     @media (max-width: 640px) {
       flex-direction: column;
@@ -265,6 +247,7 @@
   }
 
   .repo-card {
+    @include mx.card-interactive(-3px);
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
@@ -273,25 +256,15 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     width: 100%;
-    transition:
-      border-color 220ms ease,
-      transform 220ms ease,
-      box-shadow 220ms ease;
+    opacity: 1 !important;
 
     .repo-ext-icon {
       opacity: 0;
       transition: opacity 150ms ease;
     }
 
-    &:hover {
-      border-color: var(--brand-border);
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-brand);
-      opacity: 1 !important;
-
-      .repo-ext-icon {
-        opacity: 1;
-      }
+    &:hover .repo-ext-icon {
+      opacity: 1;
     }
   }
 
@@ -352,29 +325,24 @@
     }
   }
 
-  $vue-clr: #41b883;
-  $ts-clr: #3178c6;
-  $js-clr: #f1e05a;
-  $cs-clr: #178600;
-
   [data-lang='Vue'] {
     &::before {
-      color: $vue-clr;
+      color: var(--lang-vue);
     }
   }
   [data-lang='TypeScript'] {
     &::before {
-      color: $ts-clr;
+      color: var(--lang-ts);
     }
   }
   [data-lang='JavaScript'] {
     &::before {
-      color: $js-clr;
+      color: var(--lang-js);
     }
   }
   [data-lang='C#'] {
     &::before {
-      color: $cs-clr;
+      color: var(--lang-cs);
     }
   }
 

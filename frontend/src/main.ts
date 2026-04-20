@@ -6,6 +6,7 @@ import './0-Global/style/utilities/_variables.css';
 import './0-Global/style/utilities/fontawesome.css';
 import './0-Global/style/base/reset.css';
 import './0-Global/style/base/global.scss';
+import './0-Global/style/base/_terminal.scss';
 import App from './App.vue';
 import router from './0-Global/router';
 

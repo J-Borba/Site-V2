@@ -1,16 +1,8 @@
 <script setup lang="ts">
-  import { ref } from 'vue';
   import { Jobs } from '../assets/utilities/jobs';
+  import { useMultiToggle } from '@/0-Global/composables/useToggle';
 
-  const expanded = ref<Set<number>>(new Set());
-
-  function toggle(index: number) {
-    if (expanded.value.has(index)) {
-      expanded.value.delete(index);
-    } else {
-      expanded.value.add(index);
-    }
-  }
+  const { expanded, toggle } = useMultiToggle();
 </script>
 
 <template>
@@ -22,10 +14,7 @@
       </div>
 
       <div class="timeline" v-fade-up>
-        <div
-          v-for="(job, index) in Jobs"
-          :key="index"
-          class="timeline-item">
+        <div v-for="(job, index) in Jobs" :key="index" class="timeline-item">
           <div class="timeline-marker">
             <div class="marker-num">{{ String(index + 1).padStart(2, '0') }}</div>
             <div class="marker-line"></div>
@@ -46,34 +35,29 @@
             </div>
 
             <div class="skill-tags" v-if="job.roles[0].skills?.length">
-              <span
-                v-for="(skill, i) in job.roles[0].skills"
-                :key="i"
-                class="skill-tag">
+              <span v-for="(skill, i) in job.roles[0].skills" :key="i" class="skill-tag">
                 {{ skill }}
               </span>
             </div>
           </a>
 
-          <button
-            v-if="job.roles.length > 1"
-            class="prev-roles-toggle"
-            @click="toggle(index)">
+          <button v-if="job.roles.length > 1" class="prev-roles-toggle" @click="toggle(index)">
             <span class="toggle-icon" :class="{ rotated: expanded.has(index) }">›</span>
-            {{ expanded.has(index) ? 'Ocultar' : job.roles.length - 1 === 1 ? '1 cargo anterior' : `${job.roles.length - 1} cargos anteriores` }}
+            {{
+              expanded.has(index)
+                ? 'Ocultar'
+                : job.roles.length - 1 === 1
+                  ? '1 cargo anterior'
+                  : `${job.roles.length - 1} cargos anteriores`
+            }}
           </button>
 
           <transition name="accordion">
             <div v-if="job.roles.length > 1 && expanded.has(index)" class="prev-roles">
-              <div
-                v-for="(role, ri) in job.roles.slice(1)"
-                :key="ri"
-                class="prev-role-card">
+              <div v-for="(role, ri) in job.roles.slice(1)" :key="ri" class="prev-role-card">
                 <div class="prev-role-header">
                   <p class="job-role">{{ role.title }}</p>
-                  <span class="job-dates">
-                    {{ role.startDate }}&nbsp;→&nbsp;{{ role.endDate ?? 'Atualmente' }}
-                  </span>
+                  <span class="job-dates"> {{ role.startDate }}&nbsp;→&nbsp;{{ role.endDate ?? 'Atualmente' }} </span>
                 </div>
                 <div class="skill-tags" v-if="role.skills?.length">
                   <span v-for="(skill, si) in role.skills" :key="si" class="skill-tag">
@@ -91,6 +75,7 @@
 
 <style scoped lang="scss">
   @use '@/0-Global/style/utilities/breakpoints' as bp;
+  @use '@/0-Global/style/utilities/mixins' as mx;
 
   .experience-page {
     flex: 1;
@@ -98,10 +83,7 @@
   }
 
   .page-container {
-    max-width: var(--container-max);
-    margin-inline: auto;
-    display: flex;
-    flex-direction: column;
+    @include mx.page-container;
     gap: var(--space-12);
   }
 
@@ -110,17 +92,7 @@
   }
 
   .page-num {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(5rem, 15vw, 10rem);
-    font-weight: 800;
-    color: var(--border);
-    position: absolute;
-    top: -0.6em;
-    left: -0.05em;
-    line-height: 1;
-    pointer-events: none;
-    user-select: none;
-    letter-spacing: -0.05em;
+    @include mx.page-num-style;
   }
 
   .timeline {
@@ -181,6 +153,7 @@
   }
 
   .job-card {
+    @include mx.card-interactive;
     background: var(--bg-surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
@@ -191,13 +164,6 @@
     width: 100%;
     text-decoration: none;
     color: inherit;
-    transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
-
-    &:hover {
-      border-color: var(--brand-border);
-      box-shadow: var(--shadow-brand);
-      transform: translateY(-2px);
-    }
   }
 
   .job-header {
@@ -360,7 +326,9 @@
 
   .accordion-enter-active,
   .accordion-leave-active {
-    transition: opacity 220ms ease, transform 220ms ease;
+    transition:
+      opacity 220ms ease,
+      transform 220ms ease;
   }
 
   .accordion-enter-from,

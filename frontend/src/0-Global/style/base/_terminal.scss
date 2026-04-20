@@ -1,0 +1,67 @@
+@keyframes terminal-cursor-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.terminal-line {
+  font-family: 'Space Mono', monospace;
+  font-size: var(--text-xs);
+  line-height: 1.7;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-break: break-all;
+  margin: 0;
+
+  &--cmd {
+    color: var(--brand);
+  }
+  &--dim {
+    color: var(--text-muted);
+  }
+  &--info {
+    color: var(--text-secondary);
+  }
+  &--error {
+    color: var(--error);
+  }
+  &--warn {
+    color: var(--gold);
+  }
+  &--ok {
+    color: var(--brand);
+  }
+  &--comment {
+    color: var(--text-muted);
+  }
+  &--gap {
+    display: block;
+    height: 0.5em;
+  }
+}
+
+.terminal-cursor {
+  display: inline-block;
+  color: var(--brand);
+  margin-left: 1px;
+  animation: terminal-cursor-blink 0.7s step-end infinite;
+}
+
+.terminal-box {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius-sm);
+  background: var(--gold-dim);
+  font-family: 'Space Mono', monospace;
+  font-size: var(--text-xs);
+  color: var(--gold);
+  line-height: 1.6;
+}
