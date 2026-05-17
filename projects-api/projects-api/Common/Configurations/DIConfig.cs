@@ -1,6 +1,7 @@
 using projects_api.Data.Repositories;
 using projects_api.Data.Repositories.Interfaces;
 using projects_api.Services;
+using projects_api.Services.Financeiro;
 using projects_api.Services.Interfaces;
 
 namespace projects_api.Common.Configurations;
@@ -16,6 +17,10 @@ public static class DIConfig
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
+
+        services.AddScoped(typeof(ICurrentUserFinancialRepository<>), typeof(CurrentUserFinancialRepository<>));
+        services.AddScoped<AtivoService>();
+        services.AddScoped<ProventoService>();
 
         return services;
     }

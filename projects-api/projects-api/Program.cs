@@ -1,11 +1,11 @@
-using Microsoft.AspNetCore.RateLimiting;
+using System.Threading.RateLimiting;
+using Microsoft.AspNetCore.Identity;
 using projects_api.Common.Configurations;
 using projects_api.Common.Identity;
 using projects_api.Data.Contexts;
 using projects_api.Data.Models;
 using projects_api.Data.Seeders;
 using projects_api.Endpoints;
-using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,7 +34,7 @@ builder.Services.AddRateLimiter(options =>
     options.AddPolicy("login", context =>
         RateLimitPartition.GetFixedWindowLimiter(
             context.Connection.RemoteIpAddress?.ToString() ?? "unknown",
-            _ => new System.Threading.RateLimiting.FixedWindowRateLimiterOptions
+            _ => new FixedWindowRateLimiterOptions
             {
                 Window = TimeSpan.FromMinutes(1),
                 PermitLimit = 10,
