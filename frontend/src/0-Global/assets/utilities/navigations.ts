@@ -2,6 +2,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faFileContract } from '@fortawesome/free-solid-svg-icons/faFileContract';
 import { faUserGraduate } from '@fortawesome/free-solid-svg-icons/faUserGraduate';
 import { faIdCard } from '@fortawesome/free-regular-svg-icons/faIdCard';
+import { faFolderTree } from '@fortawesome/free-solid-svg-icons/faFolderTree';
 
 interface iNavigation {
   title: string;
@@ -24,5 +25,10 @@ export const Navigations: iNavigation[] = [
     title: 'Sobre mim',
     rota: '/about-me',
     icon: faIdCard,
+  },
+  {
+    title: 'Projetos',
+    rota: '/projetos',
+    icon: faFolderTree,
   },
 ];

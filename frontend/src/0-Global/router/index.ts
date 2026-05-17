@@ -16,6 +16,17 @@ const routes: RouteRecordRaw[] = [
   { path: '/login', component: () => import('@/2-Auth/views/login-view.vue'), meta: { guestOnly: true } },
   { path: '/register', component: () => import('@/2-Auth/views/register-view.vue'), meta: { guestOnly: true } },
   { path: '/profile', component: () => import('@/2-Auth/views/profile-view.vue'), meta: { requiresAuth: true } },
+  { path: '/projetos', component: () => import('@/3-Projetos/views/projetos-index-view.vue') },
+  {
+    path: '/projetos/financeiro',
+    component: () => import('@/3-Projetos/financeiro/views/financeiro-shell-view.vue'),
+    meta: { requiresAuth: true },
+    children: [
+      { path: '', component: () => import('@/3-Projetos/financeiro/views/financeiro-overview-view.vue') },
+      { path: 'posicoes', component: () => import('@/3-Projetos/financeiro/views/financeiro-posicoes-view.vue') },
+      { path: 'proventos', component: () => import('@/3-Projetos/financeiro/views/financeiro-proventos-view.vue') },
+    ],
+  },
   { path: '/:catchAll(.*)', component: () => import('@/0-Global/views/not-found-view.vue') },
 ];
 
@@ -33,7 +44,7 @@ router.beforeEach(async (to) => {
   await authStore.initSession();
 
   if (to.meta.requiresAuth && !authStore.isLoggedIn) {
-    return '/login';
+    return { path: '/login', query: { redirect: to.fullPath } };
   }
 
   if (to.meta.guestOnly && authStore.isLoggedIn) {

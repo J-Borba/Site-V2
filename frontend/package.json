@@ -15,11 +15,13 @@
     "@fortawesome/free-regular-svg-icons": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/vue-fontawesome": "^3.0.6",
+    "apexcharts": "^5.10.6",
     "axios": "^1.6.7",
     "bootstrap": "^5.3.2",
     "pinia": "^3.0.4",
     "vue": "^3.4.15",
-    "vue-router": "^4.3.0"
+    "vue-router": "^4.3.0",
+    "vue3-apexcharts": "^1.11.1"
   },
   "devDependencies": {
     "@types/bootstrap": "^5.2.10",
